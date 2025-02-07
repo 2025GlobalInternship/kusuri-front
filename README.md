@@ -1,1 +1,1 @@
-# kusri
+# kusuri
