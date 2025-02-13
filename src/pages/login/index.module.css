@@ -5,6 +5,7 @@
     justify-content: center;
     height: 100vh;
     margin-top: -40px;
+    font-family: 'pre-medium';
 }
 
 .icon {
@@ -91,14 +92,14 @@
     color: #7AFFC7;
     font-size: 12px;
     margin-top: -35px;
-    font-weight: bold;
+    /* font-weight: bold; */
     margin-right: 130px;
 }
 
 .errorMessage {
     color: rgba(255, 134, 134, 1);
     font-size: 12px;
-    margin-top: -50px;
-    font-weight: bold;
-    margin-right: 123px;
+    margin-top: -55px;
+    /* font-weight: bold; */
+    margin-right: 125px;
 }
