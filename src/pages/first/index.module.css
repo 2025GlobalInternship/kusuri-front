@@ -1,6 +1,6 @@
 .logo {
     display: flex;
     align-items: center;
-    justify-self: center;
-    margin-top: 70%;
+    justify-content: center;
+    height: 100vh;
 }
