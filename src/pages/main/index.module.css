@@ -8,8 +8,39 @@
     width: 340px;
     height: 210px;
     margin: 27.73px auto;
+    display: flex;
+    flex-direction: column;
+    font-family: 'pre-medium';
+    padding: 17px 19px;
+    box-sizing: border-box;
 }
 
 .txtContainer {
+    position: relative;
+}
+
+#recommendTxt {
+    font-size: 18px;
+}
+
+#xIcon {
+    position: absolute;
+    right: 0px;
+}
+
+#medicineIcon {
+    display: flex;
+    margin: 12px auto 20px;
+}
+
+#recommendBtn {
+    background-color: #7AFFC7;
+    width: 271.08px;
+    height: 43.79px;
+    border: none;
+    border-radius: 12px;
+    font-size: 16px;
+    font-family: 'pre-medium';
+    color: rgba(93, 93, 93, 1);
     margin: 0 auto;
 }

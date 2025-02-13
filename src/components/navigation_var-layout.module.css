@@ -15,8 +15,15 @@
     width: 60px;
     text-align: center;
 }
-#naviTxt {
+
+#naviTxt, #activeTxt {
     margin: 2px 0px 0px;
-    color: rgba(170, 170, 170, 1);
     font-size: 12px;
+    font-family: 'pre-medium';
+}
+#naviTxt {
+    color: rgba(170, 170, 170, 1);
+}
+#activeTxt {
+    color: #00FF95; /* 선택된 페이지일 때 */
 }
