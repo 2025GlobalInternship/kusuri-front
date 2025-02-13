@@ -15,10 +15,16 @@ export default function Page() {
 
             <div className={style.recommendContainer}>
                 <div className={style.txtContainer}>
-                    <p>내 증상에 맞는 약 추천 받기</p>
-                    <Image src={xIcon} alt="x" />
+                    <span id={style.recommendTxt}>내 증상에 맞는 약 추천 받기</span>
+                    <Image id={style.xIcon} src={xIcon} alt="x" />
                 </div>
-                <Image src={medicineIcon} alt="약" />
+                <Image id={style.medicineIcon} src={medicineIcon} alt="약" />
+                <button id={style.recommendBtn}>바로 가기</button>
+            </div>
+
+            <div className={style.container}>
+                <div className={style.container}></div>
+                <div className={style.container}></div>
             </div>
 
             <NavigationVarLayout/>
