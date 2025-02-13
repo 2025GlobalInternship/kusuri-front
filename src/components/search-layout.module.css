@@ -1,0 +1,27 @@
+.container {
+    background: white;
+    width: 340px;
+    height: 55px;
+    display: flex;
+    align-self: center;
+    text-align: center;
+    border-radius: 12px;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto;
+}
+
+#searchTxt {
+    border: none;
+    height: 100%;
+    display: flex;
+    flex: 1;
+    font-size: 16px;
+    margin: 15px 0px 15px 17px;
+    align-items: center;
+    color: rgb(209, 210, 209);
+}
+
+#searchIcon {
+    margin-right: 17px;
+}
