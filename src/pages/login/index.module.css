@@ -4,7 +4,8 @@
     align-items: center;
     justify-content: center;
     height: 100vh;
-    margin-top: -40px; 
+    margin-top: -40px;
+    font-family: 'pre-medium';
 }
 
 .icon {
@@ -44,21 +45,25 @@
     display: flex;
     align-items: center;
     gap: 10px; /* 버튼과 입력 필드 사이 간격 */
+    position: relative;
 }
 
 .checkButton {
-    padding: 10px 20px;
+    padding: 10px 10px;
     border: none;
-    background-color: #DDE1E5;
-    color: gray;
-    font-size: 14px;
+    background-color: #7AFFC7;
+    color: white;
+    font-size: 12px;
     font-weight: bold;
-    border-radius: 20px;
+    border-radius: 10px;
     cursor: pointer;
+    position: absolute;
+    right: 10px;
+    margin-top: -20px;
 }
 
 .checkButton:hover {
-    background-color: #BDC7D7;
+    background-color: #7AFFC7;
 }
 
 .signupButton {
@@ -81,4 +86,20 @@
 
 .input[name="passwordcheck"] {
     margin-bottom: 40px;
+}
+
+.successMessage {
+    color: #7AFFC7;
+    font-size: 12px;
+    margin-top: -35px;
+    /* font-weight: bold; */
+    margin-right: 130px;
+}
+
+.errorMessage {
+    color: rgba(255, 134, 134, 1);
+    font-size: 12px;
+    margin-top: -55px;
+    /* font-weight: bold; */
+    margin-right: 125px;
 }

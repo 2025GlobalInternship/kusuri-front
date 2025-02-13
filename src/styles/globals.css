@@ -12,3 +12,8 @@ html, body {
   margin: 0px;
 }
 
+@font-face {
+  font-family: 'pre-medium';
+  src: url('../pages/fonts/Pretendard-Medium.otf');
+}
+
