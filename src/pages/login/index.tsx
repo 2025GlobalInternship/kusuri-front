@@ -46,7 +46,7 @@ export default function Page() {
                 {/* 아이디 중복 확인 후 밑에 메시지 표시 */}
                 {checked && validUsername && (
                     <div className={style.successMessage}>
-                        사용할 수 있는 아이디입니다.
+                        사용할 수 있는 아이디 입니다.
                     </div>
                 )}
                 <input
