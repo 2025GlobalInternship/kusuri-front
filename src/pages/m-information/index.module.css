@@ -91,18 +91,16 @@
     left: 0;
     right: 0;
     margin: 0 auto;
-    margin-bottom: 83px;
-    
-    transition: background-color 0.3s ease, color 0.3s ease;
+    margin-bottom: 163px;
 }
 
 .nextButton:disabled {
-    background-color: #ccc;
+    background-color: rgba(221, 225, 229, 1);
     cursor: not-allowed;
 }
 
 .clicked {
-    background-color: rgba(122, 255, 199, 1); 
+    background-color: rgba(221, 225, 229, 1); 
     color: white; 
 }
 
