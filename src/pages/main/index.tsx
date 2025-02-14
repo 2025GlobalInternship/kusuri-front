@@ -1,10 +1,13 @@
 import SearchLayout from "@/components/search-layout"; //불러오기
 import NavigationVarLayout from "@/components/navigation_var-layout";
+import ChatIconLayout from "@/components/chatIcon-layout";
 import Image from "next/image";
+
 import kusuriLogo from "../../../public/images/kusuri-logo.png";
 import bellIcon from "../../../public/images/bellIcon.png";
 import medicineIcon from "../../../public/images/medicines_icon.png";
 import xIcon from "../../../public/images/xIcon.png";
+
 import style from "./index.module.css";
 
 
@@ -56,7 +59,9 @@ export default function Page() {
                 </div>
             </div>
 
-            <NavigationVarLayout/>
+            <ChatIconLayout />
+
+            <NavigationVarLayout />
         </div>
     )
 }

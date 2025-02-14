@@ -1,0 +1,27 @@
+.chatCon {
+    position: fixed;
+    z-index: 2;
+    bottom: 126px;
+    width: 100%;
+}
+
+.chatBubbleCon {
+    position: absolute;
+    right: -8px;
+    bottom: 0px;
+}
+
+#chatBubbleTxt {
+    position: absolute;
+    top: 40%;
+    left: 0%;
+    transform: translate(20%, -25%);
+    color: rgb(93, 93, 93);
+    font-size: 16px;
+}
+
+#chatIcon {
+    position: absolute;
+    bottom: -30px;
+    right: 24.9px;
+}
