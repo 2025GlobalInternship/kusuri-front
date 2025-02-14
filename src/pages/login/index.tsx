@@ -1,24 +1,15 @@
 import { useState } from "react";
 import Image from "next/image";
 import Icon from "../../../public/images/Frame 2814.png";
-import CheckedIcon from "../../../public/images/Frame 2815.png"; 
 import style from "./index.module.css";
 
-export default function Page() {
-    const [checked, setChecked] = useState(false);
-    const [validUsername, setValidUsername] = useState(false);
+export default function LoginPage() {
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
-    const [passwordCheck, setPasswordCheck] = useState("");
-    const [passwordMatch, setPasswordMatch] = useState(true);
+    const [isClicked, setIsClicked] = useState(false);
 
-    const handleCheckClick = () => {
-        setChecked(true);
-        setValidUsername(true);
-    };
-
-    const handlePasswordCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setPasswordCheck(e.target.value);
-        setPasswordMatch(e.target.value === password);
+    const handleLoginClick = () => {
+        setIsClicked(true); // 버튼 클릭 시 색상 변경
     };
 
     return (
@@ -27,26 +18,14 @@ export default function Page() {
                 <Image src={Icon} alt="아이콘" />
             </div>
             <div className={style.form}>
-                <div className={style.inputContainer}>
-                    <input
-                        type="text"
-                        name="userid"
-                        placeholder="아이디 작성하기"
-                        className={style.input}
-                    />
-                    <button className={style.checkButton} onClick={handleCheckClick}>
-                        {checked ? (
-                            <Image src={CheckedIcon} alt="아이디 확인됨" width={15} height={15} />
-                        ) : (
-                            "아이디 중복 확인"
-                        )}
-                    </button>
-                </div>
-                {checked && validUsername && (
-                    <div className={style.successMessage}>
-                        사용할 수 있는 아이디 입니다.
-                    </div>
-                )}
+                <input
+                    type="text"
+                    name="userid"
+                    placeholder="아이디 작성하기"
+                    className={style.input}
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                />
                 <input
                     type="password"
                     name="password"
@@ -55,18 +34,12 @@ export default function Page() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <input
-                    type="password"
-                    name="passwordcheck"
-                    placeholder="비밀번호 확인"
-                    className={style.input}
-                    value={passwordCheck}
-                    onChange={handlePasswordCheck}
-                />
-                {!passwordMatch && passwordCheck !== "" && (
-                    <div className={style.errorMessage}>비밀번호가 일치하지 않습니다.</div>
-                )}
-                <button className={style.signupButton}>회원가입</button>
+                <button 
+                    className={`${style.signupButton} ${isClicked ? style.clicked : ""}`} 
+                    onClick={handleLoginClick}
+                >
+                    로그인
+                </button>
             </div>
         </div>
     );
