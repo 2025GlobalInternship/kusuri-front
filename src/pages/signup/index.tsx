@@ -26,6 +26,7 @@ export default function Page() {
             <div className={style.icon}>
                 <Image src={Icon} alt="아이콘" />
             </div>
+            <form method="post" action="#">
             <div className={style.form}>
                 <div className={style.inputContainer}>
                     <input
@@ -68,6 +69,7 @@ export default function Page() {
                 )}
                 <button className={style.signupButton}>회원가입</button>
             </div>
+            </form>
         </div>
     );
 }

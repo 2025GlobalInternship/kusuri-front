@@ -17,6 +17,7 @@ export default function LoginPage() {
             <div className={style.icon}>
                 <Image src={Icon} alt="아이콘" />
             </div>
+            <form method="post" action="#">
             <div className={style.form}>
                 <input
                     type="text"
@@ -41,6 +42,7 @@ export default function LoginPage() {
                     로그인
                 </button>
             </div>
+            </form>
         </div>
     );
 }
