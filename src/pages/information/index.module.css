@@ -1,0 +1,127 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    height: 100vh;
+    padding: 40px;
+    font-family: 'pre-medium';
+}
+
+.titleBox {
+    margin-top: 50px;
+}
+
+.greeting {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.subtitle {
+    font-size: 24px;
+    font-weight: bold;
+    color: black;
+    margin-top: -10px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 340px;
+    margin-top: 20px;
+}
+
+.input {
+    width: 270px;
+    max-width: 100%;
+    padding: 18px;
+    border: none;
+    background-color: rgba(244, 247, 250, 1);
+    border-radius: 16px;
+    outline: none;
+    font-size: 16px;
+    color: gray;
+    margin-bottom: 10px;
+}
+
+.nameInfo {
+    font-size: 14px;
+    color: rgba(170, 170, 170, 1);
+    margin: 4px 0;
+    margin-bottom: 30px;
+    margin-left: 3px;
+}
+
+.required {
+    color: rgba(255, 134, 134, 1);
+    font-weight: bold;
+}
+
+.genderContainer {
+    display: flex;
+    gap: 20px;
+}
+
+.genderButton {
+    width: 128px;
+    height: 55px;
+    border: none;
+    background-color: #EBF0F7;
+    color: gray;
+    font-size: 16px;
+    border-radius: 24px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.genderButton:hover {
+    background-color: #C0C4C8;
+}
+
+.selected {
+    background-color: #7AFFC7 !important;
+    color: white !important;
+}
+
+.input {
+    background-color: rgba(235, 240, 247, 0.5) !important;
+}
+
+.genderRequired {
+    font-size: 14px;
+    color: rgba(170, 170, 170, 1);
+    margin-left: 3px;
+}
+
+.genderRequired .required {
+    color: rgba(255, 134, 134, 1);
+    font-weight: bold;
+}
+
+.nextButton {
+    width: 300px;
+    height: 50px;
+    border: none;
+    background-color: rgba(221, 225, 229, 1);
+    color: gray;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 230px;
+    transition: background-color 0.3s ease;
+}
+
+.nextButton:disabled {
+    background-color: rgba(221, 225, 229, 1); /* 비활성화 상태일 때 연한 회색 */
+    color: gray;
+    cursor: not-allowed;
+}
+
+.clicked {
+    background-color: #7AFFC7 !important;
+    color: white !important;
+}
+
+
