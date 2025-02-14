@@ -1,0 +1,37 @@
+.nearCon {
+    width: 100%;
+    background-color: white;
+    border-radius: 30px;
+    padding: 52px 0px;
+    position: fixed;
+    bottom: -145px;
+    z-index: 2;
+}
+
+#nearConLine {
+    position: absolute;
+    top: 13px;
+    left: 50%;
+    transform: translate(-34.5px, 0);
+    width: 69px;
+    height: 4px;
+    border-radius: 20px;
+    background-color: #EFEFEF;
+}
+
+.pharmacyCon {
+    width: 332px;
+    margin: 10px auto;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+#pharmacyTxt {
+    margin-left: 12px;
+}
+
+#pharmacyKm {
+    position: absolute;
+    right: 0px;
+}
