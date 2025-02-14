@@ -36,36 +36,6 @@
     color: gray;
 }
 
-.input:first-child {
-    margin-bottom: 20px;
-}
-
-/* 아이디 작성하기와 중복 확인 버튼을 가로로 나열 */
-.inputContainer {
-    display: flex;
-    align-items: center;
-    gap: 10px; /* 버튼과 입력 필드 사이 간격 */
-    position: relative;
-}
-
-.checkButton {
-    padding: 10px 10px;
-    border: none;
-    background-color: #7AFFC7;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    border-radius: 10px;
-    cursor: pointer;
-    position: absolute;
-    right: 10px;
-    margin-top: -20px;
-}
-
-.checkButton:hover {
-    background-color: #7AFFC7;
-}
-
 .signupButton {
     width: 200px;
     height: 60px;
@@ -81,25 +51,13 @@
 }
 
 .signupButton:hover {
-    background-color: #DDE1E5;
+    background-color: #C0C4C8;
 }
 
-.input[name="passwordcheck"] {
-    margin-bottom: 40px;
+.clicked {
+    background-color: #7AFFC7 !important; 
+    color: white !important;
 }
 
-.successMessage {
-    color: #7AFFC7;
-    font-size: 12px;
-    margin-top: -35px;
-    /* font-weight: bold; */
-    margin-right: 130px;
-}
 
-.errorMessage {
-    color: rgba(255, 134, 134, 1);
-    font-size: 12px;
-    margin-top: -55px;
-    /* font-weight: bold; */
-    margin-right: 125px;
-}
+
