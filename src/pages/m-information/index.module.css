@@ -103,7 +103,7 @@
 
 .clicked {
     background-color: rgba(122, 255, 199, 1); 
-    color: gray; 
+    color: white; 
 }
 
 .addButton {
@@ -111,7 +111,7 @@
     height: 45px;
     margin-top: 10px;
     border: none;
-    background-color: rgba(122, 255, 199, 1);
+    background-color: rgba(127, 241, 173, 1);
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -120,7 +120,7 @@
 }
 
 .addButton:hover {
-    background-color: #5cd6a0;
+    background-color: rgba(127, 241, 173, 1);
 }
 
 
@@ -132,7 +132,8 @@
 .medicineLabel {
     font-size: 18px;
     color: black;
-    margin-top: 30px; 
+    margin-top: 30px;
+    font-weight: 500;
 }
 .inputContainer {
     margin-top: 1px;
