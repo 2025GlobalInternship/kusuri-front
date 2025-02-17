@@ -2,7 +2,7 @@ import style from "./chatIcon-layout.module.css";
 import Image from "next/image";
 
 import chatIcon from "../../public/images/chatIcon.png";
-import chatText from "../../public/images/chatText.png";
+import chatText from "../../public/images/chatTxt.png";
 
 export default function ChatIconLayout() {
     return (

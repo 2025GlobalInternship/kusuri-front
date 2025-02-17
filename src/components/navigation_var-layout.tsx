@@ -10,11 +10,11 @@ import chosenHospitalIcon from "../../public/images/chosen_hospital.png";
 import chosenMyIcon from "../../public/images/chosen_my.png";
 import style from "./navigation_var-layout.module.css";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function NavigationVarLayout() {
     const router = useRouter();
-    const pathname = usePathname(); // 현재 결로 가져오기
+    const pathname = usePathname(); // 현재 경로 가져오기
 
     useEffect(()=>{
         console.log(pathname);

@@ -1,0 +1,10 @@
+.categoryCon > div {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 16px;
+    justify-content: center;
+}
+
+.header {
+    margin-bottom: 26px;
+}

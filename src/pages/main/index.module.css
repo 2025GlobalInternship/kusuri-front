@@ -1,6 +1,6 @@
 .container {
     font-family: 'pre-medium';
-    padding-bottom: 75.8px;
+    padding-bottom: 119.8px;
 }
 
 .topCon {
@@ -20,7 +20,7 @@
     border-radius: 20px;
     width: 340px;
     height: 210px;
-    margin: 27.73px auto 0;
+    margin: 26px auto 0;
     display: flex;
     flex-direction: column;
     padding: 17px 19px;
@@ -33,6 +33,7 @@
 
 #recommendTxt {
     font-size: 18px;
+    font-style: normal;
 }
 
 #xIcon {
@@ -46,29 +47,62 @@
 }
 
 #recommendBtn {
-    background-color: #7AFFC7;
-    width: 271.08px;
-    height: 43.79px;
+    background-color: #7FF1AD;
+    width: 222px;
+    height: 44px;
     border: none;
     border-radius: 12px;
     font-size: 16px;
     font-family: 'pre-medium';
-    color: rgba(93, 93, 93, 1);
+    color: white;
     margin: 0 auto;
+}
+
+.tagCon {
+    margin: 12px 25px;
+    gap: 10px;
+    display: flex;
+}
+
+#tag {
+    background-color: white;
+    border-radius: 43.653px;
+    color: #71E2B3;
+    text-align: center;
+    font-size: 14px;
+    padding: 8px 16px;
 }
 
 .plusCon {
     display: flex;
-    justify-content: center;
-    margin: 15px auto 58.64px;
+    padding: 23px 27.73px;
     gap: 15px;
+    overflow-x: scroll;
+    white-space: nowrap;
+    scrollbar-width: none;
 }
 
-.firstCon, .secondCon {
+.plusInfoCon {
     background-color: white;
-    width: 161px;
-    height: 123px;
+    width: 158px;
+    height: 98px;
     border-radius: 20px;
+    flex: 0 0 auto;
+    padding: 23px 17px;
+    display: flex;
+    gap: 18px;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+}
+
+#plusTxt {
+    color: #AAA;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+#plusImg {
 }
 
 .famousCon {
