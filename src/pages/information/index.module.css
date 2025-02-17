@@ -125,4 +125,37 @@
     color: white !important;
 }
 
+/* radio 버튼 기본 스타일 제거 */
+.radio {
+    display: none; /* 기본 radio 버튼 숨기기 */
+}
+
+/* 라벨 클릭 시, 선택된 스타일 적용 */
+.radio:checked + span {
+    color: white;
+}
+
+/* 라벨로 스타일 적용 */
+.genderButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 128px;
+    height: 55px;
+    border: none;
+    background-color: #EBF0F7;
+    color: gray;
+    font-size: 16px;
+    border-radius: 24px;
+    cursor: pointer;
+    margin-top: 10px;
+    text-align: center;
+    position: relative;
+}
+
+/* 선택된 상태의 스타일 */
+.radio:checked + span {
+    color: white;
+}
+
 
