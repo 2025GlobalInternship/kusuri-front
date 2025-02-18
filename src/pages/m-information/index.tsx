@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Link from "next/link"; 
 import style from "./index.module.css";
 import plusIcon from "../../../public/images/plus.png";
 
@@ -14,17 +15,13 @@ export default function InfoPage() {
         }
     };
 
-    const handleNextButtonClick = () => {
-        setButtonClicked(true); // 넘어가기 버튼 클릭 시 상태 변경
-    };
-
     return (
         <form method="post" action="#">
             <div className={style.container}>
                 <div className={style.titleBox}>
                     <h2 className={style.greeting}>평소에</h2>
                     <h2 className={style.subtitle}>드시는 약이 있나요?</h2>
-                    <p className={style.medicineLabel}>약 이름</p> {/* 추가된 부분 */}
+                    <p className={style.medicineLabel}>약 이름</p> 
                 </div>
 
                 {/* 약 입력창 & 플러스 버튼 */}
@@ -56,13 +53,14 @@ export default function InfoPage() {
                 </div>
 
                 {/* 넘어가기 버튼 */}
-                <button
-                    className={`${style.nextButton} ${buttonClicked ? style.clicked : ""}`}
-                    onClick={handleNextButtonClick}
-                    disabled={medicineList.length === 0} // 약이 하나도 없으면 비활성화
-                >
-                    넘어가기
-                </button>
+                <Link href="/profile">
+                    <button
+                        className={`${style.nextButton} ${buttonClicked ? style.clicked : ""}`}
+                        disabled={medicineList.length === 0} // 약이 하나도 없으면 비활성화
+                    >
+                        넘어가기
+                    </button>
+                </Link>
             </div>
         </form>
     );
