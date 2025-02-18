@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 export default function HeaderLayout({
     children,
 }: {
-    children : string
+    children : any
 }) {
     const router = useRouter();
 
@@ -18,7 +18,7 @@ export default function HeaderLayout({
     return (
         <div className={style.container}>
             <div className={style.txtContainer}>
-                <Image onClick={backBtnClick} src={backIcon} alt="뒤로가기" />
+                <Image onClick={backBtnClick} src={backIcon} alt="뒤로가기" priority />
                 <span id={style.title}>{children}</span>
             </div>
         </div>

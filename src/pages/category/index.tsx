@@ -20,13 +20,18 @@ import chosenMotion from "../../../public/images/category/chosen_motion.png";
 import chosenStomack from "../../../public/images/category/chosen_stomach.png";
 import chosenSkin from "../../../public/images/category/chosen_skin.png";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 export default function Page() {
     const router = useRouter();
 
     const categoryBtnClick = (e : React.MouseEvent<HTMLImageElement>) => {
-        const cate = e.target.alt;
+        const cate = (e.target as HTMLImageElement).alt;
         router.push(`/category/${cate}`);
+    }
+
+    const onmouse = () => {
+        console.log("over");
     }
 
     return (

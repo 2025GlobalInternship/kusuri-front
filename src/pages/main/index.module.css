@@ -66,6 +66,11 @@
     margin: 0 auto;
 }
 
+#recommendBtn:hover {
+    background-color: #DDE1E5;
+    color: rgb(170, 170, 170);
+}
+
 .tagCon {
     margin: 12px 25px;
     gap: 10px;

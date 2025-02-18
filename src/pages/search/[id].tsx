@@ -24,8 +24,6 @@ export default function Page() {
                 </div>
             </div>
 
-            {id}
-
             <div className={style.mediCon}>
                 <MedicineLayout data="데이터" />
                 <MedicineLayout data="데이터" />

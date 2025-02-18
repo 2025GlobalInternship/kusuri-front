@@ -8,7 +8,7 @@ export default function Page() {
 
     const {id} = router.query;
     return (
-        <>
+        <div>
             <HeaderLayout>{id}</HeaderLayout>
 
             <div className={style.mediCon}>
@@ -16,6 +16,6 @@ export default function Page() {
                 <MedicineLayout data="123" />
                 <MedicineLayout data="123" />
             </div>
-        </>
+        </div>
     )
 }
