@@ -36,7 +36,7 @@ export default function Page() {
     return (
         <div>
             <div id={style.searchCon}>
-                <SearchLayout>완전 럭키비키잖아?</SearchLayout>
+                <SearchLayout text="">완전 럭키비키잖아?</SearchLayout>
             </div>
             <div className={style.dragCom} onClick={onClick}>
                 <NearbyPharmacyLayout />
