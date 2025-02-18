@@ -28,21 +28,30 @@ export default function Page() {
             </div>
             <form method="post" action="#">
             <div className={style.form}>
-                <div className={style.inputContainer}>
-                    <input
-                        type="text"
-                        name="userid"
-                        placeholder="아이디 작성하기"
-                        className={style.input}
-                    />
-                    <button className={style.checkButton} onClick={handleCheckClick}>
-                        {checked ? (
-                            <Image src={CheckedIcon} alt="아이디 확인됨" width={15} height={15} />
-                        ) : (
-                            "아이디 중복 확인"
-                        )}
-                    </button>
-                </div>
+            <div className={style.inputContainer}>
+    <input
+        type="text"
+        name="userid"
+        placeholder="아이디 작성하기"
+        className={style.input}
+    />
+    {!checked ? (
+        <button className={style.checkButton} onClick={handleCheckClick}>
+            아이디 중복 확인
+        </button>
+    ) : (
+        <Image
+            src={CheckedIcon}
+            alt="아이디 확인됨"
+            width={20}
+            height={20}
+            className={style.checkedIcon}
+        />
+    )}
+</div>
+
+
+
                 {checked && validUsername && (
                     <div className={style.successMessage}>
                         사용할 수 있는 아이디 입니다.
