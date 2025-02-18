@@ -30,7 +30,9 @@ export default function Page() {
             <Image className={style.logo} src={kusuriLogo} alt="쿠스리로고" />
             <Image className={style.bellIcon} src={bellIcon} alt="알림" />
             </div>
-            <SearchLayout>원하는 약을 검색해주세요.</SearchLayout>
+            <div className={style.searchBar}>
+                <SearchLayout text="">원하는 약을 검색해주세요.</SearchLayout>
+            </div>
 
             <div className={style.recommendContainer}>
                 <div className={style.txtContainer}>

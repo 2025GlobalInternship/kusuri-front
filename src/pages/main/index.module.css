@@ -1,6 +1,6 @@
 .container {
     font-family: 'pre-medium';
-    padding-bottom: 119.8px;
+    padding-bottom: 129.8px;
 }
 
 .topCon {
@@ -13,6 +13,14 @@
     right: 0px;
     top: 50%;
     transform: translate(0, -50%);
+}
+
+.searchBar {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: 0 auto;
+    width: 340px;
 }
 
 .recommendContainer {
@@ -56,6 +64,11 @@
     font-family: 'pre-medium';
     color: white;
     margin: 0 auto;
+}
+
+#recommendBtn:hover {
+    background-color: #DDE1E5;
+    color: rgb(170, 170, 170);
 }
 
 .tagCon {

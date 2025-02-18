@@ -11,6 +11,32 @@
     bottom: 0px;
 }
 
+.fadeout {
+    animation : fadeOut 2s;
+    animation-fill-mode: both;
+  }
+  @keyframes fadeOut {
+    0% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+
+.fadein {
+    animation : fadein 2s;
+    animation-fill-mode: both;
+  }
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
 #chatBubbleTxt {
     position: absolute;
     top: 40%;

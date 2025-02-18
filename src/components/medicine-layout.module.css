@@ -1,0 +1,39 @@
+.medicineCon {
+    width: 306px;
+    height: 75px;
+    padding: 10px 0px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#medicineImg {
+    width: 43.33px;
+    height: 43.33px;
+    border-radius: 50px;
+}
+
+.medicineInfoCon {
+    margin-left: 16px;
+}
+
+#tegInfo {
+    margin: 0 0 1px;
+    color: #71E2B3;
+    font-size: 14px;
+}
+
+#medicineName {
+    font-size: 15px;
+}
+
+#medicineInfo {
+    font-size: 14px;
+    color: #AAA;
+    margin: 0;
+    width: 230px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

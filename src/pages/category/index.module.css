@@ -5,6 +5,11 @@
     justify-content: center;
 }
 
+.categoryCon > div> img {
+    width: 160px;
+    height: 123px;
+}
+
 .header {
     margin-bottom: 26px;
 }
