@@ -59,5 +59,9 @@
     color: white !important;
 }
 
-
-
+.signupLink {
+    color: gray;
+    font-size: 14px;
+    text-decoration-color: gray;
+    margin-top: 10px;
+}

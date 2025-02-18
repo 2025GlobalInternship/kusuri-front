@@ -121,8 +121,9 @@
 }
 
 .clicked {
-    background-color: #7AFFC7 !important;
+    
     color: white !important;
+    background-color: rgba(127, 241, 173, 1) !important;
 }
 
 /* radio 버튼 기본 스타일 제거 */
