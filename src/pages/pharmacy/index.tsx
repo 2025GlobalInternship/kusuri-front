@@ -1,6 +1,7 @@
 import NavigationVarLayout from "@/components/navigation_var-layout";
 import NearbyPharmacyLayout from "@/components/nearbyPharmacy-layout";
 import SearchLayout from "@/components/search-layout";
+import GoogleMapComponent from "@/components/googleMap";
 
 import style from "./index.module.css";
 import Draggable from "react-draggable";
@@ -14,6 +15,7 @@ export default function Page() {
 
         if(ele) {
             if(!ele.classList.contains(style.drag)) {
+                ele.classList.remove(style.drag2);
                 ele.classList.add(style.drag);
 
                 ele.addEventListener("animationend", () => {
@@ -34,7 +36,8 @@ export default function Page() {
     };
 
     return (
-        <div>
+        <div className={style.pharmacyCon}>
+            <GoogleMapComponent></GoogleMapComponent>
             <div id={style.searchCon}>
                 <SearchLayout text="">완전 럭키비키잖아?</SearchLayout>
             </div>
