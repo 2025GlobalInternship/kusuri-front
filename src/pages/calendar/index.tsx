@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import styles from './index.module.css';
 import NavigationVarLayout from "@/components/navigation_var-layout";
 
 const Calendar = () => {
-  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 18)); // 2025년 3월 시작
+  const router = useRouter(); // useRouter 추가
+  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 18)); // 2025년 6월 시작
 
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
@@ -55,7 +57,13 @@ const Calendar = () => {
   return (
     <>
       {/* 헤더 */}
-      <div className={styles.headerContainer}>전체 캘린더</div>
+      <div className={styles.headerContainer}>
+        {/* 🔙 왼쪽 얇은 화살표 버튼 추가 */}
+        <span className={styles.backArrow} onClick={() => router.push("/alram")}>
+          {"<"}
+        </span>
+        <span className={styles.headerTitle}>전체 캘린더</span>
+      </div>
 
       {/* 헤더 아래 여백 */}
       <div className={styles.headerSpacer}></div>

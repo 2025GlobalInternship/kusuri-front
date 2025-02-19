@@ -27,11 +27,29 @@
     grid-template-columns: repeat(7, 1fr);
     text-align: center;
     font-size: 14px;
-    margin-bottom: 15px;
-    color: #888;
+    margin-bottom: -10px;
+    color: rgba(170, 170, 170, 1);
   }
-  
- 
+
+    /* 요일 색상 (토요일, 일요일만 따로 설정) */
+  .daysOfWeek div:nth-child(1) { /* 일요일 */
+    color: rgba(170, 170, 170, 1);
+  }
+
+  .daysOfWeek div:nth-child(7) { /* 토요일 */
+    color: rgba(170, 170, 170, 1);
+  }
+
+  /* 날짜 색상 (토요일, 일요일만 따로 설정) */
+  .day:nth-child(7n + 1) { /* 일요일 날짜 */
+    color: rgba(93, 93, 93, 1);
+  }
+
+  .day:nth-child(7n) { /* 토요일 날짜 */
+    color: rgba(93, 93, 93, 1);
+  }
+
+
   .week {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -41,20 +59,34 @@
   .day {
     text-align: center;
     padding: 12px;
-    height: 50px;
+    height: 55px;
     font-size: 14px;
-    border-radius: 12px; 
-    background-color: rgba(244, 247, 250, 1); 
-    color: gray;
+    color: rgba(170, 170, 170, 1);
     cursor: pointer;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
-  }
-  
-  .day:empty {
-    background-color: transparent; /* 빈 날짜 칸 투명 */
-    border: none;
-  }
+.day:empty::after {
+  background-color: transparent; /* 빈 날짜 칸 투명 */
+  content: none; 
+}
+
+
+.day::after {
+    content: "";
+    width: 90%;  /* 사각형 크기 조정 */
+    height: 50px;
+    background-color: rgba(244, 247, 250, 1); /* 연한 회색 */
+    border-radius: 10px; /* 둥글게 */
+    position: absolute;
+    bottom: -20px; /* 날짜 아래에 위치 */
+    left: 50%;
+    transform: translateX(-50%);
+}
   
   /* 선택된 날짜 스타일 */
   .selected {
@@ -82,9 +114,10 @@
   /* 캘린더 컨테이너 */
   .calendarContainer {
     background-color: rgba(255, 255, 255, 1); 
-    border-radius: 16px;
+    border-radius: 20px;
     padding: 2s0px;
-    width: 340px;
+    width: 320px;
+    height: 550px;
     margin: 60px auto;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   }
@@ -106,3 +139,26 @@
     color: #777;
     user-select: none; 
 }
+
+.headerContainer {
+  display: flex;
+  align-items: center;
+  padding: 30px 15px;
+}
+
+.backArrow {
+  font-size: 18px;
+  color: #aaa;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-bottom: -60px;
+}
+
+.headerTitle {
+  font-size: 18px;
+  margin-bottom: -60px;
+  margin-left: 120px;
+}
+
+
+
