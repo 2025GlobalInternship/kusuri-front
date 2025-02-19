@@ -1,0 +1,145 @@
+.searchBar {
+    display: flex;
+    align-items: center;
+    margin: 66px 25px 17px 25px;
+    gap: 7px;
+}
+
+.search {
+    width: 100%;
+}
+
+.titleCon {
+    background-color: #ffffff;
+    padding: 29.5px 72px;
+    box-sizing: border-box;
+    width: 340px;
+    border-radius: 20px;
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+}
+
+#markIcon {
+    position: absolute;
+    top: 16.35px;
+    right: 16.66px;
+}
+
+#mediName {
+    font-size: 18px;
+    color: black;
+    font-weight: 600;
+    line-height: 160%;
+}
+
+#mediJp {
+    font-size: 14px;
+    color: #888;
+    font-weight: 600;
+    line-height: 160%;
+}
+
+#mediImg {
+    width: 184px;
+    height: 164px;
+    border-radius: 20px;
+    margin-top: 16px;
+    align-self: center;
+}
+
+.cateCon {
+    margin: 15px auto 18px 25px;
+}
+
+.category {
+    background-color: white;
+    margin-right: 2px;
+    padding: 7px 16px;
+    border-radius: 43.653px;
+    color: #71E2B3;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 140%;
+    text-align: center;
+}
+
+.details {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+
+}
+
+.detailCon {
+    width: 340px;
+    box-sizing: border-box;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    padding: 19px 28px;
+    align-items: flex-start;
+    margin: 0 auto;
+    text-align: center;
+    align-items: center;
+    gap: 8px;
+}
+
+#detailTitle {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 160%;
+}
+
+#detailTxt {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 157%;
+    color: #AAA;
+    margin: 0;
+}
+
+#detailJp {
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 157%;
+    color: #7FF1AD;
+    margin: 0;
+}
+
+.plusCon1 {
+    display: flex;
+    gap: 13px;
+    width: 340px;
+    margin: 20px auto 50px;
+}
+
+.plusCon2 {
+    background-color: white;
+    padding: 12px 21px;
+    box-sizing: border-box;
+    border-radius: 20px;
+    text-align: center;
+    align-content: center;
+}
+
+.plusCon2 > p {
+    margin: 0;
+}
+
+#plusTitle {
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 140%;
+    margin-bottom: 10px;
+}
+
+#plusTxt {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 157%;
+    color: #AAA;
+}

@@ -11,8 +11,12 @@ export default function MedicineLayout({
 }) {
     const router = useRouter();
 
+    const onClick = () => {
+        router.push(`/medicine/${data.name}`);
+    }
+
     return (
-        <div className={style.medicineCon}>
+        <div className={style.medicineCon} onClick={onClick}>
             <Image id={style.medicineImg} src={bellIcon} alt="약 이미지" />
             <div className={style.medicineInfoCon}>
                 <p id={style.tegInfo}>{data.tag}</p>

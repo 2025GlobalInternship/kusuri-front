@@ -8,8 +8,6 @@ const GoogleMapComponent = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const apiKey = process.env.NEXT_PUBLIC_MAPS_API_KEY;
 
-  console.log(apiKey);
-
   useEffect(() => {
     if (!apiKey || !mapRef.current) {
       console.error("🚨 Google Maps API 키가 없거나, mapRef가 설정되지 않았습니다.");
