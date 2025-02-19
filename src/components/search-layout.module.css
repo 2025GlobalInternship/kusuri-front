@@ -9,6 +9,8 @@
     align-items: center;
     gap: 10px;
     font-family: 'pre-medium';
+    z-index: 10;
+    position: relative;
 }
 
 #searchTxt {
