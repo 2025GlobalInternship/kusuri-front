@@ -51,7 +51,7 @@ export default function Page() {
                         { id }
                     </span>
                     <p id={style.detailTxt}>
-                        이브 쓰리 샷 프리미엄은 .........................................................................
+                        이브 쓰리 샷 프리미엄은 .... ...... ..... .............. ................................ .....
                     </p>
                 </div>
                 <div className={style.detailCon}>
@@ -59,7 +59,7 @@ export default function Page() {
                         이렇게 주문하세요.
                     </span>
                     <p id={style.detailTxt}>
-                        두통이이 .........................................................................
+                        두통이이 ...... ............sdfsdffff ffaedsdf ssdfsfdeggdfsfefs.
                     </p>
                     <p id={style.detailJp}>
                         일본어일본어어
@@ -76,7 +76,7 @@ export default function Page() {
                 <div className={style.plusCon2}>
                     <p id={style.plusTitle}>약 복용법</p>
                     <p id={style.plusTxt}>
-                        이 약은 어떤 통증에 효과가 있나여?ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ
+                        많이 먹으면 나으세여........
                     </p>
                 </div>
             </div>

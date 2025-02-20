@@ -6,7 +6,7 @@ import chatText from "../../public/images/chatTxt.png";
 import { useEffect, useRef } from "react";
 
 export default function ChatIconLayout() {
-    const chatBubbleRef = useRef<HTMLDivElement>(null)
+    const chatBubbleRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (!chatBubbleRef.current) return;

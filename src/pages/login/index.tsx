@@ -3,14 +3,18 @@ import Image from "next/image";
 import Icon from "../../../public/images/Frame 2814.png";
 import style from "./index.module.css";
 import Link from "next/link"; 
+import { useRouter } from "next/router";
 
 export default function LoginPage() {
+    const router = useRouter();
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [isClicked, setIsClicked] = useState(false);
 
     const handleLoginClick = () => {
-        setIsClicked(true); 
+        setIsClicked(true);
+        router.push('/information');
     };
 
     return (
