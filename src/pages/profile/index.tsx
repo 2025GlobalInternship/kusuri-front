@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import style from "./index.module.css";
+import { useRouter } from "next/router";
 
 const imageList = [
     "/images/ch1.png",
@@ -12,10 +13,11 @@ const imageList = [
 ];
 
 export default function ProfileSelection() {
+    const router = useRouter();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const handleCompleteClick = () => {
-        console.log("완료 버튼 클릭됨");
+        router.replace('/main');
     };
 
     return (
