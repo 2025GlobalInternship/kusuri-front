@@ -52,6 +52,7 @@
 
 .cateCon {
     margin: 15px auto 18px 25px;
+    display: flex;
 }
 
 .category {
@@ -114,16 +115,16 @@
     display: flex;
     gap: 13px;
     width: 340px;
-    margin: 20px auto 50px;
+    margin: 20px auto 70px;
 }
 
 .plusCon2 {
+    flex: 1;
     background-color: white;
     padding: 12px 21px;
     box-sizing: border-box;
     border-radius: 20px;
     text-align: center;
-    align-content: center;
 }
 
 .plusCon2 > p {
@@ -135,6 +136,7 @@
     font-weight: 600;
     line-height: 140%;
     margin-bottom: 10px;
+    margin-top: 16px;
 }
 
 #plusTxt {
@@ -142,4 +144,5 @@
     font-weight: 600;
     line-height: 157%;
     color: #AAA;
+    margin-bottom: 16px;
 }
