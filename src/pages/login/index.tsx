@@ -17,12 +17,16 @@ export default function LoginPage() {
         router.push('/information');
     };
 
+    const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        if (e) e.preventDefault();
+    }
+
     return (
         <div className={style.container}>
             <div className={style.icon}>
                 <Image src={Icon} alt="아이콘" />
             </div>
-            <form method="post" action="#">
+            <form method="post" action="#" onSubmit={onSubmit}>
                 <div className={style.form}>
                     <input
                         type="text"
