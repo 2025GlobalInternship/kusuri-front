@@ -21,6 +21,7 @@ import chosenStomack from "../../../public/images/category/chosen_stomach.png";
 import chosenSkin from "../../../public/images/category/chosen_skin.png";
 import { useRouter } from "next/router";
 import Head from "next/head";
+import { useState } from "react";
 
 export default function Page() {
     const router = useRouter();
@@ -30,10 +31,6 @@ export default function Page() {
         router.push(`/category/${cate}`);
     }
 
-    const onmouse = () => {
-        console.log("over");
-    }
-
     return (
         <div>
             <div className={style.header}>
@@ -41,20 +38,20 @@ export default function Page() {
             </div>
             <div className={style.categoryCon}>
                 <div>
-                    <Image onClick={categoryBtnClick} src={head} alt="두통" />
-                    <Image onClick={categoryBtnClick} src={cold} alt="감기 및 기침" />
+                    <Image onClick={categoryBtnClick} src={head} alt="두통" priority />
+                    <Image onClick={categoryBtnClick} src={cold} alt="감기 및 기침" priority />
                 </div>
                 <div>
-                    <Image onClick={categoryBtnClick} src={sleep} alt="불면증" />
-                    <Image onClick={categoryBtnClick} src={muscle} alt="근육 및 관절 통증" />
+                    <Image onClick={categoryBtnClick} src={sleep} alt="불면증" priority />
+                    <Image onClick={categoryBtnClick} src={muscle} alt="근육 및 관절 통증" priority />
                 </div>
                 <div>
-                    <Image onClick={categoryBtnClick} src={allergy} alt="알레르기" />
-                    <Image onClick={categoryBtnClick} src={motion} alt="멀미" />
+                    <Image onClick={categoryBtnClick} src={allergy} alt="알레르기" priority />
+                    <Image onClick={categoryBtnClick} src={motion} alt="멀미" priority />
                 </div>
                 <div>
-                    <Image onClick={categoryBtnClick} src={stomach} alt="위통 및 소화 불량" />
-                    <Image onClick={categoryBtnClick} src={skin} alt="피부 문제" />
+                    <Image onClick={categoryBtnClick} src={stomach} alt="위통 및 소화 불량" priority />
+                    <Image onClick={categoryBtnClick} src={skin} alt="피부 문제" priority />
                 </div>
             </div>
         </div>

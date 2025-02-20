@@ -18,18 +18,18 @@ export default function Page() {
     let [data, setData] = useState(
         [
             {
-                name: "123",
-                tag: "123",
+                name: "약1",
+                tag: "감기",
                 detail: "어쩌구저쩌구"
             },
             {
-                name: "456",
-                tag: "123",
+                name: "약2",
+                tag: "멀미미",
                 detail: "어쩌구저쩌구"
             },
             {
-                name: "789",
-                tag: "123",
+                name: "약3",
+                tag: "알레르기",
                 detail: "어쩌구저쩌구"
             }
         ]
@@ -48,7 +48,9 @@ export default function Page() {
                 {
                     data.map((a) => {
                         return (
-                            <MedicineLayout data={a} />
+                            <div key={a.name}>
+                                <MedicineLayout data={a} />
+                            </div>
                         )
                     })
                 }

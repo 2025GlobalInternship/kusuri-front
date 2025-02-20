@@ -23,22 +23,22 @@ export default function Page() {
     return (
         <div className={style.medicineCon}>
             <div className={style.searchBar}>
-                <Image onClick={backBtnClick} id={style.backIcon} src={backIcon} alt="뒤로가기" />
+                <Image onClick={backBtnClick} id={style.backIcon} src={backIcon} alt="뒤로가기" priority />
                 <div className={style.search}>
                     <SearchLayout text="">원하는 약을 검색해주세요</SearchLayout>
                 </div>
             </div>
             <div className={style.titleCon}>
-                <Image id={style.markIcon} src={markIcon} alt="북마크" />
+                <Image id={style.markIcon} src={markIcon} alt="북마크" priority />
                 <span id={style.mediName}>{id}</span>
                 <span id={style.mediJp}>({jp})</span>
-                <Image id={style.mediImg} src={img} alt="이미지" />
+                <Image id={style.mediImg} src={img} alt="이미지" priority />
             </div>
             <div className={style.cateCon}>
                 {
                     category.map((cate) => {
                         return (
-                            <span className={style.category}>
+                            <span className={style.category} key={cate}>
                                 #{cate}
                             </span>
                         )
@@ -76,7 +76,7 @@ export default function Page() {
                 <div className={style.plusCon2}>
                     <p id={style.plusTitle}>약 복용법</p>
                     <p id={style.plusTxt}>
-                        많이 먹으면 나으세여........
+                        많이 먹으세여 ..... ....어쩌구 저쩌구
                     </p>
                 </div>
             </div>
