@@ -15,20 +15,46 @@ import clockIcon from "../../../public/images/clockIcon.png";
 
 import style from "./index.module.css";
 import { useRouter } from "next/router";
+import { useState } from "react";
+import MedicineLayout from "@/components/medicine-layout";
 
 export default function Page() {
 
     const router = useRouter();
 
+    const alramBtnClick = () => {
+        router.push('dayalram');
+    }
+
     const recommendBtnClick = () => {
         router.push('category');
-    }
+    };
+
+    let [data, setData] = useState(
+        [
+            {
+                name: "약1",
+                tag: "감기",
+                detail: "어쩌구저쩌구"
+            },
+            {
+                name: "약2",
+                tag: "멀미미",
+                detail: "어쩌구저쩌구"
+            },
+            {
+                name: "약3",
+                tag: "알레르기",
+                detail: "어쩌구저쩌구"
+            }
+        ]
+    );
 
     return (
         <div className={style.container}>
             <div className={style.topCon}>
             <Image className={style.logo} src={kusuriLogo} alt="쿠스리로고" />
-            <Image className={style.bellIcon} src={bellIcon} alt="알림" />
+            <Image onClick={alramBtnClick} className={style.bellIcon} src={bellIcon} alt="알림" />
             </div>
             <div className={style.searchBar}>
                 <SearchLayout text="">원하는 약을 검색해주세요.</SearchLayout>
@@ -66,27 +92,15 @@ export default function Page() {
 
             <div className={style.famousCon}>
                 <span id={style.famousTitle}>많이 찾는 약 list</span>
-                <div className={style.medicineCon}>
-                    <Image id={style.medicineImg} src={bellIcon} alt="약 이미지" />
-                    <div className={style.medicineInfoCon}>
-                        <span id={style.medicineName}>오타이산</span>
-                        <p id={style.medicineInfo}>소화제, 상비약으로 구비해 두고 있을 시 어쩌구 저쩌구</p>
-                    </div>
-                </div>
-                <div className={style.medicineCon}>
-                    <Image id={style.medicineImg} src={bellIcon} alt="약 이미지" />
-                    <div className={style.medicineInfoCon}>
-                        <span id={style.medicineName}>오타이산</span>
-                        <p id={style.medicineInfo}>소화제, 상비약으로 구비해 두고 있을 시 어쩌구 저쩌구</p>
-                    </div>
-                </div>
-                <div className={style.medicineCon}>
-                    <Image id={style.medicineImg} src={bellIcon} alt="약 이미지" />
-                    <div className={style.medicineInfoCon}>
-                        <span id={style.medicineName}>오타이산</span>
-                        <p id={style.medicineInfo}>소화제, 상비약으로 구비해 두고 있을 시 어쩌구 저쩌구</p>
-                    </div>
-                </div>
+                    {
+                        data.map((a) => {
+                            return(
+                                <div key={a.name}>
+                                    <MedicineLayout data={a} />
+                                </div>
+                            )
+                        })
+                    }
             </div>
 
             <ChatIconLayout />

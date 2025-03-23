@@ -1,0 +1,45 @@
+.userImfoContainer, .storedMcon {
+    display: flex;
+    width: 340px;
+    align-items: center;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background: #FFF;
+    margin: 0 auto;
+    position: relative;
+}
+
+.userImfoContainer {
+    height: 97px;
+    padding: 19px 26px;
+    gap: 17px;
+    margin-top: 67px;
+}
+
+.storedMcon {
+    height: 66px;
+    padding: 20px 17px;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.recentCon {
+    width: 340px;
+    border-radius: 20px;
+    background-color: #FFF;
+    padding: 18px 26px;
+    justify-content: center;
+    box-sizing: border-box;
+    margin: 35px auto 0;
+}
+
+.recentTitleCon {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+#right_icon {
+    position: absolute;
+    right: 26px;
+}

@@ -4,12 +4,14 @@ import SearchLayout from "@/components/search-layout";
 
 import backIcon from "../../../public/images/chevron-left.png";
 import markIcon from "../../../public/images/markIcon.png";
+import markIcon2 from "../../../public/images/markIcon2.png";
 import img from "../../../public/images/ch2.png";
 
 import style from "./[id].module.css";
 
 export default function Page() {
     const router = useRouter();
+    const mark = 1;
 
     const { id } = router.query;
     const jp = "일본어입니당"
@@ -29,7 +31,7 @@ export default function Page() {
                 </div>
             </div>
             <div className={style.titleCon}>
-                <Image id={style.markIcon} src={markIcon} alt="북마크" priority />
+                <Image id={style.markIcon} src={mark ? markIcon : markIcon2 } alt="북마크" priority />
                 <span id={style.mediName}>{id}</span>
                 <span id={style.mediJp}>({jp})</span>
                 <Image id={style.mediImg} src={img} alt="이미지" priority />

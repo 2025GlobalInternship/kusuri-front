@@ -11,6 +11,7 @@ import allergy from "../../../public/images/category/allergyImg.png";
 import motion from "../../../public/images/category/motionImg.png";
 import stomach from "../../../public/images/category/stomackImg.png";
 import skin from "../../../public/images/category/skinImg.png";
+
 import chosenHead from "../../../public/images/category/chosen_head.png";
 import chosenCold from "../../../public/images/category/chosen_cold.png";
 import chosenSleep from "../../../public/images/category/chosen_sleep.png";
@@ -19,15 +20,19 @@ import chosenAllergy from "../../../public/images/category/chosen_allergy.png";
 import chosenMotion from "../../../public/images/category/chosen_motion.png";
 import chosenStomack from "../../../public/images/category/chosen_stomach.png";
 import chosenSkin from "../../../public/images/category/chosen_skin.png";
+
 import { useRouter } from "next/router";
 import Head from "next/head";
 import { useState } from "react";
 
 export default function Page() {
     const router = useRouter();
+    // const [selectedImg, setSelectedImg] = useState<string>("");
 
     const categoryBtnClick = (e : React.MouseEvent<HTMLImageElement>) => {
-        const cate = (e.target as HTMLImageElement).alt;
+        const cate = e.currentTarget.alt;
+        // setSelectedImg(chosenHead.src as string);
+
         router.push(`/category/${cate}`);
     }
 
