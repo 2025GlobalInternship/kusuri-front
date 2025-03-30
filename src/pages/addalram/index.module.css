@@ -178,18 +178,29 @@
     border: none;
   }
   
-  /* 두 날짜 사이 배경색을 이어지게 */
-  .selectedBetween {
-    background-color: rgba(218, 254, 239, 1); 
-    color: rgba(127, 241, 173, 1);
+  .selected, 
+.selectedBetween {
     border-radius: 50%; 
+    color: rgb(255, 255, 255) !important; /* 선택된 날짜 및 사이 날짜의 글자색을 흰색으로 변경 */
     width: 16px; 
     height: 17px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-top: 20px;
-  }
+    border: none;
+}
+
+  /* 두 날짜 사이 배경색을 이어지게 */
+  .selectedBetween {
+    background-color: rgba(218, 254, 239, 1); /* 연한 초록색 배경 */
+    color: rgba(127, 241, 173, 1) !important; /* 글자색을 배경색과 동일하게 설정 */
+    border-radius: 50%;
+    width: 16px;
+    height: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
   
   /* 선택된 날짜들 사이의 배경색 연속 효과 */
   .selectedRange {
@@ -229,9 +240,25 @@
     color: rgba(93, 93, 93, 1);
   }
 
-  .dateSeparator {
-    margin: 0 20px;
-  }
+  .dateRange {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* 날짜와 '-' 사이 간격 조정 (기본 10px에서 30px로 증가) */
+}
+
+.dateSeparator {
+    display: inline-block;
+    min-width: 30px; /* '-'의 최소 너비 설정 (기본 20px에서 40px로 증가) */
+    text-align: center;
+}
+
+
+.emptyDate {
+    visibility: hidden; /* 빈 날짜 칸을 유지하되 보이지 않게 설정 */
+}
+
+
 
   .nextButton {
     width: 350px;

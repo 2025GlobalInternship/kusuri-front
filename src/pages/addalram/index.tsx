@@ -147,18 +147,22 @@ const Calendar = () => {
 
       {/* 날짜 선택 범위 표시 */}
       <div className={styles.dateRangeContainer}>
-        {selectedDates.length === 0 ? (
-          <span>기간을 선택해주세요!</span>
-        ) : (
-          <div className={styles.dateRange}>
-            <span className={styles.selectedDate}>
-              {selectedDates[0] && formatDate(selectedDates[0])} 
-              <span className={styles.dateSeparator}> - </span>
-              {selectedDates[1] && formatDate(selectedDates[1])}
-            </span>
-          </div>
-        )}
-      </div>
+  {selectedDates.length === 0 ? (
+    <span>기간을 선택해주세요!</span>
+  ) : (
+    <div className={styles.dateRange}>
+      <span className={styles.selectedDate}>
+        {selectedDates[0] ? formatDate(selectedDates[0]) : <span className={styles.emptyDate}>가짜 날짜</span>}
+      </span>
+      <span className={styles.dateSeparator}> - </span>
+      <span className={styles.selectedDate}>
+        {selectedDates[1] ? formatDate(selectedDates[1]) : <span className={styles.emptyDate}>가짜 날짜</span>}
+      </span>
+    </div>
+  )}
+</div>
+
+
 
       {/* "다음" 버튼 */}
       <div className={styles.nextButtonContainer}>
