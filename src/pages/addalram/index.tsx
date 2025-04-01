@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from './index.module.css';
+import HeaderLayout from "@/components/header-layout";
 import NavigationVarLayout from "@/components/navigation_var-layout";
 
 const Calendar = () => {
+
   const router = useRouter();
   const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 18)); // 2025년 6월 시작
   const [selectedDates, setSelectedDates] = useState<(number | null)[]>([]); // 선택된 날짜 상태 관리
@@ -101,15 +103,6 @@ const Calendar = () => {
 
   return (
     <>
-      <div className={styles.headerContainer}>
-        <span className={styles.backArrow} onClick={() => router.push("/alram")}>
-          {"<"}
-        </span>
-        <span className={styles.headerTitle}>알람 추가</span>
-      </div>
-
-      <div className={styles.headerSpacer}></div>
-
       <div className={styles.calendarContainer}>
         <div className={styles.monthHeader}>
           <span className={styles.arrow} onClick={goToPreviousMonth}>{"<"}</span>
@@ -147,18 +140,22 @@ const Calendar = () => {
 
       {/* 날짜 선택 범위 표시 */}
       <div className={styles.dateRangeContainer}>
-        {selectedDates.length === 0 ? (
-          <span>기간을 선택해주세요!</span>
-        ) : (
-          <div className={styles.dateRange}>
-            <span className={styles.selectedDate}>
-              {selectedDates[0] && formatDate(selectedDates[0])} 
-              <span className={styles.dateSeparator}> - </span>
-              {selectedDates[1] && formatDate(selectedDates[1])}
-            </span>
-          </div>
-        )}
-      </div>
+  {selectedDates.length === 0 ? (
+    <span>기간을 선택해주세요!</span>
+  ) : (
+    <div className={styles.dateRange}>
+      <span className={styles.selectedDate}>
+        {selectedDates[0] ? formatDate(selectedDates[0]) : <span className={styles.emptyDate}>가짜 날짜</span>}
+      </span>
+      <span className={styles.dateSeparator}> - </span>
+      <span className={styles.selectedDate}>
+        {selectedDates[1] ? formatDate(selectedDates[1]) : <span className={styles.emptyDate}>가짜 날짜</span>}
+      </span>
+    </div>
+  )}
+</div>
+
+
 
       {/* "다음" 버튼 */}
       <div className={styles.nextButtonContainer}>
@@ -176,6 +173,9 @@ const Calendar = () => {
 
 export default function Page() {
   return (
-    <Calendar />
+    <>
+      <HeaderLayout>알람추가</HeaderLayout>
+      <Calendar />
+    </>
   );
 }
