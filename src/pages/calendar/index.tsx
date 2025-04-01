@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from './index.module.css';
+import HeaderLayout from "@/components/header-layout";
 import NavigationVarLayout from "@/components/navigation_var-layout";
 
 const Calendar = () => {
@@ -56,18 +57,6 @@ const Calendar = () => {
 
   return (
     <>
-      {/* 헤더 */}
-      <div className={styles.headerContainer}>
-        {/* 🔙 왼쪽 얇은 화살표 버튼 추가 */}
-        <span className={styles.backArrow} onClick={() => router.push("/alram")}>
-          {"<"}
-        </span>
-        <span className={styles.headerTitle}>전체 캘린더</span>
-      </div>
-
-      {/* 헤더 아래 여백 */}
-      <div className={styles.headerSpacer}></div>
-
       {/* 캘린더 */}
       <div className={styles.calendarContainer}>
         <div className={styles.monthHeader}>
@@ -105,6 +94,7 @@ const Calendar = () => {
 export default function Page() {
   return (
     <>
+      <HeaderLayout>전체 캘린더</HeaderLayout>
       <Calendar />
     </>
   );
