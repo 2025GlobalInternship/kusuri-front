@@ -1,2 +1,321 @@
+.page {
+  padding: 16px;
+  background-color: rgba(244, 247, 250, 1);
+  padding-bottom: 100px; /* 하단 여백 추가 */
+}
+
+/* 필터 버튼 영역 */
+.filterWrapper {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.filterItem {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  padding: 4px 8px;
+  background-color: white;
+  border-radius: 20px;
+  font-weight: 500;
+  color: rgba(93, 93, 93, 1);
+  margin-top: 65px;
+}
+
+.dotGreen, .dotBlue, .dotYellow {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotGreen {
+  background-color: #c7f2d1;
+}
+
+.dotBlue {
+  background-color: #cfe7ff;
+}
+
+.dotYellow {
+  background-color: #fff4b3;
+}
+
+.calendarContainer {
+  background-color: white;
+  padding: 16px;
+  border-radius: 12px;
+  margin-bottom: 0px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.calendarHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.calendarTitle {
+  color: rgba(0, 0, 0, 1);
+  font-size: 16px;
+}
+
+.calendarWrapper {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.calendarChevron {
+  cursor: pointer;
+  margin-left: 4px;
+}
+
+.dateCard {
+  flex: 1;
+  margin: 0 2px;
+  background-color: rgba(244, 247, 250, 1);
+  border-radius: 17px;
+  padding: 18px 0px;
+  text-align: center;
+  font-size: 12px;
+  color: rgba(170, 170, 170, 1);
+  transition: all 0.2s ease;
+}
+
+.selected {
+  border: 3px solid rgba(127, 241, 173, 1);
+  background-color: rgba(218, 254, 239, 1);
+  color: rgba(127, 241, 173, 1);
+}
+
+.dateNum {
+  font-weight: 600;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+}
+
+.dotGreen,
+.dotBlue,
+.dotYellow,
+.dotGray {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+.dotGreen {
+  background-color: #90f0bc;
+}
+
+.dotBlue {
+  background-color: #8edbff;
+}
+
+.dotYellow {
+  background-color: #ffe676;
+}
+
+.dotGray {
+  background-color: #c4c4c4;
+}
 
 
+  
+  /* 알람 설정 영역 */
+  .container {
+    padding: 16px 0;
+  }
+  
+  .addBtn {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    border-radius: 12px;
+    padding: 15px 17px;
+    margin-bottom: 18px;
+    font-weight: 600;
+    font-size: 16px;
+    color: rgba(93, 93, 93, 1);
+  }
+  
+  .pluss {
+    color: rgba(209, 210, 209, 1);
+    font-size: 22px;
+    font-weight: 300;
+    border: none;
+    border-radius: 50px;
+    background-color: white;
+  }
+  
+  /* 알람 카드 */
+  .card {
+    background-color: white;
+    border-radius: 16px;
+    padding: 16px;
+  }
+  
+  .cardHeader {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-weight: 600;
+    font-size: 16px;
+  }
+  
+  .deleteAll {
+    color: #f36;
+    background: none;
+    border: none;
+    font-size: 0.9rem;
+  }
+  
+  .section {
+    margin-top: 20px;
+  }
+  
+  .sectionTitle {
+    font-size: 14px;
+    color: rgba(170, 170, 170, 1);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .sectionTitle::after {
+    content: "";
+    flex-grow: 1;
+    height: 1px;
+    background-color: #ddd;
+  }
+  
+  .alarmItem {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 10px 0;
+  }
+  
+  .dot {
+    width: 28px;
+    height: 28px;
+    background-image: url('/images/icon.png');
+    background-size: cover; 
+    background-position: center; 
+    border-radius: 50%; 
+    margin-right: 10px;
+  }
+  
+  .time {
+    font-weight: 500;
+    font-size: 1.1rem;
+    color: rgba(93, 93, 93, 1);
+    width: 60px;
+  }
+  
+  .label {
+    flex-grow: 1;
+    font-size: 12px;
+    color: rgba(170, 170, 170, 1);
+  }
+  
+  .minuss {
+    color: rgba(218, 73, 72, 1);
+    background-color: rgba(218, 73, 72, 0.2);
+    border: none;
+    border-radius: 2.5px;
+    width: 24px;
+    height: 24px;
+  }
+  
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 22px;
+    margin-left: 10px;
+  }
+  
+  .switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+  }
+  
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    border-radius: 34px;
+    transition: 0.4s;
+  }
+  
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    border-radius: 50%;
+    transition: 0.4s;
+  }
+  
+  input:checked + .slider {
+    background-color: #7fffb0; /* 너가 첨부한 이미지의 민트색 비슷하게 */
+  }
+  
+  input:checked + .slider:before {
+    transform: translateX(18px);
+  }
+  
+  .toggleBtn {
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .toggleSwitch {
+    width: 40px;
+    height: 22px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    padding: 2px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .toggleCircle {
+    width: 18px;
+    height: 18px;
+    background: white;
+    border-radius: 50%;
+    transition: transform 0.3s ease;
+  }
+  
+  .bellIcon {
+    width: 20px;
+    height: 20px;
+    margin-left: 8px;
+    cursor: pointer;
+  }
+  
+  
