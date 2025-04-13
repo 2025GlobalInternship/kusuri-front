@@ -54,8 +54,3 @@
     transition: color 0.3s ease, font-size 0.3s ease;
 }
 
-.selected {
-    color: black;
-    font-weight: 600;
-    font-size: 22px;
-}
