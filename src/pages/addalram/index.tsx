@@ -97,8 +97,8 @@ const Calendar = () => {
 
   // '다음' 버튼 클릭시 이동할 함수
   const goToNextPage = () => {
-    setButtonClicked(true);  // 버튼 클릭 상태를 true로 변경
-    router.push('/dayalram'); // 'dayalram/index.tsx'로 이동
+    setButtonClicked(true);
+    router.push('/addtime'); // 'addtime/index.tsx'로 이동
   };
 
   return (
