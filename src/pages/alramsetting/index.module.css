@@ -13,6 +13,7 @@
     margin-bottom: 18px;
     font-weight: 500;
     color: rgba(93, 93, 93, 1);
+    margin-top: 15px;
   }
   
   .plus {
@@ -30,6 +31,7 @@
     background-color: white;
     border-radius: 16px;
     padding: 16px;
+    margin-top: 30px;
   }
   
   .cardHeader {
@@ -37,6 +39,7 @@
     justify-content: space-between;
     margin-bottom: 12px;
     font-weight: 600;
+
   }
   
   .deleteAll {
@@ -47,14 +50,13 @@
   }
   
   .section {
-    margin-top: 20px;
+    margin-top: 25px;
   }
   
   .sectionTitle {
     font-size: 14px;
     color: rgba(170, 170, 170, 1);
     margin-bottom: 6px;
-  
     display: flex;
     align-items: center;
     gap: 10px;
@@ -77,26 +79,13 @@
   
   
   .dot {
-    width: 28px;
-    height: 28px;
+    width: 35px;
+    height: 35px;
     background-image: url('/images/icon.png');
     background-size: cover; 
     background-position: center; 
     border-radius: 50%; 
     margin-right: 10px;
-  }
-  
-  
-  .green {
-    background-color: #c7f2d1;
-  }
-  
-  .yellow {
-    background-color: #fff4b3;
-  }
-  
-  .blue {
-    background-color: #cfe7ff;
   }
   
   .time {
