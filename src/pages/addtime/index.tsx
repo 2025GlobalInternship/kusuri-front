@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import styles from './index.module.css';
 import HeaderLayout from '@/components/header-layout';
+import { useRouter } from 'next/router';
 
 const ITEM_HEIGHT = 40;
 const VISIBLE_COUNT = 5;
@@ -21,6 +22,7 @@ const repeatOptions = [
 ];
 
 const AddTime = () => {
+  const router = useRouter();
   const [hour, setHour] = useState('08');
   const [minute, setMinute] = useState('00');
   const [ampm, setAmpm] = useState('AM');
@@ -143,7 +145,17 @@ const AddTime = () => {
           )}
         </div>
       </div>
-    </>
+
+      <div className={styles.nextButtonContainer}>
+      <button className={styles.nextButton}
+      onClick={() => router.push('/finishalarm')}>
+        다음
+      </button>
+    </div>
+          
+        </>
+
+    
   );
 };
 
