@@ -33,7 +33,7 @@ const AddTime = () => {
   const minutesRaw = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
   const ampmRaw = ['AM', 'PM'];
 
-  const repeatCount = 1000;
+  const repeatCount = 30; // 너무 크지 않게 조정
 
   const hours = Array.from({ length: hoursRaw.length * repeatCount }, (_, i) => hoursRaw[i % hoursRaw.length]);
   const minutes = Array.from({ length: minutesRaw.length * repeatCount }, (_, i) => minutesRaw[i % minutesRaw.length]);
@@ -54,6 +54,7 @@ const AddTime = () => {
 
       const scrollTop = ref.current.scrollTop;
       const index = Math.round(scrollTop / ITEM_HEIGHT) + CENTER_INDEX;
+
       if (index >= 0 && index < items.length) {
         const value = items[index];
         if (value && value !== selected) {
@@ -61,7 +62,8 @@ const AddTime = () => {
         }
       }
 
-      const buffer = ITEM_HEIGHT * 30;
+      // 끝에 가까워지면 중간 위치로 점프 (무한 스크롤처럼 보이게)
+      const buffer = ITEM_HEIGHT * 20;
       if (scrollTop < buffer || scrollTop > ref.current.scrollHeight - ref.current.clientHeight - buffer) {
         const visibleCount = items.length / repeatCount;
         const offset = (index - CENTER_INDEX) % visibleCount;
@@ -104,27 +106,26 @@ const AddTime = () => {
           >
             {selectedRepeat}
             <span className={styles.arrow}>
-            <svg
-              width="20"
-              height="20"
-              viewBox="0 0 24 24"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-              style={{
-                transform: repeatOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                transition: 'transform 0.2s ease',
-              }}
-            >
-              <path
-                d="M6 9L12 15L18 9"
-                stroke="#ccc"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </span>
-
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{
+                  transform: repeatOpen ? 'rotate(180deg)' : 'rotate(0deg)',
+                  transition: 'transform 0.2s ease',
+                }}
+              >
+                <path
+                  d="M6 9L12 15L18 9"
+                  stroke="#ccc"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </span>
           </div>
 
           {repeatOpen && (
@@ -147,15 +148,14 @@ const AddTime = () => {
       </div>
 
       <div className={styles.nextButtonContainer}>
-      <button className={styles.nextButton}
-      onClick={() => router.push('/finishalarm')}>
-        다음
-      </button>
-    </div>
-          
-        </>
-
-    
+        <button
+          className={styles.nextButton}
+          onClick={() => router.push('/finishalarm')}
+        >
+          다음
+        </button>
+      </div>
+    </>
   );
 };
 
