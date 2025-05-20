@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",                         
     "types": ["googlemaps"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
