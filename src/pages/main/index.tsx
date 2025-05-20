@@ -30,6 +30,10 @@ export default function Page() {
         router.push('category');
     };
 
+    const storedClick = () => {
+        router.push('/my/storedMedicine');
+    }
+
     let [data, setData] = useState(
         [
             {
@@ -76,7 +80,7 @@ export default function Page() {
             </div>
 
             <div className={style.plusCon}>
-                <div className={style.plusInfoCon}>
+                <div className={style.plusInfoCon} onClick={storedClick}>
                     <span id={style.plusTxt}>내가 저장한<br/>약 보기</span>
                     <Image id={style.plusImg} src={markIcon} alt="마크" />
                 </div>
