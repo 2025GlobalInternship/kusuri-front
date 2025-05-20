@@ -1,0 +1,19 @@
+.storedTitlecon {
+    display: flex;
+    position: relative;
+    gap: 8px;
+    align-items: center;
+    width: 287px;
+}
+
+.storedMcon {
+    border-radius: 20px;
+    background: #FFF;
+    margin: 26px auto 70px;
+    padding: 20px 17px;
+    box-sizing: border-box;
+    width: 340px;
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+}
