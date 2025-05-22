@@ -33,19 +33,25 @@ const AddTime = () => {
   const minutesRaw = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
   const ampmRaw = ['AM', 'PM'];
 
-  const repeatCount = 30; // 너무 크지 않게 조정
+  const repeatCount = 30;
 
   const hours = Array.from({ length: hoursRaw.length * repeatCount }, (_, i) => hoursRaw[i % hoursRaw.length]);
   const minutes = Array.from({ length: minutesRaw.length * repeatCount }, (_, i) => minutesRaw[i % minutesRaw.length]);
-  const ampmList = Array.from({ length: ampmRaw.length * repeatCount }, (_, i) => ampmRaw[i % ampmRaw.length]);
+  const ampmList = ['', '', 'AM', 'PM', '', ''];
 
-  const renderWheel = (items: string[], selected: string, onSelect: (val: string) => void) => {
+  const renderWheel = (
+    items: string[],
+    selected: string,
+    onSelect: (val: string) => void,
+    isAmpm = false
+  ) => {
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
       if (ref.current) {
-        const middleIndex = Math.floor(items.length / 2);
-        ref.current.scrollTop = (middleIndex - CENTER_INDEX) * ITEM_HEIGHT;
+        const selectedIndex = items.findIndex(item => item === selected);
+        const scrollTop = (selectedIndex - CENTER_INDEX) * ITEM_HEIGHT;
+        ref.current.scrollTop = scrollTop >= 0 ? scrollTop : 0;
       }
     }, [items.length]);
 
@@ -57,18 +63,23 @@ const AddTime = () => {
 
       if (index >= 0 && index < items.length) {
         const value = items[index];
-        if (value && value !== selected) {
+        if (value && value !== selected && value !== '') {
           onSelect(value);
         }
       }
 
-      // 끝에 가까워지면 중간 위치로 점프 (무한 스크롤처럼 보이게)
-      const buffer = ITEM_HEIGHT * 20;
-      if (scrollTop < buffer || scrollTop > ref.current.scrollHeight - ref.current.clientHeight - buffer) {
-        const visibleCount = items.length / repeatCount;
-        const offset = (index - CENTER_INDEX) % visibleCount;
-        const base = Math.floor(items.length / 2) - (Math.floor(items.length / 2) % visibleCount);
-        ref.current.scrollTop = (base + offset) * ITEM_HEIGHT - CENTER_INDEX * ITEM_HEIGHT;
+      if (!isAmpm && items.length > 20) {
+        const buffer = ITEM_HEIGHT * 20;
+        if (
+          scrollTop < buffer ||
+          scrollTop > ref.current.scrollHeight - ref.current.clientHeight - buffer
+        ) {
+          const visibleCount = items.length / repeatCount;
+          const offset = (index - CENTER_INDEX) % visibleCount;
+          const base =
+            Math.floor(items.length / 2) - (Math.floor(items.length / 2) % visibleCount);
+          ref.current.scrollTop = (base + offset) * ITEM_HEIGHT - CENTER_INDEX * ITEM_HEIGHT;
+        }
       }
     };
 
@@ -79,11 +90,18 @@ const AddTime = () => {
         ref={ref}
         style={{ height: ITEM_HEIGHT * VISIBLE_COUNT }}
       >
-        {items.map((item, i) => (
-          <div key={i} className={styles.wheelItem}>
-            {item}
-          </div>
-        ))}
+        {items.map((item, i) => {
+          const centerIndex = Math.round(ref.current?.scrollTop! / ITEM_HEIGHT) + CENTER_INDEX;
+          const isSelected = i === centerIndex && item !== '';
+          return (
+            <div
+              key={i}
+              className={`${styles.wheelItem} ${isSelected ? styles.selected : ''}`}
+            >
+              {item}
+            </div>
+          );
+        })}
       </div>
     );
   };
@@ -93,16 +111,16 @@ const AddTime = () => {
       <HeaderLayout>알람추가</HeaderLayout>
       <div className={styles.wrapper}>
         <div className={styles.wheelWrapper}>
+          <div className={styles.centerOverlay} />
           {renderWheel(hours, hour, setHour)}
           {renderWheel(minutes, minute, setMinute)}
-          {renderWheel(ampmList, ampm, setAmpm)}
+          {renderWheel(ampmList, ampm, setAmpm, true)}
         </div>
 
-        {/* 반복 요일 드롭다운 */}
         <div className={styles.dropdownWrapper}>
           <div
             className={styles.selectedBox}
-            onClick={() => setRepeatOpen(prev => !prev)}
+            onClick={() => setRepeatOpen((prev) => !prev)}
           >
             {selectedRepeat}
             <span className={styles.arrow}>
@@ -130,7 +148,7 @@ const AddTime = () => {
 
           {repeatOpen && (
             <div className={styles.optionList}>
-              {repeatOptions.map(option => (
+              {repeatOptions.map((option) => (
                 <div
                   key={option}
                   className={styles.optionItem}
