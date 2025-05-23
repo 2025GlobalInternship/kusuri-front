@@ -53,13 +53,17 @@ export default function Page() {
     const onStroedClick = () => {
         router.push('/my/storedMedicine');
     }
+
+    const onManageClick = () => {
+        router.push('/my/management');
+    }
     
     return (
         <div>
             <div className={style.userImfoContainer}>
                 <Image src={imageList[0]} alt="프로필 이미지" width={50} height={50} />
                 <p>{userName}님</p>
-                <Image id={style.right_icon} src={detailIcon} alt="설정" />
+                <Image onClick={onManageClick} id={style.right_icon} src={detailIcon} alt="설정" />
             </div>
             <div className={style.storedMcon}>
                 <Image src={markIcon} alt="북마크 아이콘"/>

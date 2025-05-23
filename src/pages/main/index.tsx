@@ -4,7 +4,7 @@ import ChatIconLayout from "@/components/chatIcon-layout";
 import Image from "next/image";
 
 import kusuriLogo from "../../../public/images/kusuri-logo.png";
-import bellIcon from "../../../public/images/bellIcon.png";
+import bellIcon from "../../../public/images/alram_icon.png";
 import medicineIcon from "../../../public/images/medicines_icon.png";
 import xIcon from "../../../public/images/xIcon.png";
 
