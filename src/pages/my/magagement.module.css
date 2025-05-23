@@ -1,0 +1,34 @@
+.managementBox {
+    background-color: white;
+    width: 330px;
+    margin: 26px auto 0;
+
+    border-radius: 20px;
+    padding: 20px 13px;
+    box-sizing: border-box;
+}
+
+.managementEleBox {
+    display: flex;
+    width: 270px;
+    flex-direction: column;
+    gap: 20px;
+    margin: 0 auto;
+
+    font-size: 16px;
+}
+
+.correctionMoveCon {
+    color: #898A8D;
+    position: relative;
+    display: flex;
+}
+
+.correntionMoveIcon {
+    position: absolute;
+    right: 0;
+}
+
+.logOutCon {
+    color: var(--sub-red, #FF8686);
+}
