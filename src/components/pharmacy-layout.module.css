@@ -1,0 +1,14 @@
+#pharmacyLCon {
+    display: flex;
+    align-items: center;
+}
+
+#pharmacyTxt {
+    margin-left: 12px;
+}
+
+#pharmacyKm {
+    position: absolute;
+    right: 0px;
+    color: rgb(170, 170, 170);
+}

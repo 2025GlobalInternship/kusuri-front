@@ -24,17 +24,5 @@
 .pharmacyCon {
     width: 332px;
     margin: 10px auto;
-    display: flex;
-    align-items: center;
     position: relative;
-}
-
-#pharmacyTxt {
-    margin-left: 12px;
-}
-
-#pharmacyKm {
-    position: absolute;
-    right: 0px;
-    color: rgb(170, 170, 170);
 }
