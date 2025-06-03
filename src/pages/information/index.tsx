@@ -1,13 +1,12 @@
 import { useState } from "react";
-import { useRouter } from "next/router"; // useRouter 추가
+import { useRouter } from "next/router";
 import style from "./index.module.css";
-import Link from "next/link";
 
 export default function InfoPage() {
     const [name, setName] = useState("");
     const [selectedGender, setSelectedGender] = useState("");
     const [isClicked, setIsClicked] = useState(false);
-    const router = useRouter(); // useRouter 훅 사용
+    const router = useRouter();
 
     const handleGenderSelect = (gender: string) => {
         setSelectedGender(gender);
@@ -16,11 +15,13 @@ export default function InfoPage() {
     const handleNextClick = () => {
         if (name && selectedGender) {
             setIsClicked(true);
-            router.push("/m-information"); // 버튼 클릭 시 '/m-information'으로 이동
+            setTimeout(() => {
+                router.push("/m-information");
+            }, 200);
         }
     };
 
-    const isButtonDisabled = !(name && selectedGender); // 이름과 성별이 입력되지 않으면 버튼 비활성화
+    const isButtonEnabled = name !== "" && selectedGender !== "";
 
     return (
         <div className={style.container}>
@@ -42,7 +43,11 @@ export default function InfoPage() {
                         실명을 입력해주세요. <span className={style.required}>(필수)</span>
                     </p>
                     <div className={style.genderContainer}>
-                        <label className={style.genderButton}>
+                        <label
+                            className={`${style.genderButton} ${
+                                selectedGender === "남자" ? style.selected : ""
+                            }`}
+                        >
                             <input
                                 type="radio"
                                 name="gender"
@@ -53,7 +58,11 @@ export default function InfoPage() {
                             />
                             <span>남자</span>
                         </label>
-                        <label className={style.genderButton}>
+                        <label
+                            className={`${style.genderButton} ${
+                                selectedGender === "여자" ? style.selected : ""
+                            }`}
+                        >
                             <input
                                 type="radio"
                                 name="gender"
@@ -70,15 +79,16 @@ export default function InfoPage() {
                         성별을 선택해주세요. <span className={style.required}>(필수)</span>
                     </p>
 
-                    <Link href="/m-information">
-                        <button
-                            className={`${style.nextButton} ${isClicked ? style.clicked : ""}`}
-                            disabled={isButtonDisabled}
-                        >
-                            다음
-                        </button>
-                    </Link>
-
+                    <button
+                        type="button"
+                        disabled={!isButtonEnabled}
+                        className={`${style.nextButton} ${
+                            isButtonEnabled ? style.active : ""
+                        } ${isClicked ? style.clicked : ""}`}
+                        onClick={handleNextClick}
+                    >
+                        다음
+                    </button>
                 </div>
             </form>
         </div>

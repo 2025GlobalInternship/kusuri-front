@@ -17,6 +17,7 @@ export default function ProfileSelection() {
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
     const handleCompleteClick = () => {
+        if (!selectedImage) return;  // 선택 안됐으면 무시
         router.replace('/main');
     };
 
@@ -25,7 +26,9 @@ export default function ProfileSelection() {
             <h2 className={style.title}>프로필 선택</h2>
 
             <div className={style.largeCircle}>
-                {selectedImage && <Image src={selectedImage} alt="선택된 프로필" width={130} height={130} />}
+                {selectedImage && (
+                    <Image src={selectedImage} alt="선택된 프로필" width={130} height={130} />
+                )}
             </div>
 
             <div className={style.gridContainer}>
@@ -40,8 +43,11 @@ export default function ProfileSelection() {
                 ))}
             </div>
 
-            {/* 완료 버튼 (스타일 변경됨) */}
-            <button className={style.nextButton} onClick={handleCompleteClick}>
+            <button
+                className={`${style.nextButton} ${selectedImage ? style.active : ""}`}
+                onClick={handleCompleteClick}
+                disabled={!selectedImage}
+            >
                 완료
             </button>
         </div>

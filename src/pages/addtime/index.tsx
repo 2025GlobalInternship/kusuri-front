@@ -26,8 +26,10 @@ const AddTime = () => {
   const [hour, setHour] = useState('08');
   const [minute, setMinute] = useState('00');
   const [ampm, setAmpm] = useState('AM');
-  const [selectedRepeat, setSelectedRepeat] = useState('월요일마다 반복');
+  const [selectedRepeat, setSelectedRepeat] = useState('');
   const [repeatOpen, setRepeatOpen] = useState(false);
+
+  const isComplete = hour && minute && ampm && selectedRepeat;
 
   const hoursRaw = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
   const minutesRaw = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
@@ -122,7 +124,7 @@ const AddTime = () => {
             className={styles.selectedBox}
             onClick={() => setRepeatOpen((prev) => !prev)}
           >
-            {selectedRepeat}
+            {selectedRepeat || '반복 설정 선택'}
             <span className={styles.arrow}>
               <svg
                 width="20"
@@ -167,8 +169,9 @@ const AddTime = () => {
 
       <div className={styles.nextButtonContainer}>
         <button
-          className={styles.nextButton}
+          className={`${styles.nextButton} ${isComplete ? styles.clicked : ''}`}
           onClick={() => router.push('/finishalarm')}
+          disabled={!isComplete}
         >
           다음
         </button>

@@ -1,15 +1,17 @@
 import { useState } from "react";
-import Link from "next/link"; 
+import Link from "next/link";
 import style from "./index.module.css";
-import plusIcon from "../../../public/images/plus.png";
 
 export default function InfoPage() {
-    const [medicine, setMedicine] = useState(""); 
-    const [medicineList, setMedicineList] = useState<string[]>([]); // 등록된 약 리스트
-    const [buttonClicked, setButtonClicked] = useState(false); // 버튼 클릭 여부 상태 관리
+    const [medicine, setMedicine] = useState("");
+    const [medicineList, setMedicineList] = useState<string[]>([]);
 
     const handleAddMedicine = () => {
-        if (medicine.trim() !== "" && !medicineList.includes(medicine) && medicineList.length < 3) {
+        if (
+            medicine.trim() !== "" &&
+            !medicineList.includes(medicine) &&
+            medicineList.length < 3
+        ) {
             setMedicineList([...medicineList, medicine]);
             setMedicine("");
         }
@@ -21,7 +23,7 @@ export default function InfoPage() {
                 <div className={style.titleBox}>
                     <h2 className={style.greeting}>평소에</h2>
                     <h2 className={style.subtitle}>드시는 약이 있나요?</h2>
-                    <p className={style.medicineLabel}>약 이름</p> 
+                    <p className={style.medicineLabel}>약 이름</p>
                 </div>
 
                 {/* 약 입력창 & 플러스 버튼 */}
@@ -32,10 +34,10 @@ export default function InfoPage() {
                         className={style.input}
                         value={medicine}
                         onChange={(e) => setMedicine(e.target.value)}
-                        disabled={medicineList.length >= 3} // 3개 추가 시 입력 비활성화
+                        disabled={medicineList.length >= 3}
                     />
                     <img
-                        src="/images/plus.png" 
+                        src="/images/plus.png"
                         alt="추가"
                         className={`${style.plusIcon} ${medicineList.length >= 3 ? style.disabledButton : ""}`}
                         onClick={handleAddMedicine}
@@ -55,8 +57,8 @@ export default function InfoPage() {
                 {/* 넘어가기 버튼 */}
                 <Link href="/profile">
                     <button
-                        className={`${style.nextButton} ${buttonClicked ? style.clicked : ""}`}
-                        disabled={medicineList.length === 0} // 약이 하나도 없으면 비활성화
+                        className={`${style.nextButton} ${medicineList.length >= 2 ? style.active : ""}`}
+                        disabled={medicineList.length < 2}
                     >
                         넘어가기
                     </button>
