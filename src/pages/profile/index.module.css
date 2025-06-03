@@ -71,13 +71,22 @@
     font-size: 16px;
     font-weight: bold;
     border-radius: 10px;
-    cursor: pointer;
+    cursor: not-allowed;
     position: absolute;
     margin-top: 550px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-.nextButton:hover {
+.nextButton.active {
     background-color: rgba(127, 241, 173, 1);
     color: white;
+    cursor: pointer;
+}
+
+.nextButton.active:hover {
+    background-color: rgba(100, 220, 140, 1);
+}
+
+.nextButton:disabled {
+    pointer-events: none;
 }

@@ -22,12 +22,12 @@
   top: 50%;
   left: 0;
   right: 0;
-  height: 45px;
+  height: 40px;
   transform: translateY(-50%);
   background-color: #f2f2f2;
   pointer-events: none;
-  z-index: 0; /* 가장 아래로 */
-  border-radius: 13px;
+  z-index: 0;
+  border-radius: 12px;
 }
 
 .wheelContainer {
@@ -41,7 +41,11 @@
   position: relative;
   mask-image: linear-gradient(to bottom, transparent 0%, black 40%, black 60%, transparent 100%);
   -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 40%, black 60%, transparent 100%);
-  z-index: 1; /* overlay보다 위에 */
+  z-index: 1;
+}
+
+.wheelContainer::-webkit-scrollbar {
+  display: none;
 }
 
 .wheelItem {
@@ -60,9 +64,6 @@
   color: black !important;
 }
 
-
-
-
 .wheelWrapper::before {
   content: "";
   position: absolute;
@@ -73,13 +74,6 @@
   pointer-events: none;
   z-index: 1;
 }
-
-
-.wheelContainer::-webkit-scrollbar {
-  display: none;
-}
-
-
 
 .selectedTime {
   margin-top: 24px;
@@ -133,20 +127,6 @@
   background-color: #f2f2f2;
 }
 
-.centerOverlay {
-  position: absolute;
-  top: 50%;
-  left: 0;
-  right: 0;
-  height: 40px;
-  transform: translateY(-50%);
-  background-color: #f2f2f2;
-  pointer-events: none;
-  z-index: 0; /* 숫자들보다 낮게 */
-  border-radius: 12px;
-}
-
-
 .nextButtonContainer {
   display: flex;
   justify-content: center;
@@ -164,7 +144,7 @@
   border-radius: 10px;
   cursor: pointer;
   margin-top: 208px;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nextButton:disabled {
@@ -174,6 +154,6 @@
 }
 
 .clicked {
-  color: white !important;
   background-color: rgba(127, 241, 173, 1) !important;
+  color: white !important;
 }

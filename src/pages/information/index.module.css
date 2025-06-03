@@ -43,14 +43,13 @@
     font-size: 16px;
     color: gray;
     margin-bottom: 10px;
+    background-color: rgba(235, 240, 247, 0.5) !important;
 }
 
 .nameInfo {
     font-size: 14px;
     color: rgba(170, 170, 170, 1);
-    margin: 4px 0;
-    margin-bottom: 30px;
-    margin-left: 3px;
+    margin: 4px 0 30px 3px;
 }
 
 .required {
@@ -64,6 +63,9 @@
 }
 
 .genderButton {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     width: 128px;
     height: 55px;
     border: none;
@@ -73,6 +75,9 @@
     border-radius: 24px;
     cursor: pointer;
     margin-top: 10px;
+    text-align: center;
+    position: relative;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .genderButton:hover {
@@ -80,12 +85,12 @@
 }
 
 .selected {
-    background-color: #7AFFC7 !important;
+    background-color: rgba(127, 241, 173, 1) !important;
     color: white !important;
 }
 
-.input {
-    background-color: rgba(235, 240, 247, 0.5) !important;
+.radio {
+    display: none;
 }
 
 .genderRequired {
@@ -111,52 +116,23 @@
     cursor: pointer;
     margin-top: 230px;
     margin-left: 5px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .nextButton:disabled {
-    background-color: rgba(221, 225, 229, 1); /* 비활성화 상태일 때 연한 회색 */
+    background-color: rgba(221, 225, 229, 1);
     color: gray;
     cursor: not-allowed;
 }
 
+/* ✅ 입력값이 모두 채워졌을 때 자동 적용되는 스타일 */
+.active {
+    background-color: rgba(127, 241, 173, 1);
+    color: white;
+}
+
+/* ✅ 클릭 시 애니메이션용 스타일 */
 .clicked {
-    
-    color: white !important;
     background-color: rgba(127, 241, 173, 1) !important;
+    color: white !important;
 }
-
-/* radio 버튼 기본 스타일 제거 */
-.radio {
-    display: none; /* 기본 radio 버튼 숨기기 */
-}
-
-/* 라벨 클릭 시, 선택된 스타일 적용 */
-.radio:checked + span {
-    color: white;
-}
-
-/* 라벨로 스타일 적용 */
-.genderButton {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 128px;
-    height: 55px;
-    border: none;
-    background-color: #EBF0F7;
-    color: gray;
-    font-size: 16px;
-    border-radius: 24px;
-    cursor: pointer;
-    margin-top: 10px;
-    text-align: center;
-    position: relative;
-}
-
-/* 선택된 상태의 스타일 */
-.radio:checked + span {
-    color: white;
-}
-
-

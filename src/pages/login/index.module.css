@@ -6,25 +6,25 @@
     height: 100vh;
     margin-top: -40px;
     font-family: 'pre-medium';
-}
-
-.icon {
+  }
+  
+  .icon {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 40px;
-}
-
-.form {
+  }
+  
+  .form {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     gap: 20px;
     width: 340px;
-}
-
-.input {
+  }
+  
+  .input {
     width: 270px;
     max-width: 100%;
     padding: 18px;
@@ -34,9 +34,9 @@
     outline: none;
     font-size: 16px;
     color: gray;
-}
-
-.signupButton {
+  }
+  
+  .signupButton {
     width: 200px;
     height: 60px;
     border: none;
@@ -47,21 +47,29 @@
     border-radius: 40px;
     cursor: pointer;
     align-self: center;
-    transition: background-color 0.3s ease;
-}
-
-.signupButton:hover {
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  
+  /* 활성화 상태 */
+  .active {
+    background-color: rgba(127, 241, 173, 1);
+    color: white;
+  }
+  
+  /* 비활성화 상태(입력값이 없을 때) */
+  .signupButton:disabled {
+    cursor: default;
+    opacity: 0.6;
+  }
+  
+  .signupButton:hover:not(:disabled) {
     background-color: #C0C4C8;
-}
-
-.clicked {
-    background-color: #7AFFC7 !important; 
-    color: white !important;
-}
-
-.signupLink {
+  }
+  
+  .signupLink {
     color: gray;
     font-size: 14px;
     text-decoration-color: gray;
     margin-top: 10px;
-}
+  }
+  
