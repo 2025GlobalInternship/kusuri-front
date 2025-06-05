@@ -75,7 +75,7 @@ export default function Page() {
         }
 
         try {
-            const response = await fetch("/api/users/check-id", {
+            const response = await fetch("/api/users/join", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
