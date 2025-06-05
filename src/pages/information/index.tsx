@@ -6,18 +6,42 @@ export default function InfoPage() {
     const [name, setName] = useState("");
     const [selectedGender, setSelectedGender] = useState("");
     const [isClicked, setIsClicked] = useState(false);
+    const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
 
     const handleGenderSelect = (gender: string) => {
         setSelectedGender(gender);
     };
 
-    const handleNextClick = () => {
-        if (name && selectedGender) {
-            setIsClicked(true);
-            setTimeout(() => {
+    const handleNextClick = async () => {
+        if (!name || !selectedGender) return;
+
+        setIsClicked(true);
+        setErrorMessage("");
+
+        try {
+            const response = await fetch("/api/users/frist-info", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name,
+                    gender: selectedGender,
+                }),
+            });
+
+            if (response.ok) {
                 router.push("/m-information");
-            }, 200);
+            } else {
+                const data = await response.json();
+                setErrorMessage(data.message || "정보 저장에 실패했습니다.");
+                setIsClicked(false);
+            }
+        } catch (error) {
+            console.error(error);
+            setErrorMessage("서버 연결에 실패했습니다.");
+            setIsClicked(false);
         }
     };
 
@@ -29,7 +53,7 @@ export default function InfoPage() {
                 <h2 className={style.greeting}>반가워요!</h2>
                 <h2 className={style.subtitle}>정보를 작성해주세요.</h2>
             </div>
-            <form method="post" action="#">
+            <form onSubmit={(e) => e.preventDefault()}>
                 <div className={style.form}>
                     <input
                         type="text"
@@ -78,6 +102,10 @@ export default function InfoPage() {
                     <p className={style.genderRequired}>
                         성별을 선택해주세요. <span className={style.required}>(필수)</span>
                     </p>
+
+                    {errorMessage && (
+                        <div className={style.errorMessage}>{errorMessage}</div>
+                    )}
 
                     <button
                         type="button"
