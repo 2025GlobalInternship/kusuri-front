@@ -72,4 +72,11 @@
     text-decoration-color: gray;
     margin-top: 10px;
   }
+
+  .errorMessage {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+  
   
