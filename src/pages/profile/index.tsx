@@ -16,9 +16,29 @@ export default function ProfileSelection() {
     const router = useRouter();
     const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
-    const handleCompleteClick = () => {
-        if (!selectedImage) return;  // 선택 안됐으면 무시
-        router.replace('/main');
+    const handleCompleteClick = async () => {
+        if (!selectedImage) return;
+
+        try {
+            const response = await fetch("/api/users/update", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    profileImage: selectedImage, // 또는 selectedImage.split('/').pop()
+                }),
+            });
+
+            if (!response.ok) {
+                throw new Error("프로필 업데이트 실패");
+            }
+
+            router.replace('/main');
+        } catch (error) {
+            console.error(error);
+            alert("프로필 설정 중 오류가 발생했습니다.");
+        }
     };
 
     return (
@@ -27,7 +47,13 @@ export default function ProfileSelection() {
 
             <div className={style.largeCircle}>
                 {selectedImage && (
-                    <Image src={selectedImage} alt="선택된 프로필" width={130} height={130} />
+                    <Image 
+                        src={selectedImage} 
+                        alt="선택된 프로필" 
+                        width={130} 
+                        height={130} 
+                        priority 
+                    />
                 )}
             </div>
 
