@@ -18,7 +18,7 @@ export default function LoginPage() {
     setErrorMessage("");
 
     try {
-      const response = await fetch("/api/users/login", {
+      const response = await fetch("http://localhost:80/kusuri-back/users/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

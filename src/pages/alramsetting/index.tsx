@@ -16,12 +16,46 @@ const Setalram = () => {
   const [alarmList, setAlarmList] = useState(initialAlarms);
   const router = useRouter();
 
-  const handleDeleteAll = () => {
-    setAlarmList([]);
+  // 전체 삭제 API 호출
+  const handleDeleteAll = async () => {
+    try {
+      const res = await fetch("http://localhost:3009/alarm/alarm-delete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ all: true }),
+      });
+
+      if (!res.ok) {
+        throw new Error("전체 삭제 실패");
+      }
+
+      setAlarmList([]);
+    } catch (error) {
+      console.error("전체 삭제 중 오류 발생:", error);
+    }
   };
 
-  const handleDeleteOne = (id: number) => {
-    setAlarmList(prev => prev.filter(alarm => alarm.id !== id));
+  // 단일 삭제 API 호출
+  const handleDeleteOne = async (id: number) => {
+    try {
+      const res = await fetch("http://localhost:3009/alarm/alarm-delete", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ id }),
+      });
+
+      if (!res.ok) {
+        throw new Error("알람 삭제 실패");
+      }
+
+      setAlarmList(prev => prev.filter(alarm => alarm.id !== id));
+    } catch (error) {
+      console.error("알람 삭제 중 오류 발생:", error);
+    }
   };
 
   const goToAddAlarm = () => {
@@ -52,7 +86,7 @@ const Setalram = () => {
             <div className={styles.sectionTitle}>오전</div>
             {morningAlarms.map((alarm) => (
               <div key={alarm.id} className={styles.alarmItem}>
-                <div className={`${styles.dot}`} />
+                <div className={styles.dot} />
                 <span className={styles.time}>{alarm.time}</span>
                 <span className={styles.label}>{alarm.label}</span>
                 <button className={styles.minuss} onClick={() => handleDeleteOne(alarm.id)}>－</button>
@@ -64,7 +98,7 @@ const Setalram = () => {
             <div className={styles.sectionTitle}>오후</div>
             {eveningAlarms.map((alarm) => (
               <div key={alarm.id} className={styles.alarmItem}>
-                <div className={`${styles.dot} `} />
+                <div className={styles.dot} />
                 <span className={styles.time}>{alarm.time}</span>
                 <span className={styles.label}>{alarm.label}</span>
                 <button className={styles.minuss} onClick={() => handleDeleteOne(alarm.id)}>－</button>
@@ -78,3 +112,4 @@ const Setalram = () => {
 };
 
 export default Setalram;
+
