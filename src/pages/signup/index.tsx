@@ -23,7 +23,7 @@ export default function Page() {
         }
 
         try {
-            const response = await fetch("http://localhost:80/kusuri-back/users/check-id", {
+            const response = await fetch("/api/users/check-id", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -75,7 +75,7 @@ export default function Page() {
         }
 
         try {
-            const response = await fetch("http://localhost:80/kusuri-back/users/join", {
+            const response = await fetch("/api/users/join", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
