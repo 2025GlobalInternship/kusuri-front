@@ -10,6 +10,7 @@ const Calendar = () => {
   const [buttonClicked, setButtonClicked] = useState(false);
 
   const today = new Date();
+
   const isToday = (day: number) => {
     return (
       selectedDates.length === 0 &&
@@ -59,9 +60,37 @@ const Calendar = () => {
     return `${month} ${day}일`;
   };
 
-  const goToNextPage = () => {
-    setButtonClicked(true);
-    router.push('/addtime');
+  const goToNextPage = async () => {
+    if (selectedDates.length !== 2) return;
+
+    const [startDay, endDay] = selectedDates;
+    const startDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), startDay!);
+    const endDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), endDay!);
+
+    const payload = {
+      startDate: startDate.toISOString().split('T')[0],
+      endDate: endDate.toISOString().split('T')[0],
+    };
+
+    try {
+      const response = await fetch('http://localhost/kusuri-back/alarm/alarm-setting', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) {
+        throw new Error(`서버 오류: ${response.status}`);
+      }
+
+      setButtonClicked(true);
+      router.push('/addtime');
+    } catch (error) {
+      console.error('날짜 저장 실패:', error);
+      alert('날짜 저장에 실패했습니다. 다시 시도해주세요.');
+    }
   };
 
   const month = currentMonth.toLocaleString('ko-KR', { month: 'long' });
@@ -134,9 +163,7 @@ const Calendar = () => {
 
       <div className={styles.nextButtonContainer}>
         <button
-          className={`${styles.nextButton} ${
-            selectedDates.length === 2 ? styles.clicked : ''
-          }`}
+          className={`${styles.nextButton} ${selectedDates.length === 2 ? styles.clicked : ''}`}
           onClick={goToNextPage}
           disabled={selectedDates.length !== 2}
         >
