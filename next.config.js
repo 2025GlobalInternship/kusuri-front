@@ -5,7 +5,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost/kusri-backend/:path*', // 서버 주소 맞는지 꼭 확인!
+        destination: 'http://localhost/kusuri-back/:path*', // ✔️ 정확한 주소
       },
     ];
   },

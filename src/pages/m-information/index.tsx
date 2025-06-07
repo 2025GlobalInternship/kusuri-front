@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
-import axios from "axios";
 import style from "./index.module.css";
 
 export default function InfoPage() {
@@ -21,12 +20,22 @@ export default function InfoPage() {
 
   const handleSubmit = async () => {
     try {
-      // 외부 백엔드 API로 POST 요청
-      await axios.post("http://localhost/kusuri-back/medicines/taking-medicine", {
-        medicines: medicineList,
-      });
+      const response = await fetch(
+        '/api/medicine/taking-medicine',
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ medicines: medicineList }),
+        }
+      );
 
-      // 성공 시 다음 페이지로 이동
+      if (!response.ok) {
+        throw new Error("약 등록 실패");
+      }
+
+      // 성공 시 페이지 이동
       router.push("/profile");
     } catch (error) {
       console.error("약 등록 중 오류 발생:", error);
