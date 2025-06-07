@@ -9,16 +9,44 @@ export default function LoginPage() {
   const router = useRouter();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
   const isActive = username !== "" && password !== "";
 
-  const handleLoginClick = () => {
+  const handleLoginClick = async () => {
     if (!isActive) return;
-    router.push("/information");
+    setErrorMessage("");
+
+    try {
+      const response = await fetch("/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userid: username,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        // ✅ 로그인 성공
+        router.push("/information");
+      } else {
+        // ❌ 로그인 실패
+        setErrorMessage(data.message || "로그인에 실패했습니다.");
+      }
+    } catch (error) {
+      setErrorMessage("서버와 연결할 수 없습니다.");
+      console.error(error);
+    }
   };
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    handleLoginClick();
   };
 
   return (
@@ -44,11 +72,13 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          {errorMessage && (
+            <div className={style.errorMessage}>{errorMessage}</div>
+          )}
           <button
-            type="button"
+            type="submit"
             disabled={!isActive}
             className={`${style.signupButton} ${isActive ? style.active : ""}`}
-            onClick={handleLoginClick}
           >
             로그인
           </button>
