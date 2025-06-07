@@ -26,7 +26,7 @@ export default function PharmacySearchLayout({
 
     const pageChange = () => {
         if(!search || q === search) return; // search 값이 없을 때 리턴
-        router.push(`/pharmacy/${search}`);
+        router.push(`/pharmacy-search/${search}`);
     }
 
     const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
