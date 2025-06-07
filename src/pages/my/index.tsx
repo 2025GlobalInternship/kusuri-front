@@ -77,9 +77,9 @@ export default function Page() {
                 </div>
                 <div className={style.obCon}>
                     {
-                        data.map((a) => {
+                        data.map((a, idx) => {
                             return (
-                                <MedicineLayout data={a} />
+                                <MedicineLayout key={idx} data={a} />
                             )
                         })
                     }

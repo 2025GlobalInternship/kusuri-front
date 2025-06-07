@@ -34,6 +34,14 @@ export default function Page() {
         router.push('/my/storedMedicine');
     }
 
+    const alramClick = () => {
+        router.push('/alram');
+    }
+
+    const recentClick = () => {
+        router.push('/my');
+    }
+
     let [data, setData] = useState(
         [
             {
@@ -65,10 +73,7 @@ export default function Page() {
             </div>
 
             <div className={style.recommendContainer}>
-                <div className={style.txtContainer}>
-                    <span id={style.recommendTxt}>내 증상에 맞는 약 추천 받기</span>
-                    <Image id={style.xIcon} src={xIcon} alt="x" />
-                </div>
+                <span id={style.recommendTxt}>내 증상에 맞는 약 추천 받기</span>
                 <Image id={style.medicineIcon} src={medicineIcon} alt="약" />
                 <button onClick={recommendBtnClick} id={style.recommendBtn}>바로 가기</button>
             </div>
@@ -84,11 +89,11 @@ export default function Page() {
                     <span id={style.plusTxt}>내가 저장한<br/>약 보기</span>
                     <Image id={style.plusImg} src={markIcon} alt="마크" />
                 </div>
-                <div className={style.plusInfoCon}>
+                <div className={style.plusInfoCon} onClick={alramClick}>
                     <span id={style.plusTxt}>오늘 나의 약<br/>알람 보기</span>
                     <Image id={style.plusImg} src={alramIcon} alt="마크" />
                 </div>
-                <div className={style.plusInfoCon}>
+                <div className={style.plusInfoCon} onClick={recentClick}>
                     <span id={style.plusTxt}>내가 최근 본<br/>약 보기</span>
                     <Image id={style.plusImg} src={clockIcon} alt="마크" />
                 </div>
