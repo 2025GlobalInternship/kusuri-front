@@ -14,10 +14,18 @@ export default function InfoPage() {
     };
 
     const handleNextClick = async () => {
-        if (!name || !selectedGender) return;
+        if (!name.trim() || !selectedGender) {
+            setErrorMessage("이름과 성별을 모두 입력해주세요.");
+            return;
+        }
 
         setIsClicked(true);
         setErrorMessage("");
+
+        console.log("🟢 Sending data:", {
+            username: name.trim(), // ✅ 'username'으로 변경
+            gender: selectedGender,
+        });
 
         try {
             const response = await fetch("/api/users/frist-info", {
@@ -26,7 +34,7 @@ export default function InfoPage() {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    name,
+                    username: name.trim(), // ✅ 'name' ➜ 'username'
                     gender: selectedGender,
                 }),
             });
@@ -39,13 +47,13 @@ export default function InfoPage() {
                 setIsClicked(false);
             }
         } catch (error) {
-            console.error(error);
+            console.error("❌ Error:", error);
             setErrorMessage("서버 연결에 실패했습니다.");
             setIsClicked(false);
         }
     };
 
-    const isButtonEnabled = name !== "" && selectedGender !== "";
+    const isButtonEnabled = name.trim() !== "" && selectedGender !== "";
 
     return (
         <div className={style.container}>
@@ -57,7 +65,7 @@ export default function InfoPage() {
                 <div className={style.form}>
                     <input
                         type="text"
-                        name="username"
+                        name="name"
                         placeholder="이름을 작성해주세요."
                         className={style.input}
                         value={name}
@@ -66,6 +74,7 @@ export default function InfoPage() {
                     <p className={style.nameInfo}>
                         실명을 입력해주세요. <span className={style.required}>(필수)</span>
                     </p>
+
                     <div className={style.genderContainer}>
                         <label
                             className={`${style.genderButton} ${
