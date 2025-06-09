@@ -5,7 +5,6 @@ import style from "./index.module.css";
 export default function InfoPage() {
     const [name, setName] = useState("");
     const [selectedGender, setSelectedGender] = useState("");
-    const [isClicked, setIsClicked] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
     const router = useRouter();
 
@@ -13,44 +12,21 @@ export default function InfoPage() {
         setSelectedGender(gender);
     };
 
-    const handleNextClick = async () => {
+    const handleNextClick = () => {
         if (!name.trim() || !selectedGender) {
             setErrorMessage("이름과 성별을 모두 입력해주세요.");
             return;
         }
 
-        setIsClicked(true);
         setErrorMessage("");
 
-        console.log("🟢 Sending data:", {
-            username: name.trim(), // ✅ 'username'으로 변경
-            gender: selectedGender,
+        router.push({
+            pathname: "/profile", // 수정된 부분
+            query: {
+                username: name.trim(),
+                gender: selectedGender,
+            },
         });
-
-        try {
-            const response = await fetch("/api/users/frist-info", {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    username: name.trim(), // ✅ 'name' ➜ 'username'
-                    gender: selectedGender,
-                }),
-            });
-
-            if (response.ok) {
-                router.push("/m-information");
-            } else {
-                const data = await response.json();
-                setErrorMessage(data.message || "정보 저장에 실패했습니다.");
-                setIsClicked(false);
-            }
-        } catch (error) {
-            console.error("❌ Error:", error);
-            setErrorMessage("서버 연결에 실패했습니다.");
-            setIsClicked(false);
-        }
     };
 
     const isButtonEnabled = name.trim() !== "" && selectedGender !== "";
@@ -121,7 +97,7 @@ export default function InfoPage() {
                         disabled={!isButtonEnabled}
                         className={`${style.nextButton} ${
                             isButtonEnabled ? style.active : ""
-                        } ${isClicked ? style.clicked : ""}`}
+                        }`}
                         onClick={handleNextClick}
                     >
                         다음
