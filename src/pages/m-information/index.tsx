@@ -20,23 +20,21 @@ export default function InfoPage() {
 
   const handleSubmit = async () => {
     try {
-      const response = await fetch(
-        '/api/medicine/taking-medicine',
-        {
+      // 1. 각각의 약을 API에 등록
+      for (const med of medicineList) {
+        const res = await fetch("/api/medicines/taking-medicine", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ medicines: medicineList }),
-        }
-      );
+          body: JSON.stringify({ med_name: med }),
+        });
 
-      if (!response.ok) {
-        throw new Error("약 등록 실패");
+        if (!res.ok) throw new Error(`약 ${med} 등록 실패`);
       }
 
-      // 성공 시 페이지 이동
-      router.push("/profile");
+      // 2. 메인 페이지로 이동
+      router.push("/main");
     } catch (error) {
       console.error("약 등록 중 오류 발생:", error);
       alert("약 정보를 등록하는 데 문제가 발생했습니다.");
@@ -57,7 +55,6 @@ export default function InfoPage() {
           <p className={style.medicineLabel}>약 이름</p>
         </div>
 
-        {/* 약 입력창 & 플러스 버튼 */}
         <div className={style.inputContainer}>
           <input
             type="text"
@@ -80,7 +77,6 @@ export default function InfoPage() {
           />
         </div>
 
-        {/* 등록된 약 리스트 */}
         <div className={style.medicineList}>
           {medicineList.map((med, index) => (
             <span key={index} className={style.medicineTag}>
@@ -89,7 +85,6 @@ export default function InfoPage() {
           ))}
         </div>
 
-        {/* 넘어가기 버튼 */}
         <button
           type="submit"
           className={`${style.nextButton} ${
@@ -97,7 +92,7 @@ export default function InfoPage() {
           }`}
           disabled={medicineList.length < 2}
         >
-          넘어가기
+          완료
         </button>
       </div>
     </form>
