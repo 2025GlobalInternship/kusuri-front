@@ -2,10 +2,9 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from './index.module.css';
 import HeaderLayout from "@/components/header-layout";
-import NavigationVarLayout from "@/components/navigation_var-layout";
 
 const Calendar = () => {
-  const router = useRouter(); // useRouter 추가
+  const router = useRouter();
   const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 18)); // 2025년 6월 시작
 
   const getDaysInMonth = (date: Date) => {
@@ -26,6 +25,15 @@ const Calendar = () => {
 
   const goToNextMonth = () => {
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
+  };
+
+  const isToday = (day: number): boolean => {
+    const today = new Date();
+    return (
+      day === today.getDate() &&
+      currentMonth.getMonth() === today.getMonth() &&
+      currentMonth.getFullYear() === today.getFullYear()
+    );
   };
 
   const month = currentMonth.toLocaleString('ko-KR', { month: 'long' });
@@ -56,38 +64,36 @@ const Calendar = () => {
   }
 
   return (
-    <>
-      {/* 캘린더 */}
-      <div className={styles.calendarContainer}>
-        <div className={styles.monthHeader}>
-          {/* 이전 달 이동 버튼 */}
-          <span className={styles.arrow} onClick={goToPreviousMonth}>{"<"}</span>
-          <span>{year} {month}</span>
-          {/* 다음 달 이동 버튼 */}
-          <span className={styles.arrow} onClick={goToNextMonth}>{">"}</span>
-        </div>
-
-        <div className={styles.daysOfWeek}>
-          <div>일</div>
-          <div>월</div>
-          <div>화</div>
-          <div>수</div>
-          <div>목</div>
-          <div>금</div>
-          <div>토</div>
-        </div>
-
-        {days.map((week, index) => (
-          <div key={index} className={styles.week}>
-            {week.map((day, dayIndex) => (
-              <div key={dayIndex} className={styles.day}>
-                {day}
-              </div>
-            ))}
-          </div>
-        ))}
+    <div className={styles.calendarContainer}>
+      <div className={styles.monthHeader}>
+        <span className={styles.arrow} onClick={goToPreviousMonth}>{"<"}</span>
+        <span>{year} {month}</span>
+        <span className={styles.arrow} onClick={goToNextMonth}>{">"}</span>
       </div>
-    </>
+
+      <div className={styles.daysOfWeek}>
+        <div>일</div>
+        <div>월</div>
+        <div>화</div>
+        <div>수</div>
+        <div>목</div>
+        <div>금</div>
+        <div>토</div>
+      </div>
+
+      {days.map((week, index) => (
+        <div key={index} className={styles.week}>
+          {week.map((day, dayIndex) => (
+            <div
+              key={dayIndex}
+              className={`${styles.day} ${day !== null && isToday(day) ? styles.today : ""}`}
+            >
+              {day}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
   );
 };
 
