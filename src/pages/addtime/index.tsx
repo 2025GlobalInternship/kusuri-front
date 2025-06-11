@@ -28,6 +28,10 @@ const AddTime = () => {
   const [ampm, setAmpm] = useState('AM');
   const [selectedRepeat, setSelectedRepeat] = useState('');
   const [repeatOpen, setRepeatOpen] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+
+  const start_day = router.query.start_day as string;
+  const last_day = router.query.last_day as string;
 
   const isComplete = hour && minute && ampm && selectedRepeat;
 
@@ -108,6 +112,43 @@ const AddTime = () => {
     );
   };
 
+  const handleSubmit = async () => {
+    if (!isComplete || !start_day || !last_day) return;
+
+    setSubmitting(true);
+
+    // AM/PM + 시/분 → 24시간 변환
+    let parsedHour = parseInt(hour);
+    if (ampm === 'PM' && parsedHour !== 12) parsedHour += 12;
+    if (ampm === 'AM' && parsedHour === 12) parsedHour = 0;
+
+    const timeString = `${String(parsedHour).padStart(2, '0')}:${minute}`;
+
+    const payload = {
+      start_day,
+      last_day,
+      time: timeString,
+      day_type: selectedRepeat,
+    };
+
+    try {
+      const response = await fetch('/api/alarms', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error('서버 오류');
+
+      router.push('/finishalarm');
+    } catch (error) {
+      alert('알람 저장에 실패했습니다.');
+      console.error(error);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <>
       <HeaderLayout>알람추가</HeaderLayout>
@@ -170,10 +211,10 @@ const AddTime = () => {
       <div className={styles.nextButtonContainer}>
         <button
           className={`${styles.nextButton} ${isComplete ? styles.clicked : ''}`}
-          onClick={() => router.push('/finishalarm')}
-          disabled={!isComplete}
+          onClick={handleSubmit}
+          disabled={!isComplete || submitting}
         >
-          다음
+          {submitting ? '저장 중...' : '다음'}
         </button>
       </div>
     </>

@@ -5,9 +5,8 @@ import HeaderLayout from "@/components/header-layout";
 
 const Calendar = () => {
   const router = useRouter();
-  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 18)); // 2025년 6월
+  const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 18));
   const [selectedDates, setSelectedDates] = useState<(number | null)[]>([]);
-  const [buttonClicked, setButtonClicked] = useState(false);
 
   const today = new Date();
 
@@ -60,37 +59,20 @@ const Calendar = () => {
     return `${month} ${day}일`;
   };
 
-  const goToNextPage = async () => {
+  const goToNextPage = () => {
     if (selectedDates.length !== 2) return;
 
-    const [startDay, endDay] = selectedDates;
+    const [startDay, endDay] = selectedDates.sort((a, b) => (a! - b!));
     const startDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), startDay!);
     const endDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), endDay!);
 
-    const payload = {
-      startDate: startDate.toISOString().split('T')[0],
-      endDate: endDate.toISOString().split('T')[0],
-    };
+    const startDateStr = startDate.toISOString().split('T')[0];
+    const endDateStr = endDate.toISOString().split('T')[0];
 
-    try {
-      const response = await fetch('http://localhost/kusuri-back/alarm/alarm-setting', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error(`서버 오류: ${response.status}`);
-      }
-
-      setButtonClicked(true);
-      router.push('/addtime');
-    } catch (error) {
-      console.error('날짜 저장 실패:', error);
-      alert('날짜 저장에 실패했습니다. 다시 시도해주세요.');
-    }
+    router.push({
+      pathname: '/addtime',
+      query: { start_day: startDateStr, last_day: endDateStr }
+    });
   };
 
   const month = currentMonth.toLocaleString('ko-KR', { month: 'long' });

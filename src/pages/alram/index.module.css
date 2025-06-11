@@ -6,6 +6,7 @@
 
 .filterWrapper {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 12px;
 }
@@ -20,7 +21,6 @@
   border-radius: 20px;
   font-weight: 500;
   color: rgba(93, 93, 93, 1);
-  margin-top: 65px;
 }
 
 .dotGreen,
