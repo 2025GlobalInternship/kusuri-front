@@ -75,7 +75,6 @@ const SelectMedicine = () => {
 
   return (
     <>
-      <HeaderLayout>약 선택</HeaderLayout>
 
       <div className={styles.container}>
         <div className={styles.inputSection}>
@@ -129,14 +128,14 @@ const SelectMedicine = () => {
         </div>
 
         <div className={styles.nextButtonContainer}>
-          <button
+        <button
             className={`${styles.nextButton} ${
               selectedMedicineId !== null ? styles.active : ''
             }`}
             onClick={handleNext}
             disabled={selectedMedicineId === null || submitting}
           >
-            {submitting ? '저장 중...' : '다음'}
+            다음
           </button>
         </div>
       </div>
@@ -144,4 +143,12 @@ const SelectMedicine = () => {
   );
 };
 
-export default SelectMedicine;
+export default function Page() {
+  return (
+    <>
+      <HeaderLayout>알람추가</HeaderLayout>
+      <SelectMedicine />
+    </>
+  );
+}
+
