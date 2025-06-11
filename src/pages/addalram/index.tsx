@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from './index.module.css';
-import HeaderLayout from "@/components/header-layout";
+import HeaderLayout from '@/components/header-layout';
 
 const Calendar = () => {
   const router = useRouter();
@@ -10,14 +10,11 @@ const Calendar = () => {
 
   const today = new Date();
 
-  const isToday = (day: number) => {
-    return (
-      selectedDates.length === 0 &&
-      today.getFullYear() === currentMonth.getFullYear() &&
-      today.getMonth() === currentMonth.getMonth() &&
-      today.getDate() === day
-    );
-  };
+  const isToday = (day: number) =>
+    selectedDates.length === 0 &&
+    today.getFullYear() === currentMonth.getFullYear() &&
+    today.getMonth() === currentMonth.getMonth() &&
+    today.getDate() === day;
 
   const getDaysInMonth = (date: Date) =>
     new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
@@ -25,22 +22,17 @@ const Calendar = () => {
   const getFirstDayOfMonth = (date: Date) =>
     new Date(date.getFullYear(), date.getMonth(), 1).getDay();
 
-  const goToPreviousMonth = () => {
+  const goToPreviousMonth = () =>
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() - 1));
-  };
 
-  const goToNextMonth = () => {
+  const goToNextMonth = () =>
     setCurrentMonth(new Date(currentMonth.getFullYear(), currentMonth.getMonth() + 1));
-  };
 
   const handleDateClick = (day: number) => {
-    let updatedSelectedDates = [...selectedDates];
-    if (updatedSelectedDates.length < 2) {
-      updatedSelectedDates.push(day);
-    } else {
-      updatedSelectedDates = [day];
-    }
-    setSelectedDates(updatedSelectedDates);
+    let updated = [...selectedDates];
+    if (updated.length < 2) updated.push(day);
+    else updated = [day];
+    setSelectedDates(updated);
   };
 
   const isSelectedDate = (day: number) => selectedDates.includes(day);
@@ -62,16 +54,16 @@ const Calendar = () => {
   const goToNextPage = () => {
     if (selectedDates.length !== 2) return;
 
-    const [startDay, endDay] = selectedDates.sort((a, b) => (a! - b!));
-    const startDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), startDay!);
-    const endDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), endDay!);
+    const [s, e] = selectedDates.sort((a, b) => (a! - b!));
+    const startDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), s!);
+    const endDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), e!);
 
-    const startDateStr = startDate.toISOString().split('T')[0];
-    const endDateStr = endDate.toISOString().split('T')[0];
+    const start = startDate.toISOString().split('T')[0];
+    const last = endDate.toISOString().split('T')[0];
 
     router.push({
       pathname: '/addtime',
-      query: { start_day: startDateStr, last_day: endDateStr }
+      query: { start_day: start, last_day: last },
     });
   };
 
@@ -100,24 +92,24 @@ const Calendar = () => {
     <>
       <div className={styles.calendarContainer}>
         <div className={styles.monthHeader}>
-          <span className={styles.arrow} onClick={goToPreviousMonth}>{"<"}</span>
+          <span className={styles.arrow} onClick={goToPreviousMonth}>{'<'}</span>
           <span>{year} {month}</span>
-          <span className={styles.arrow} onClick={goToNextMonth}>{">"}</span>
+          <span className={styles.arrow} onClick={goToNextMonth}>{'>'}</span>
         </div>
-
         <div className={styles.daysOfWeek}>
-          {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => <div key={i}>{d}</div>)}
+          {['일','월','화','수','목','금','토'].map((d, i) => <div key={i}>{d}</div>)}
         </div>
-
         {days.map((week, i) => (
           <div key={i} className={styles.week}>
             {week.map((day, j) => (
               <div
                 key={j}
-                className={`${styles.day} 
+                className={`
+                  ${styles.day} 
                   ${day && isToday(day) ? styles.today : ''} 
                   ${day && isBetweenSelectedDates(day) ? styles.selectedBetween : ''} 
-                  ${day && isSelectedDate(day) ? styles.selected : ''}`}
+                  ${day && isSelectedDate(day) ? styles.selected : ''}
+                `}
                 onClick={() => day && handleDateClick(day)}
               >
                 {day}

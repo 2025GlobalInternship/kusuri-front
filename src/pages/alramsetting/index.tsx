@@ -59,7 +59,7 @@ const Setalram = () => {
   };
 
   const goToAddAlarm = () => {
-    router.push("/addalram");
+    router.push("/selectmedicine");
   };
 
   const morningAlarms = alarmList.filter(a => a.period === "오전");
