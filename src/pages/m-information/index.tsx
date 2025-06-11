@@ -20,7 +20,6 @@ export default function InfoPage() {
 
   const handleSubmit = async () => {
     try {
-      // 1. 각각의 약을 API에 등록
       for (const med of medicineList) {
         const res = await fetch("/api/medicines/taking-medicine", {
           method: "POST",
@@ -33,7 +32,6 @@ export default function InfoPage() {
         if (!res.ok) throw new Error(`약 ${med} 등록 실패`);
       }
 
-      // 2. 메인 페이지로 이동
       router.push("/main");
     } catch (error) {
       console.error("약 등록 중 오류 발생:", error);
