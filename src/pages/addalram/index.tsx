@@ -7,6 +7,7 @@ const Calendar = () => {
   const router = useRouter();
   const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 18));
   const [selectedDates, setSelectedDates] = useState<(number | null)[]>([]);
+  const { medicine, medicine_id } = router.query;
 
   const today = new Date();
 
@@ -54,7 +55,7 @@ const Calendar = () => {
   const goToNextPage = () => {
     if (selectedDates.length !== 2) return;
 
-    const [s, e] = selectedDates.sort((a, b) => (a! - b!));
+    const [s, e] = selectedDates.sort((a, b) => a! - b!);
     const startDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), s!);
     const endDate = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), e!);
 
@@ -63,7 +64,7 @@ const Calendar = () => {
 
     router.push({
       pathname: '/addtime',
-      query: { start_day: start, last_day: last },
+      query: { medicine, medicine_id, start_day: start, last_day: last },
     });
   };
 
@@ -97,7 +98,9 @@ const Calendar = () => {
           <span className={styles.arrow} onClick={goToNextMonth}>{'>'}</span>
         </div>
         <div className={styles.daysOfWeek}>
-          {['일','월','화','수','목','금','토'].map((d, i) => <div key={i}>{d}</div>)}
+          {['일', '월', '화', '수', '목', '금', '토'].map((d, i) => (
+            <div key={i}>{d}</div>
+          ))}
         </div>
         {days.map((week, i) => (
           <div key={i} className={styles.week}>
@@ -125,11 +128,15 @@ const Calendar = () => {
         ) : (
           <div className={styles.dateRange}>
             <span className={styles.selectedDate}>
-              {selectedDates[0] ? formatDate(selectedDates[0]) : <span className={styles.emptyDate}>가짜 날짜</span>}
+              {selectedDates[0]
+                ? formatDate(selectedDates[0])
+                : <span className={styles.emptyDate}>가짜 날짜</span>}
             </span>
             <span className={styles.dateSeparator}> - </span>
             <span className={styles.selectedDate}>
-              {selectedDates[1] ? formatDate(selectedDates[1]) : <span className={styles.emptyDate}>가짜 날짜</span>}
+              {selectedDates[1]
+                ? formatDate(selectedDates[1])
+                : <span className={styles.emptyDate}>가짜 날짜</span>}
             </span>
           </div>
         )}
