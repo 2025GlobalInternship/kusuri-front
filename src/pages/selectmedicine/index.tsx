@@ -76,7 +76,18 @@ const SelectMedicine = () => {
   const handleNext = () => {
     if (selectedMedicineId === null) return;
     setSubmitting(true);
-    router.push('/addalram');
+
+    const selectedMedicine = medicines.find((m) => m.id === selectedMedicineId);
+
+    if (!selectedMedicine) {
+      alert('선택된 약 정보를 찾을 수 없습니다.');
+      return;
+    }
+
+    router.push({
+      pathname: '/addalram',
+      query: { medicine: selectedMedicine.medicine },
+    });
   };
 
   const handleSelectMedicine = (id: number) => {

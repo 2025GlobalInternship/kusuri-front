@@ -10,9 +10,9 @@ const VISIBLE_COUNT = 5;
 const CENTER_INDEX = Math.floor(VISIBLE_COUNT / 2);
 
 const repeatOptions = [
-  '매일 반복', '격일로 반복', '월요일마다 반복', '화요일마다 반복',
-  '수요일마다 반복', '목요일마다 반복', '금요일마다 반복',
-  '토요일마다 반복', '일요일마다 반복',
+  '격일', '매일', 'Mon', 'Tue',
+  'Wed', 'Thu', 'Fri',
+  'Sat', 'Sun',
 ];
 
 const AddTime = () => {
@@ -24,7 +24,7 @@ const AddTime = () => {
   const [repeatOpen, setRepeatOpen] = useState(false);
   const [startDay, setStartDay] = useState('');
   const [lastDay, setLastDay] = useState('');
-  // ** medicine 쿼리 받기 (이전 페이지에서 넘겼다고 가정) **
+  // medicine 쿼리만 받음
   const [medicine, setMedicine] = useState('');
 
   useEffect(() => {
@@ -101,15 +101,16 @@ const AddTime = () => {
     if (ampm === 'PM' && h !== 12) h += 12;
     if (ampm === 'AM' && h === 12) h = 0;
 
-    const timeString = `${String(h).padStart(2, '0')}:${minute}:00`; // 초까지 포함해서 08:00:00 형식
+    const timeString = `${String(h).padStart(2, '0')}:${minute}:00`;
+    const timeslot = ampm === 'AM' ? '오전' : '오후'; // ✅ 추가된 라인
 
-    // 쿼리로 다음 페이지에 넘기기 (medicine도 같이 넘김)
     router.push({
       pathname: '/finishalarm',
       query: {
         start_day: startDay,
         last_day: lastDay,
         time: timeString,
+        timeslot, // ✅ 추가된 항목
         day_type: selectedRepeat,
         medicine,
       },
