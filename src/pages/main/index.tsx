@@ -1,7 +1,8 @@
-import SearchLayout from "@/components/search-layout"; //불러오기
+import SearchLayout from "@/components/search-layout";
 import NavigationVarLayout from "@/components/navigation_var-layout";
 import ChatIconLayout from "@/components/chatIcon-layout";
 import Image from "next/image";
+import axios from "axios";
 
 import kusuriLogo from "../../../public/images/kusuri-logo.png";
 import bellIcon from "../../../public/images/alram_icon.png";
@@ -15,7 +16,7 @@ import clockIcon from "../../../public/images/clockIcon.png";
 
 import style from "./index.module.css";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MedicineLayout from "@/components/medicine-layout";
 
 export default function Page() {
@@ -42,25 +43,26 @@ export default function Page() {
         router.push('/my');
     }
 
-    let [data, setData] = useState(
-        [
-            {
-                name: "약1",
-                tag: "감기",
-                detail: "어쩌구저쩌구"
-            },
-            {
-                name: "약2",
-                tag: "멀미미",
-                detail: "어쩌구저쩌구"
-            },
-            {
-                name: "약3",
-                tag: "알레르기",
-                detail: "어쩌구저쩌구"
-            }
-        ]
-    );
+    const [medicine, setMedicine] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        axios.get('http://localhost:80/kusuri-back/medicines/ranking')
+        .then(response => {
+            console.log('약 리스트:', response.data); // 데이터 구조 확인
+            setMedicine(response.data);
+            setLoading(false);
+        })
+        .catch(error => {
+            setError(error);
+            setLoading(false);
+        })
+    }, []);
+
+
+    if(loading) return <p>Loading</p>
+    if(error) return <p>Error : {error}</p>
 
     return (
         <div className={style.container}>
@@ -102,13 +104,11 @@ export default function Page() {
             <div className={style.famousCon}>
                 <span id={style.famousTitle}>많이 찾는 약 list</span>
                     {
-                        data.map((a) => {
-                            return(
-                                <div key={a.name}>
-                                    <MedicineLayout data={a} />
-                                </div>
-                            )
-                        })
+                        medicine.slice(0, 3).map((medi) => (
+                            <div key={medi.med_id}>
+                                <MedicineLayout data={medi} />
+                            </div>
+                        ))
                     }
             </div>
 
