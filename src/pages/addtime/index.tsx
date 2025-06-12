@@ -22,12 +22,23 @@ const AddTime = () => {
   const [ampm, setAmpm] = useState('AM');
   const [selectedRepeat, setSelectedRepeat] = useState('');
   const [repeatOpen, setRepeatOpen] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
+  const [startDay, setStartDay] = useState('');
+  const [lastDay, setLastDay] = useState('');
+  // ** medicine 쿼리 받기 (이전 페이지에서 넘겼다고 가정) **
+  const [medicine, setMedicine] = useState('');
 
-  const start_day = router.query.start_day as string;
-  const last_day = router.query.last_day as string;
+  useEffect(() => {
+    if (router.isReady) {
+      const queryStart = router.query.start_day as string;
+      const queryLast = router.query.last_day as string;
+      const queryMedicine = router.query.medicine as string;
+      if (queryStart) setStartDay(queryStart);
+      if (queryLast) setLastDay(queryLast);
+      if (queryMedicine) setMedicine(queryMedicine);
+    }
+  }, [router.isReady, router.query]);
 
-  const isComplete = hour && minute && ampm && selectedRepeat;
+  const isComplete = hour && minute && ampm && selectedRepeat && startDay && lastDay;
 
   const hoursRaw = Array.from({ length: 12 }, (_, i) => String(i + 1).padStart(2, '0'));
   const minutesRaw = Array.from({ length: 60 }, (_, i) => String(i).padStart(2, '0'));
@@ -37,8 +48,9 @@ const AddTime = () => {
   const minutes = Array.from({ length: minutesRaw.length * repeatCount }, (_, i) => minutesRaw[i % minutesRaw.length]);
   const ampmList = ['', '', 'AM', 'PM', '', ''];
 
-  const renderWheel = (items: string[], selected: string, onSelect: (v:string)=>void, isAmpm = false) => {
+  const renderWheel = (items: string[], selected: string, onSelect: (v: string) => void, isAmpm = false) => {
     const ref = useRef<HTMLDivElement>(null);
+
     useEffect(() => {
       if (ref.current) {
         const idx = items.findIndex(item => item === selected);
@@ -51,10 +63,11 @@ const AddTime = () => {
       if (!ref.current) return;
       const scrollTop = ref.current.scrollTop;
       const idx = Math.round(scrollTop / ITEM_HEIGHT) + CENTER_INDEX;
-      if (idx >=0 && idx < items.length) {
+      if (idx >= 0 && idx < items.length) {
         const v = items[idx];
         if (v && v !== selected) onSelect(v);
       }
+
       if (!isAmpm && items.length > 20) {
         const buffer = ITEM_HEIGHT * 20;
         if (scrollTop < buffer || scrollTop > ref.current.scrollHeight - ref.current.clientHeight - buffer) {
@@ -68,48 +81,39 @@ const AddTime = () => {
 
     return (
       <div className={styles.wheelContainer} ref={ref} onScroll={handleScroll} style={{ height: ITEM_HEIGHT * VISIBLE_COUNT }}>
-        {items.map((item,i) => {
+        {items.map((item, i) => {
           const centerIdx = Math.round(ref.current?.scrollTop! / ITEM_HEIGHT) + CENTER_INDEX;
           const isSel = i === centerIdx && item !== '';
-          return <div key={i} className={`${styles.wheelItem} ${isSel ? styles.selected : ''}`}>{item}</div>;
+          return (
+            <div key={i} className={`${styles.wheelItem} ${isSel ? styles.selected : ''}`}>
+              {item}
+            </div>
+          );
         })}
       </div>
     );
   };
 
-  const handleSubmit = async () => {
-    if (!isComplete || !start_day || !last_day) return;
-    setSubmitting(true);
+  const handleNext = () => {
+    if (!isComplete) return;
 
     let h = parseInt(hour);
     if (ampm === 'PM' && h !== 12) h += 12;
     if (ampm === 'AM' && h === 12) h = 0;
 
-    const timeString = `${String(h).padStart(2,'0')}:${minute}`;
+    const timeString = `${String(h).padStart(2, '0')}:${minute}:00`; // 초까지 포함해서 08:00:00 형식
 
-    const payload = {
-      start_day,
-      last_day,
-      time: timeString,
-      day_type: selectedRepeat,
-    };
-
-    try {
-      const response = await fetch('/api/alarms/alarm-setting', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error('서버 오류');
-
-      router.push('/finishalarm');
-    } catch (e) {
-      alert('알람 저장에 실패했습니다.');
-      console.error(e);
-    } finally {
-      setSubmitting(false);
-    }
+    // 쿼리로 다음 페이지에 넘기기 (medicine도 같이 넘김)
+    router.push({
+      pathname: '/finishalarm',
+      query: {
+        start_day: startDay,
+        last_day: lastDay,
+        time: timeString,
+        day_type: selectedRepeat,
+        medicine,
+      },
+    });
   };
 
   return (
@@ -147,10 +151,10 @@ const AddTime = () => {
       <div className={styles.nextButtonContainer}>
         <button
           className={`${styles.nextButton} ${isComplete ? styles.clicked : ''}`}
-          onClick={handleSubmit}
-          disabled={!isComplete || submitting}
+          onClick={handleNext}
+          disabled={!isComplete}
         >
-          {submitting ? '저장 중...' : '다음'}
+          다음
         </button>
       </div>
     </>

@@ -5,6 +5,7 @@
 
 .inputSection {
   margin-top: 20px;
+  position: relative;
 }
 
 .label {
@@ -62,7 +63,7 @@
   flex-wrap: wrap;
   gap: 8px;
   justify-content: flex-start;
-  margin-top: 25px;
+  margin-top: 44px;
   padding-left: 0;
   color: rgba(93, 93, 93, 1);
 }
@@ -258,3 +259,14 @@
   border: 2px solid #00E284 !important; /* 선택 시 테두리 */
   background-color: rgba(0, 226, 132, 0.17);
 }
+
+/* errorMessage 위치 고정 */
+.errorMessage {
+  color: rgba(255, 134, 134, 1);
+  font-size: 12px;
+  margin-top: 8px;
+  position: absolute;
+  z-index: 100;
+}
+
+

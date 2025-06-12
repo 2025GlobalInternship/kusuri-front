@@ -6,46 +6,46 @@
     height: 100vh;
     padding: 40px;
     font-family: 'pre-medium';
-    position: relative; 
-}
-
-.titleBox {
+    position: relative;
+  }
+  
+  .titleBox {
     margin-top: 50px;
-}
-
-.greeting {
+  }
+  
+  .greeting {
     font-size: 24px;
     font-weight: bold;
-}
-
-.subtitle {
+  }
+  
+  .subtitle {
     font-size: 24px;
     font-weight: bold;
     color: black;
     margin-top: -10px;
-}
-
-.inputContainer {
+  }
+  
+  .inputContainer {
     display: flex;
     align-items: center;
     gap: 10px;
     margin-top: 20px;
-}
-
-.input {
+  }
+  
+  .input {
     width: 250px;
     padding: 15px;
     border: none;
-    background-color: transparent; 
-    border-bottom: 2px solid #ccc; 
+    background-color: transparent;
+    border-bottom: 2px solid #ccc;
     outline: none;
     font-size: 16px;
     color: gray;
-    border-radius: 0; 
+    border-radius: 0;
     transition: border-bottom 0.3s ease;
-}
-
-.addButton {
+  }
+  
+  .addButton {
     width: 45px;
     height: 45px;
     border: none;
@@ -54,28 +54,27 @@
     font-size: 20px;
     border-radius: 50%;
     cursor: pointer;
-}
-
-.addButton:hover {
+  }
+  
+  .addButton:hover {
     background-color: #5cd6a0;
-}
-
-.medicineList {
+  }
+  
+  .medicineList {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
-    margin-top: 20px;
-}
-
-.medicineTag {
+  }
+  
+  .medicineTag {
     padding: 10px 20px;
     background-color: #EBF0F7;
     color: gray;
     font-size: 16px;
     border-radius: 20px;
-}
-
-.nextButton {
+  }
+  
+  .nextButton {
     width: 300px;
     height: 50px;
     border: none;
@@ -92,37 +91,46 @@
     margin: 0 auto;
     margin-bottom: 163px;
     transition: background-color 0.3s, color 0.3s;
-}
-
-.nextButton:disabled {
+  }
+  
+  .nextButton:disabled {
     background-color: rgba(221, 225, 229, 1);
     cursor: not-allowed;
-}
-
-/* 활성화 상태일 때 버튼 색상 변경 */
-.active {
+  }
+  
+  /* 활성화 상태일 때 버튼 색상 변경 */
+  .active {
     background-color: rgba(127, 241, 173, 1) !important;
     color: white !important;
-}
-
-.plusIcon {
+  }
+  
+  .plusIcon {
     width: 35px;
     height: 35px;
-}
-
-.medicineLabel {
+  }
+  
+  .medicineLabel {
     font-size: 18px;
     color: black;
     margin-top: 30px;
     font-weight: 500;
-}
-
-.inputContainer {
+  }
+  
+  .inputContainer {
     margin-top: 1px;
-}
-
-/* disabled 상태일 때 플러스 아이콘 커서 변경 */
-.disabledButton {
+  }
+  
+  /* disabled 상태일 때 플러스 아이콘 커서 변경 */
+  .disabledButton {
     cursor: not-allowed !important;
     opacity: 0.5;
-}
+  }
+  
+  /* 에러 메시지 고정 영역 */
+  .errorMessage {
+    color: rgba(255, 134, 134, 1);
+    font-size: 12px;
+    margin-top: 5px;
+    height: 1.2em; /* 고정 높이로 레이아웃 밀림 방지 */
+  }
+  

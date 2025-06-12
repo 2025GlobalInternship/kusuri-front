@@ -5,17 +5,22 @@ import style from "./index.module.css";
 export default function InfoPage() {
   const [medicine, setMedicine] = useState("");
   const [medicineList, setMedicineList] = useState<string[]>([]);
+  const [errorMessage, setErrorMessage] = useState("");
   const router = useRouter();
 
   const handleAddMedicine = () => {
-    if (
-      medicine.trim() !== "" &&
-      !medicineList.includes(medicine) &&
-      medicineList.length < 3
-    ) {
-      setMedicineList([...medicineList, medicine]);
-      setMedicine("");
+    if (medicine.trim() === "") return;
+
+    if (medicineList.includes(medicine)) {
+      setErrorMessage("이미 등록되어있는 약입니다.");
+      setTimeout(() => setErrorMessage(""), 3000);
+      return;
     }
+
+    if (medicineList.length >= 3) return;
+
+    setMedicineList([...medicineList, medicine]);
+    setMedicine("");
   };
 
   const handleSubmit = async () => {
@@ -74,6 +79,14 @@ export default function InfoPage() {
             }}
           />
         </div>
+
+        {/* 에러 메시지 위치 고정 */}
+        <p
+          className={style.errorMessage}
+          style={{ visibility: errorMessage ? "visible" : "hidden" }}
+        >
+          {errorMessage || "placeholder"}
+        </p>
 
         <div className={style.medicineList}>
           {medicineList.map((med, index) => (
