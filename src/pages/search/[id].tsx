@@ -1,4 +1,4 @@
-import SearchLayout from "@/components/search-layout";
+import SearchLayout from "@/components/search-layout"; 
 import MedicineLayout from "@/components/medicine-layout";
 import Image from "next/image";
 import backIcon from "../../../public/images/chevron-left.png";
@@ -6,6 +6,7 @@ import backIcon from "../../../public/images/chevron-left.png";
 import style from "./[id].module.css";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Page() {
     const router = useRouter();
@@ -15,45 +16,36 @@ export default function Page() {
         router.push('/main');
     }
 
-    let [data, setData] = useState(
-        [
-            {
-                name: "약1",
-                tag: "감기",
-                detail: "어쩌구저쩌구"
-            },
-            {
-                name: "약2",
-                tag: "멀미미",
-                detail: "어쩌구저쩌구"
-            },
-            {
-                name: "약3",
-                tag: "알레르기",
-                detail: "어쩌구저쩌구"
-            }
-        ]
-    );
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        if (!id) return;
+
+        axios.get(`http://localhost/kusuri-back/medicines/search?name=${id}`)
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error("데이터 불러오기 실패:", error);
+                setData([]);  // 에러 시 빈 배열로 초기화
+            });
+    }, [id]);
 
     return (
         <div>
             <div className={style.searchBar}>   
                 <Image onClick={backBtnClick} src={backIcon} alt="뒤로가기" />
                 <div id={style.search}>
-                    <SearchLayout text={id}>원하는 약을 검색해주세요</SearchLayout>
+                    <SearchLayout text={typeof id === "string" ? id : ""}>원하는 약을 검색해주세요</SearchLayout>
                 </div>
             </div>
 
             <div className={style.mediCon}>
-                {
-                    data.map((a) => {
-                        return (
-                            <div key={a.name}>
-                                <MedicineLayout data={a} />
-                            </div>
-                        )
-                    })
-                }
+                {data.map((medi, idx) => (
+                    <div key={idx}>
+                        <MedicineLayout data={medi} />
+                    </div>
+                ))}
             </div>
         </div>
     )
