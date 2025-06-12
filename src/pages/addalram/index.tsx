@@ -7,7 +7,7 @@ const Calendar = () => {
   const router = useRouter();
   const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 18));
   const [selectedDates, setSelectedDates] = useState<(number | null)[]>([]);
-  const { medicine, medicine_id } = router.query;
+  const { medicine} = router.query;
 
   const today = new Date();
 
@@ -64,7 +64,7 @@ const Calendar = () => {
 
     router.push({
       pathname: '/addtime',
-      query: { medicine, medicine_id, start_day: start, last_day: last },
+      query: { medicine,  start_day: start, last_day: last },
     });
   };
 
