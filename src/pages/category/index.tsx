@@ -23,15 +23,16 @@ import chosenSkin from "../../../public/images/category/chosen_skin.png";
 
 import { useRouter } from "next/router";
 import Head from "next/head";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 export default function Page() {
     const router = useRouter();
     // const [selectedImg, setSelectedImg] = useState<string>("");
 
     const categoryBtnClick = (e : React.MouseEvent<HTMLImageElement>) => {
-        const cate = e.currentTarget.alt;
         // setSelectedImg(chosenHead.src as string);
+        const cate = e.currentTarget.alt;
 
         router.push(`/category/${cate}`);
     }

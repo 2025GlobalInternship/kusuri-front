@@ -22,29 +22,22 @@ export default function Page({ id, data }: { id: string; data: any[] }) {
 export const getServerSideProps: GetServerSideProps = async (context) => {
     const { id } = context.params as { id: string };
 
-    // 추후 fetch로 대체 예정
-    const data = [
-        {
-            name: "약1",
-            tag: "감기",
-            detail: "어쩌구저쩌구"
-        },
-        {
-            name: "약2",
-            tag: "멀미미",
-            detail: "어쩌구저쩌구"
-        },
-        {
-            name: "약3",
-            tag: "알레르기",
-            detail: "어쩌구저쩌구"
-        }
-    ];
+    try {
+        const response = await fetch(`http://localhost:80/kusuri-back/medicines/category?type=${id}`);
+        const data = await response.json();
 
-    return {
-        props: {
-            id,
-            data,
-        },
-    };
+        return {
+            props: {
+                id,
+                data,
+            },
+        };
+    } catch (error) {
+        return {
+            props: {
+                id,
+                data: [],
+            },
+        };
+    }
 };
