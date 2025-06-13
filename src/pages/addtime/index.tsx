@@ -24,8 +24,8 @@ const AddTime = () => {
   const [repeatOpen, setRepeatOpen] = useState(false);
   const [startDay, setStartDay] = useState('');
   const [lastDay, setLastDay] = useState('');
-  // medicine 쿼리만 받음
   const [medicine, setMedicine] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (router.isReady) {
@@ -80,7 +80,12 @@ const AddTime = () => {
     };
 
     return (
-      <div className={styles.wheelContainer} ref={ref} onScroll={handleScroll} style={{ height: ITEM_HEIGHT * VISIBLE_COUNT }}>
+      <div
+        className={styles.wheelContainer}
+        ref={ref}
+        onScroll={handleScroll}
+        style={{ height: ITEM_HEIGHT * VISIBLE_COUNT }}
+      >
         {items.map((item, i) => {
           const centerIdx = Math.round(ref.current?.scrollTop! / ITEM_HEIGHT) + CENTER_INDEX;
           const isSel = i === centerIdx && item !== '';
@@ -94,27 +99,50 @@ const AddTime = () => {
     );
   };
 
-  const handleNext = () => {
-    if (!isComplete) return;
+  const handleNext = async () => {
+    if (!isComplete || submitting) return;
+
+    setSubmitting(true);
 
     let h = parseInt(hour);
     if (ampm === 'PM' && h !== 12) h += 12;
     if (ampm === 'AM' && h === 12) h = 0;
 
     const timeString = `${String(h).padStart(2, '0')}:${minute}:00`;
-    const timeslot = ampm === 'AM' ? '오전' : '오후'; // ✅ 추가된 라인
+    const timeslot = ampm === 'AM' ? '오전' : '오후';
 
-    router.push({
-      pathname: '/finishalarm',
-      query: {
-        start_day: startDay,
-        last_day: lastDay,
-        time: timeString,
-        timeslot, // ✅ 추가된 항목
-        day_type: selectedRepeat,
-        medicine,
-      },
-    });
+    const payload = {
+      start_day: startDay,
+      last_day: lastDay,
+      time: timeString,
+      timeslot,
+      day_type: selectedRepeat,
+      medicine,
+    };
+
+    try {
+      const res = await fetch('/api/alarms/alarm-setting', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.status === 409) {
+        router.push('/failalram'); // 약 중복 저장
+        return;
+      }
+
+      if (!res.ok) {
+        throw new Error('API 실패');
+      }
+
+      router.push('/finishalarm');
+    } catch (e) {
+      console.error('알람 저장 실패:', e);
+      router.push('/failalarm');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -140,7 +168,14 @@ const AddTime = () => {
           {repeatOpen && (
             <div className={styles.optionList}>
               {repeatOptions.map(o => (
-                <div key={o} className={styles.optionItem} onClick={() => { setSelectedRepeat(o); setRepeatOpen(false); }}>
+                <div
+                  key={o}
+                  className={styles.optionItem}
+                  onClick={() => {
+                    setSelectedRepeat(o);
+                    setRepeatOpen(false);
+                  }}
+                >
                   {o}
                 </div>
               ))}
@@ -153,9 +188,9 @@ const AddTime = () => {
         <button
           className={`${styles.nextButton} ${isComplete ? styles.clicked : ''}`}
           onClick={handleNext}
-          disabled={!isComplete}
+          disabled={!isComplete || submitting}
         >
-          다음
+          {submitting ? '저장 중...' : '다음'}
         </button>
       </div>
     </>
