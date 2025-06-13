@@ -50,7 +50,7 @@ export default function Page() {
     useEffect(() => {
         axios.get('http://localhost:80/kusuri-back/medicines/ranking')
         .then(response => {
-            console.log('약 리스트:', response.data); // 데이터 구조 확인
+            // console.log('약 리스트:', response.data);
             setMedicine(response.data);
             setLoading(false);
         })
