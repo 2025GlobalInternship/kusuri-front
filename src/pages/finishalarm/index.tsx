@@ -12,7 +12,7 @@ export default function FinishAlarmPage() {
 
   return (
     <div className={styles.container}>
-      <img src="/images/alarm-finish.png" alt="Finish Alarm" className={styles.image} />
+      <img src="/images/check1.png" alt="Finish Alarm" className={styles.image} />
       <p className={styles.text}>
         성공적으로<br />알람이 예약됐습니다.
       </p>

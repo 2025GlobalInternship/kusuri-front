@@ -128,18 +128,16 @@ const AddTime = () => {
       });
 
       if (res.status === 409) {
-        router.push('/failalram'); // 약 중복 저장
-        return;
+        router.push('/failalram'); // 중복된 알람
+      } else if (res.ok) {
+        router.push('/finishalarm'); // 정상 등록
+      } else {
+        console.error('알람 저장 실패:', res.status);
+        router.push('/failalram'); // 기타 실패
       }
-
-      if (!res.ok) {
-        throw new Error('API 실패');
-      }
-
-      router.push('/finishalarm');
     } catch (e) {
-      console.error('알람 저장 실패:', e);
-      router.push('/failalarm');
+      console.error('알람 저장 중 네트워크 오류:', e);
+      router.push('/failalram');
     } finally {
       setSubmitting(false);
     }
@@ -190,7 +188,7 @@ const AddTime = () => {
           onClick={handleNext}
           disabled={!isComplete || submitting}
         >
-          {submitting ? '저장 중...' : '다음'}
+          다음
         </button>
       </div>
     </>

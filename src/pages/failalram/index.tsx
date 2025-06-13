@@ -6,13 +6,15 @@ import { useRouter } from 'next/router';
 export default function FailAlarmPage() {
   const router = useRouter();
 
-  const handleRetry = () => {
-    router.push('/main')
-  };
+  // router.push 이후 로딩 상태를 렌더링하지 않게 하기
+const handleRetry = () => {
+  router.push('/main'); // 아무 상태 변화 없이 바로 전환
+};
+
 
   return (
     <div className={styles.container}>
-      <img src="/images/calcelalram.png" alt="Fail Alarm" className={styles.image} />
+      <img src="/images/cancelalram.png" alt="Fail Alarm" className={styles.image} />
       <p className={styles.text}>
         알람 설정에<br />실패했습니다.
       </p>
