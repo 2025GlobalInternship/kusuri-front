@@ -30,20 +30,36 @@ export default function Page() {
         );
 
         const fetchFavorite = axios.get(
-            `http://localhost:80/kusuri-back/medicines/my-favorite-medicine`,
+            `http://localhost:80/kusuri-back/medicines/is-favorite-medicine?med_id=${id}`,
             { withCredentials: true }
         );
 
         Promise.all([fetchMedicine, fetchFavorite])
             .then(([res1, res2]) => {
-                setMedicine(res1.data);
-                setMarked(res2.data);
+                setMedicine(res1.data); // 정보
+                setMarked(res2.data === false ? 0 : 1); // 북마크
             })
             .catch(err => {
                 console.error('데이터 로딩 실패:', err);
             })
             .finally(() => setLoading(false));
     }, [id]);
+
+    const toggleBookmark = async () => {
+        try {
+            const response = await axios.post(
+                `http://localhost:80/kusuri-back/medicines/favorite`,
+                { med_id: {id} },
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            setMarked(prev => (prev === 0 ? 1 : 0));
+        } catch (error) {
+            console.error("북마크 처리 중 오류:", error);
+        }
+    };
 
     const backBtnClick = () => {
         router.back();
@@ -69,12 +85,18 @@ export default function Page() {
                 </div>
             </div>
             <div className={style.titleCon}>
-                <Image id={style.markIcon} src={marked === 0 ? markIcon : markIcon2} alt="북마크" priority />
+                <Image
+                    id={style.markIcon}
+                    src={marked === 0 ? markIcon : markIcon2}
+                    alt="북마크"
+                    priority
+                    onClick={toggleBookmark}
+                />
                 <span id={style.mediName}>{medicine.med_name_kr}</span>
                 <span id={style.mediJp}>({medicine.med_name_jp})</span>
                 <Image
                     id={style.mediImg}
-                    src={`http://localhost/kusuri-back/${medicine.med_imgPath}`}
+                    src={`http://localhost:80/kusuri-back/${medicine.med_imgPath}`}
                     alt="약 이미지"
                     width={150}
                     height={150}

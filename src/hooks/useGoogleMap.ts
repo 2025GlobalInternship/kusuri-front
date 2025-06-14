@@ -18,7 +18,7 @@ export const useGoogleMap = (
     useEffect(() => {
         if (!apiKey || !mapRef.current) return;
 
-    const initMap = async () => {
+        const initMap = async () => {
         const loader = new Loader({
             apiKey,
             version: "weekly",
@@ -27,15 +27,15 @@ export const useGoogleMap = (
 
         await loader.load();
 
-        const center = { lat: 37.5665, lng: 126.9780 };
+        const center = { lat: 37.46643982035745, lng: 126.93295654348258 };
         const map = new google.maps.Map(mapRef.current!, {
             center,
             zoom: 15,
             disableDefaultUI: true,
             mapId: "ef67e9db5416313b",
             styles: [
-            { featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] },
-            { featureType: "transit.station", stylers: [{ visibility: "off" }] },
+                { featureType: "poi", elementType: "labels", stylers: [{ visibility: "off" }] },
+                { featureType: "transit.station", stylers: [{ visibility: "off" }] },
             ],
         });
 
@@ -71,7 +71,9 @@ export const useGoogleMap = (
             markerContent.className = style.customMarker;
             markerContent.innerHTML = `
                 <img id="${style.icon}" src="/images/pharmacyIcon2.png" alt="약국" />
-                <div class="${style.title}">${pharmacy.name}</div>
+                <div class="${style.title}">
+                    <span>${pharmacy.name}</span>
+                </div>
                 <div class="${style.distance}">${pharmacy.length}km</div>
             `;
 
@@ -79,11 +81,6 @@ export const useGoogleMap = (
                 map,
                 position: pharmacy.location,
                 content: markerContent,
-            });
-
-            marker.addListener("click", () => {
-                infoWindow.setContent(`<div><strong>${pharmacy.name}</strong></div>`);
-                infoWindow.open(map, marker);
             });
           });
 
