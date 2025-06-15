@@ -13,10 +13,13 @@ interface Medicine {
 
 interface Alarm {
   id: number;
-  time: string; // "06:00" 형식
+  time: string;
   timeslot: "오전" | "오후";
   medicine: string;
   isActive: boolean;
+  start_day?: string;
+  last_day?: string;
+  days?: string; // 요일 문자열 또는 날짜 숫자 문자열, 예: "Mon,Tue" 또는 "17,18,19"
 }
 
 export default function Page() {
@@ -37,39 +40,32 @@ export default function Page() {
 
   const fetchAlarms = async () => {
     try {
-      const res = await fetch("/api/alarms/alarm", {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      });
-
+      const res = await fetch("/api/alarms/alarm");
       const text = await res.text();
-      if (!text) {
-        console.warn("응답 본문이 없습니다.");
-        setAlarmList([]);
-        return;
-      }
+      if (!text) return setAlarmList([]);
 
       let data;
       try {
         data = JSON.parse(text);
       } catch (err) {
         console.error("JSON 파싱 실패:", err);
-        setAlarmList([]);
-        return;
+        return setAlarmList([]);
       }
 
       if (!Array.isArray(data)) {
         console.error("알람 응답이 배열이 아님:", data);
-        setAlarmList([]);
-        return;
+        return setAlarmList([]);
       }
 
       const parsedAlarms: Alarm[] = data.map((item: any, index: number) => ({
         id: item.id ?? index + 1,
-        time: item.time ? item.time.split(":").slice(0, 2).join(":") : "",
+        time: item.time?.split(":").slice(0, 2).join(":") ?? "",
         timeslot: item.timeslot === "오전" || item.timeslot === "오후" ? item.timeslot : "오전",
-        medicine: item.medicine || "",
+        medicine: item.medicine ?? "",
         isActive: item.state === "On",
+        start_day: item.start_day,
+        last_day: item.last_day,
+        days: item.days,
       }));
 
       setAlarmList(parsedAlarms);
@@ -101,10 +97,59 @@ export default function Page() {
     );
   };
 
+  const getCurrentWeekDates = (): Date[] => {
+    const today = new Date();
+    const dayOfWeek = today.getDay(); // 0(일) ~ 6(토)
+    const start = new Date(today);
+    start.setDate(today.getDate() - dayOfWeek);
+    start.setHours(0, 0, 0, 0);
+    return Array.from({ length: 7 }, (_, i) => {
+      const date = new Date(start);
+      date.setDate(start.getDate() + i);
+      return date;
+    });
+  };
+
+  const isAlarmOnThisDate = (alarm: Alarm, date: Date): boolean => {
+    if (!alarm.start_day || !alarm.last_day) return false;
+
+    const alarmStart = new Date(alarm.start_day);
+    alarmStart.setHours(0, 0, 0, 0);
+    const alarmEnd = new Date(alarm.last_day);
+    alarmEnd.setHours(0, 0, 0, 0);
+
+    const targetDate = new Date(date);
+    targetDate.setHours(0, 0, 0, 0);
+
+    if (targetDate < alarmStart || targetDate > alarmEnd) return false;
+
+    if (!alarm.days || alarm.days.trim() === "") {
+      return true;
+    }
+
+    const daysArray = alarm.days
+      .split(",")
+      .map((d) => d.trim())
+      .filter((d) => d.length > 0);
+
+    const validWeekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+    const isDaysAreWeekdays = daysArray.every((d) => validWeekDays.includes(d));
+
+    if (isDaysAreWeekdays) {
+      const dayStr = targetDate.toLocaleDateString("en-US", { weekday: "short" });
+      return daysArray.includes(dayStr);
+    } else {
+      const targetDayNum = targetDate.getDate();
+      const daysNums = daysArray.map((d) => Number(d));
+      return daysNums.includes(targetDayNum);
+    }
+  };
+
+  const weekDates = getCurrentWeekDates();
+
   return (
     <>
       <div className={styles.page}>
-        {/* 약 필터 */}
         <div className={styles.filterWrapper}>
           {medicines ? (
             medicines.map((m, i) => (
@@ -126,7 +171,6 @@ export default function Page() {
           )}
         </div>
 
-        {/* 캘린더 */}
         <div className={styles.calendarContainer}>
           <div className={styles.calendarHeader}>
             <span className={styles.calendarTitle}>캘린더</span>
@@ -140,24 +184,37 @@ export default function Page() {
               style={{ cursor: "pointer" }}
             />
           </div>
+
           <div className={styles.calendarWrapper}>
-            {[5, 6, 7, 8, 9].map((day) => (
-              <div
-                key={day}
-                className={`${styles.dateCard} ${day === 6 ? styles.selected : ""}`}
-              >
-                <span className={styles.dateNum}>{day}</span>
-                <div className={styles.dots}>
-                  <span className={styles.dotGreen}></span>
-                  <span className={styles.dotGray}></span>
-                  <span className={styles.dotYellow}></span>
+            {weekDates.map((date) => {
+              const day = date.getDate();
+              const dayOfWeek = date.toLocaleDateString("ko-KR", {
+                weekday: "short",
+              });
+              const isToday = date.toDateString() === new Date().toDateString();
+
+              const hasAlarm = alarmList.some((alarm) =>
+                isAlarmOnThisDate(alarm, date)
+              );
+
+              return (
+                <div
+                  key={day}
+                  className={`${styles.dateCard} ${
+                    isToday ? styles.selected : ""
+                  }`}
+                >
+                  <span className={styles.dateNum}>{day}</span>
+                  <span className={styles.dayLabel}>{dayOfWeek}</span>
+                  <div className={styles.dots}>
+                    {hasAlarm && <span className={styles.dotGreen}></span>}
+                  </div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
-        {/* 알람 카드 */}
         <div className={styles.container}>
           <div className={styles.addBtn}>
             <span>알람 설정</span>
@@ -177,12 +234,16 @@ export default function Page() {
               <button className={styles.toggleBtn} onClick={toggleGlobal}>
                 <div
                   className={styles.toggleSwitch}
-                  style={{ backgroundColor: globalToggle ? "#90f0bc" : "#ccc" }}
+                  style={{
+                    backgroundColor: globalToggle ? "#90f0bc" : "#ccc",
+                  }}
                 >
                   <div
                     className={styles.toggleCircle}
                     style={{
-                      transform: globalToggle ? "translateX(20px)" : "translateX(0)",
+                      transform: globalToggle
+                        ? "translateX(20px)"
+                        : "translateX(0)",
                     }}
                   ></div>
                 </div>
