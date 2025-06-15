@@ -5,101 +5,120 @@ import NavigationVarLayout from "@/components/navigation_var-layout";
 import styles from "./index.module.css";
 import Image from "next/image";
 
-// 약 데이터 타입 정의
 interface Medicine {
   id: number;
-  medicine: string; // API에서 오는 필드명
+  medicine: string;
   user_id: number;
 }
 
-// 알람 데이터 타입 정의
 interface Alarm {
   id: number;
-  time: string;
-  label: string;
-  period: "오전" | "오후";
+  time: string; // "06:00" 형식
+  timeslot: "오전" | "오후";
+  medicine: string;
   isActive: boolean;
 }
 
-const initialAlarms: Alarm[] = [
-  { id: 1, time: "06:15", label: "혈압약", period: "오전", isActive: true },
-  { id: 2, time: "07:15", label: "혈압약", period: "오전", isActive: true },
-  { id: 3, time: "08:15", label: "혈압약", period: "오전", isActive: true },
-  { id: 4, time: "17:15", label: "혈압약", period: "오후", isActive: true },
-  { id: 5, time: "18:15", label: "혈압약", period: "오후", isActive: true },
-  { id: 6, time: "19:15", label: "혈압약", period: "오후", isActive: true },
-];
-
 export default function Page() {
   const [medicines, setMedicines] = useState<Medicine[] | null>(null);
-  const [alarmList, setAlarmList] = useState<Alarm[]>(initialAlarms);
+  const [alarmList, setAlarmList] = useState<Alarm[]>([]);
   const [globalToggle, setGlobalToggle] = useState<boolean>(true);
   const router = useRouter();
 
-  // 약 정보 가져오기
-  const fetchMedicines = async (): Promise<void> => {
+  const fetchMedicines = async () => {
     try {
-      const response = await fetch("/api/medicines/my-take-medicine", {
+      const res = await fetch("/api/medicines/my-take-medicine");
+      const json = await res.json();
+      setMedicines(json.data);
+    } catch (err) {
+      console.error("약물 정보 가져오기 실패:", err);
+    }
+  };
+
+  const fetchAlarms = async () => {
+    try {
+      const res = await fetch("/api/alarms/alarm", {
         method: "GET",
         headers: { "Content-Type": "application/json" },
       });
-      if (response.ok) {
-        const data = await response.json();
-        console.log("받은 약 목록:", data);
-        setMedicines(data.data);
-      } else {
-        console.error("서버 응답 오류");
+
+      const text = await res.text();
+      if (!text) {
+        console.warn("응답 본문이 없습니다.");
+        setAlarmList([]);
+        return;
       }
-    } catch (error) {
-      console.error("약물 정보 가져오기 실패:", error);
+
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (err) {
+        console.error("JSON 파싱 실패:", err);
+        setAlarmList([]);
+        return;
+      }
+
+      if (!Array.isArray(data)) {
+        console.error("알람 응답이 배열이 아님:", data);
+        setAlarmList([]);
+        return;
+      }
+
+      const parsedAlarms: Alarm[] = data.map((item: any, index: number) => ({
+        id: item.id ?? index + 1,
+        time: item.time ? item.time.split(":").slice(0, 2).join(":") : "",
+        timeslot: item.timeslot === "오전" || item.timeslot === "오후" ? item.timeslot : "오전",
+        medicine: item.medicine || "",
+        isActive: item.state === "On",
+      }));
+
+      setAlarmList(parsedAlarms);
+    } catch (err) {
+      console.error("알람 데이터 가져오기 실패:", err);
     }
   };
 
   useEffect(() => {
     fetchMedicines();
+    fetchAlarms();
   }, []);
 
-  // 오전/오후 알람 필터링
-  const morningAlarms = alarmList.filter((alarm) => alarm.period === "오전");
-  const eveningAlarms = alarmList.filter((alarm) => alarm.period === "오후");
+  const morningAlarms = alarmList.filter((a) => a.timeslot === "오전");
+  const eveningAlarms = alarmList.filter((a) => a.timeslot === "오후");
 
   const goToAlarmSetting = () => router.push("/alramsetting");
 
   const toggleAlarmActive = (id: number) => {
     setAlarmList((prev) =>
-      prev.map((alarm) =>
-        alarm.id === id ? { ...alarm, isActive: !alarm.isActive } : alarm
-      )
+      prev.map((a) => (a.id === id ? { ...a, isActive: !a.isActive } : a))
     );
   };
 
   const toggleGlobal = () => {
     setGlobalToggle((prev) => !prev);
     setAlarmList((prev) =>
-      prev.map((alarm) => ({ ...alarm, isActive: !globalToggle }))
+      prev.map((a) => ({ ...a, isActive: !globalToggle }))
     );
   };
-
-  // console.log(medicines.length)
 
   return (
     <>
       <div className={styles.page}>
-        {/* 상단 필터 - 약 리스트 */}
+        {/* 약 필터 */}
         <div className={styles.filterWrapper}>
-          {medicines != null ? (
-            medicines.map((medicine, index) => (
-              <div key={medicine.id} className={styles.filterItem}>
+          {medicines ? (
+            medicines.map((m, i) => (
+              <div key={m.id} className={styles.filterItem}>
                 <span
                   className={
-                    index % 3 === 0
+                    i % 3 === 0
                       ? styles.dotGreen
-                      : index % 3 === 1
+                      : i % 3 === 1
                       ? styles.dotBlue
                       : styles.dotYellow
                   }
                 ></span>{" "}
-                {medicine.medicine}
+                {m.medicine}
               </div>
             ))
           ) : (
@@ -121,14 +140,11 @@ export default function Page() {
               style={{ cursor: "pointer" }}
             />
           </div>
-
           <div className={styles.calendarWrapper}>
             {[5, 6, 7, 8, 9].map((day) => (
               <div
                 key={day}
-                className={`${styles.dateCard} ${
-                  day === 6 ? styles.selected : ""
-                }`}
+                className={`${styles.dateCard} ${day === 6 ? styles.selected : ""}`}
               >
                 <span className={styles.dateNum}>{day}</span>
                 <div className={styles.dots}>
@@ -166,9 +182,7 @@ export default function Page() {
                   <div
                     className={styles.toggleCircle}
                     style={{
-                      transform: globalToggle
-                        ? "translateX(20px)"
-                        : "translateX(0)",
+                      transform: globalToggle ? "translateX(20px)" : "translateX(0)",
                     }}
                   ></div>
                 </div>
@@ -177,48 +191,56 @@ export default function Page() {
 
             <div className={styles.section}>
               <div className={styles.sectionTitle}>오전</div>
-              {morningAlarms.map((alarm) => (
-                <div key={alarm.id} className={styles.alarmItem}>
-                  <div className={styles.dot}></div>
-                  <span className={styles.time}>{alarm.time}</span>
-                  <span className={styles.label}>{alarm.label}</span>
-                  <Image
-                    src={
-                      alarm.isActive
-                        ? "/images/chosen_alram.png"
-                        : "/images/alram_icon.png"
-                    }
-                    alt="alarm toggle"
-                    className={styles.bellIcon}
-                    width={24}
-                    height={24}
-                    onClick={() => toggleAlarmActive(alarm.id)}
-                  />
-                </div>
-              ))}
+              {morningAlarms.length === 0 ? (
+                <div className={styles.emptyMsg}>등록된 알람이 없습니다.</div>
+              ) : (
+                morningAlarms.map((a) => (
+                  <div key={a.id} className={styles.alarmItem}>
+                    <div className={styles.dot}></div>
+                    <span className={styles.time}>{a.time}</span>
+                    <span className={styles.label}>{a.medicine}</span>
+                    <Image
+                      src={
+                        a.isActive
+                          ? "/images/chosen_alram.png"
+                          : "/images/alram_icon.png"
+                      }
+                      alt="alarm toggle"
+                      className={styles.bellIcon}
+                      width={24}
+                      height={24}
+                      onClick={() => toggleAlarmActive(a.id)}
+                    />
+                  </div>
+                ))
+              )}
             </div>
 
             <div className={styles.section}>
               <div className={styles.sectionTitle}>오후</div>
-              {eveningAlarms.map((alarm) => (
-                <div key={alarm.id} className={styles.alarmItem}>
-                  <div className={styles.dot}></div>
-                  <span className={styles.time}>{alarm.time}</span>
-                  <span className={styles.label}>{alarm.label}</span>
-                  <Image
-                    src={
-                      alarm.isActive
-                        ? "/images/chosen_alram.png"
-                        : "/images/alram_icon.png"
-                    }
-                    alt="alarm toggle"
-                    className={styles.bellIcon}
-                    width={24}
-                    height={24}
-                    onClick={() => toggleAlarmActive(alarm.id)}
-                  />
-                </div>
-              ))}
+              {eveningAlarms.length === 0 ? (
+                <div className={styles.emptyMsg}>등록된 알람이 없습니다.</div>
+              ) : (
+                eveningAlarms.map((a) => (
+                  <div key={a.id} className={styles.alarmItem}>
+                    <div className={styles.dot}></div>
+                    <span className={styles.time}>{a.time}</span>
+                    <span className={styles.label}>{a.medicine}</span>
+                    <Image
+                      src={
+                        a.isActive
+                          ? "/images/chosen_alram.png"
+                          : "/images/alram_icon.png"
+                      }
+                      alt="alarm toggle"
+                      className={styles.bellIcon}
+                      width={24}
+                      height={24}
+                      onClick={() => toggleAlarmActive(a.id)}
+                    />
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>
