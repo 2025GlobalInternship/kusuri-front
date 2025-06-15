@@ -41,11 +41,17 @@ export default function Page() {
             </div>
 
             <div className={style.mediCon}>
-                {data.map((medi, idx) => (
-                    <div key={idx}>
-                        <MedicineLayout data={medi} />
+                {data.length > 0 ? (
+                    <div className={style.mediCon}>
+                        {data.map((medi, idx) => (
+                            <div key={idx}>
+                                <MedicineLayout data={medi} />
+                            </div>
+                        ))}
                     </div>
-                ))}
+                ) : (
+                    <div>검색 결과가 없습니다</div>
+                )}
             </div>
         </div>
     )

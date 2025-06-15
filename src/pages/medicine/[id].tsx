@@ -17,21 +17,49 @@ export default function Page() {
     const [medicine, setMedicine] = useState<any>(null);
     const [loading, setLoading] = useState(true);
 
-    const mark = 1;
+    const [marked, setMarked] = useState<0 | 1>(0);
 
     useEffect(() => {
         if (!id) return;
 
-        axios
-            .get(`http://localhost/kusuri-back/medicines/medicine?id=${id}`)
-            .then((res) => {
-                setMedicine(res.data);
+        setLoading(true);
+
+        const fetchMedicine = axios.get(
+            `http://localhost:80/kusuri-back/medicines/medicine?id=${id}`,
+            { withCredentials: true }
+        );
+
+        const fetchFavorite = axios.get(
+            `http://localhost:80/kusuri-back/medicines/is-favorite-medicine?med_id=${id}`,
+            { withCredentials: true }
+        );
+
+        Promise.all([fetchMedicine, fetchFavorite])
+            .then(([res1, res2]) => {
+                setMedicine(res1.data); // 정보
+                setMarked(res2.data === false ? 0 : 1); // 북마크
             })
-            .catch((err) => {
-                console.error("데이터 로딩 실패:", err);
+            .catch(err => {
+                console.error('데이터 로딩 실패:', err);
             })
             .finally(() => setLoading(false));
     }, [id]);
+
+    const toggleBookmark = async () => {
+        try {
+            const response = await axios.post(
+                `http://localhost:80/kusuri-back/medicines/favorite`,
+                { med_id: {id} },
+                {
+                    headers: { 'Content-Type': 'application/json' },
+                    withCredentials: true
+                }
+            );
+            setMarked(prev => (prev === 0 ? 1 : 0));
+        } catch (error) {
+            console.error("북마크 처리 중 오류:", error);
+        }
+    };
 
     const backBtnClick = () => {
         router.back();
@@ -40,14 +68,13 @@ export default function Page() {
     if (loading) return <div>로딩 중...</div>;
     if (!medicine) return <div>약 정보를 불러오지 못했습니다.</div>;
 
-    // 카테고리 배열로 변환
     const categories = [
         medicine.cate_1,
         medicine.cate_2,
         medicine.cate_3,
         medicine.cate_4,
         medicine.cate_5,
-    ].filter(Boolean); // null 제거
+    ].filter(Boolean);
 
     return (
         <div className={style.medicineCon}>
@@ -58,12 +85,18 @@ export default function Page() {
                 </div>
             </div>
             <div className={style.titleCon}>
-                <Image id={style.markIcon} src={mark ? markIcon : markIcon2} alt="북마크" priority />
+                <Image
+                    id={style.markIcon}
+                    src={marked === 0 ? markIcon : markIcon2}
+                    alt="북마크"
+                    priority
+                    onClick={toggleBookmark}
+                />
                 <span id={style.mediName}>{medicine.med_name_kr}</span>
                 <span id={style.mediJp}>({medicine.med_name_jp})</span>
                 <Image
                     id={style.mediImg}
-                    src={`http://localhost/kusuri-back/${medicine.med_imgPath}`}
+                    src={`http://localhost:80/kusuri-back/${medicine.med_imgPath}`}
                     alt="약 이미지"
                     width={150}
                     height={150}

@@ -52,7 +52,8 @@
 }
 
 .cateCon {
-    margin: 15px auto 18px 25px;
+    width: 340px;
+    margin: 15px auto 18px;
     display: flex;
 }
 
