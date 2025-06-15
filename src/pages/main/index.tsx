@@ -7,12 +7,9 @@ import axios from "axios";
 import kusuriLogo from "../../../public/images/kusuri-logo.png";
 import bellIcon from "../../../public/images/alram_icon.png";
 import medicineIcon from "../../../public/images/medicines_icon.png";
-import xIcon from "../../../public/images/xIcon.png";
-
 import markIcon from "../../../public/images/markIcon.png";
 import alramIcon from "../../../public/images/alramIcon.png";
 import clockIcon from "../../../public/images/clockIcon.png";
-
 
 import style from "./index.module.css";
 import { useRouter } from "next/router";
@@ -115,6 +112,22 @@ export default function Page() {
             <ChatIconLayout />
 
             <NavigationVarLayout />
+
         </div>
-    )
+      </div>
+
+      <div className={style.famousCon}>
+        <span id={style.famousTitle}>많이 찾는 약 list</span>
+        {medicine.slice(0, 3).map((medi, idx) => (
+          <div key={idx}>
+            <MedicineLayout data={medi} />
+          </div>
+        ))}
+      </div>
+
+      <ChatIconLayout />
+
+      <NavigationVarLayout />
+    </div>
+  );
 }
