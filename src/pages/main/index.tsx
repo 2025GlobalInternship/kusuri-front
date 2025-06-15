@@ -108,9 +108,6 @@ export default function Page() {
                         ))
                     }
             </div>
-
-            <ChatIconLayout />
-
             <NavigationVarLayout />
 
         </div>

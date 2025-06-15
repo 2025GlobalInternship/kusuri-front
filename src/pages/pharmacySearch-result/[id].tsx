@@ -1,6 +1,6 @@
 import { useRouter } from "next/router";
 import PharmacySearchLayout from "@/components/pharmacySearch-layout";
-import PharmacyLayout from "@/components/pharmacy-layout";
+import PharmacyList from "@/components/pharmacyList-layout";
 import Image from "next/image";
 
 import chevronLeft from "../../../public/images/chevron-left.png";
@@ -40,22 +40,12 @@ export default function Page() {
     return (
         <div>
             <div id={style.headerCon}>
-                <Image src={chevronLeft} alt="" onClick={BackBtnClick} />
-                <div id={style.searchCon}>
-                    <PharmacySearchLayout text={id}>null</PharmacySearchLayout>
-                </div>
-                <div>
-                    <p>주변 약국 추천</p>
-                    {
-                        data.map((a) => {
-                            return (
-                                <PharmacyLayout data={a}></PharmacyLayout>
-                            )
-                        })
-                    }
-                </div>
+                    <Image src={chevronLeft} alt="" onClick={BackBtnClick} />
+                    <div id={style.searchCon}>
+                        <PharmacySearchLayout text={id}>원하는 약국을 검색해주세요</PharmacySearchLayout>
+                    </div>
             </div>
-            
+            <PharmacyList filterText={id as string} />
         </div>
     )
 } 

@@ -6,8 +6,10 @@ import NearbyPharmacyLayout from "@/components/nearbyPharmacy-layout";
 import PharmacySearchLayout from "@/components/pharmacySearch-layout";
 import GoogleMapComponent from "@/components/googleMap";
 import style from "./index.module.css";
+import { useRouter } from "next/router";
 
 export default function Page() {
+  const router = useRouter();
   const [data, setData] = useState<{ name: string; length: number }[]>([]);
 
   const onClick = () => {
@@ -38,10 +40,14 @@ export default function Page() {
     }
   };
 
+  const searchBarClick = () => {
+    router.push('/pharmacySearch');
+  }
+
   return (
     <div className={style.pharmacyCon}>
       <GoogleMapComponent onPharmaciesFound={setData} />
-      <div id={style.searchCon}>
+      <div id={style.searchCon} onClick={searchBarClick}>
         <PharmacySearchLayout text="" >완전 럭키비키잖아?</PharmacySearchLayout>
       </div>
       <div className={style.dragCom} onClick={onClick}>
