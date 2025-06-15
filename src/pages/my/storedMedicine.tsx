@@ -3,40 +3,27 @@ import style from "./storedMedicine.module.css";
 import Image from "next/image";
 
 import markIcon from "../../../public/images/markIcon.png";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MedicineLayout from "@/components/medicine-layout";
+import axios from "axios";
 
 export default function Page() {
 
-    let [data, setData] = useState(
-            [
-                {
-                    name: "약1",
-                    tag: "감기",
-                    detail: "어쩌구저쩌구"
-                },
-                {
-                    name: "약2",
-                    tag: "멀미미",
-                    detail: "어쩌구저쩌구"
-                },
-                {
-                    name: "약3",
-                    tag: "알레르기",
-                    detail: "어쩌구저쩌구"
-                },
-                {
-                    name: "약4",
-                    tag: "멀미미",
-                    detail: "어쩌구저쩌구"
-                },
-                {
-                    name: "약5",
-                    tag: "알레르기",
-                    detail: "어쩌구저쩌구"
-                }
-            ]
-        );
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+
+        axios.get(`http://localhost:80/kusuri-back/medicines/my-favorite-medicine`, {
+            withCredentials: true
+        })
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error("데이터 불러오기 실패:", error);
+                setData([]);
+            });
+    }, []);
 
     return (
         <div>
@@ -46,13 +33,17 @@ export default function Page() {
                     <Image src={markIcon} alt="북마크 아이콘"/>
                     <p>내가 저장한 약</p>
                 </div>
-                {
-                   data.map((a) => {
-                        return (
-                            <MedicineLayout data={a} />
-                        )
-                   })
-                }
+                {data.length > 0 ? (
+                    <div className={style.mediCon}>
+                        {data.map((medi, idx) => (
+                            <div key={idx}>
+                                <MedicineLayout data={medi} />
+                            </div>
+                        ))}
+                    </div>
+                ) : (
+                    <div>저장된 약이 없습니다</div>
+                )}
             </div>
         </div>
     )

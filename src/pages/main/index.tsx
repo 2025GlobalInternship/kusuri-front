@@ -17,82 +17,99 @@ import { useEffect, useState } from "react";
 import MedicineLayout from "@/components/medicine-layout";
 
 export default function Page() {
-  const router = useRouter();
 
-  const alramBtnClick = () => {
-    router.push('dayalram');
-  };
+    const router = useRouter();
 
-  const recommendBtnClick = () => {
-    router.push('category');
-  };
+    const alramBtnClick = () => {
+        router.push('dayalram');
+    }
 
-  const storedClick = () => {
-    router.push('/my/storedMedicine');
-  };
+    const recommendBtnClick = () => {
+        router.push('category');
+    };
 
-  const alramClick = () => {
-    router.push('/alram');
-  };
+    const storedClick = () => {
+        router.push('/my/storedMedicine');
+    }
 
-  const recentClick = () => {
-    router.push('/my');
-  };
+    const alramClick = () => {
+        router.push('/alram');
+    }
 
-  // 초기값을 빈 배열로 설정해서 slice/map 오류 방지
-  const [medicine, setMedicine] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+    const recentClick = () => {
+        router.push('/my');
+    }
 
-  useEffect(() => {
-    axios.get('http://localhost:80/kusuri-back/medicines/ranking')
-      .then(response => {
-        console.log('약 리스트:', response.data); // 데이터 구조 확인
-        setMedicine(response.data);
-        setLoading(false);
-      })
-      .catch(error => {
-        setError(error);
-        setLoading(false);
-      });
-  }, []);
+    const [medicine, setMedicine] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
 
-  if (loading) return null;  // 로딩 중에는 아무것도 렌더링하지 않음
+    useEffect(() => {
+        axios.get('http://localhost:80/kusuri-back/medicines/ranking')
+        .then(response => {
+            // console.log('약 리스트:', response.data);
+            setMedicine(response.data);
+            setLoading(false);
+        })
+        .catch(error => {
+            setError(error);
+            setLoading(false);
+        })
+    }, []);
 
-  return (
-    <div className={style.container}>
-      <div className={style.topCon}>
-        <Image className={style.logo} src={kusuriLogo} alt="쿠스리로고" />
-        <Image onClick={alramBtnClick} className={style.bellIcon} src={bellIcon} alt="알림" />
-      </div>
-      <div className={style.searchBar}>
-        <SearchLayout text="">원하는 약을 검색해주세요.</SearchLayout>
-      </div>
 
-      <div className={style.recommendContainer}>
-        <span id={style.recommendTxt}>내 증상에 맞는 약 추천 받기</span>
-        <Image id={style.medicineIcon} src={medicineIcon} alt="약" />
-        <button onClick={recommendBtnClick} id={style.recommendBtn}>바로 가기</button>
-      </div>
+    if(loading) return <p>Loading</p>
+    if(error) return <p>Error : {error}</p>
 
-      <div className={style.tagCon}>
-        <div id={style.tag}>#두통</div>
-        <div id={style.tag}>#알레르기</div>
-        <div id={style.tag}>#불면증</div>
-      </div>
+    return (
+        <div className={style.container}>
+            <div className={style.topCon}>
+            <Image className={style.logo} src={kusuriLogo} alt="쿠스리로고" />
+            <Image onClick={alramBtnClick} className={style.bellIcon} src={bellIcon} alt="알림" />
+            </div>
+            <div className={style.searchBar}>
+                <SearchLayout text="">원하는 약을 검색해주세요.</SearchLayout>
+            </div>
 
-      <div className={style.plusCon}>
-        <div className={style.plusInfoCon} onClick={storedClick}>
-          <span id={style.plusTxt}>내가 저장한<br />약 보기</span>
-          <Image id={style.plusImg} src={markIcon} alt="마크" />
-        </div>
-        <div className={style.plusInfoCon} onClick={alramClick}>
-          <span id={style.plusTxt}>오늘 나의 약<br />알람 보기</span>
-          <Image id={style.plusImg} src={alramIcon} alt="마크" />
-        </div>
-        <div className={style.plusInfoCon} onClick={recentClick}>
-          <span id={style.plusTxt}>내가 최근 본<br />약 보기</span>
-          <Image id={style.plusImg} src={clockIcon} alt="마크" />
+            <div className={style.recommendContainer}>
+                <span id={style.recommendTxt}>내 증상에 맞는 약 추천 받기</span>
+                <Image id={style.medicineIcon} src={medicineIcon} alt="약" />
+                <button onClick={recommendBtnClick} id={style.recommendBtn}>바로 가기</button>
+            </div>
+
+            <div className={style.tagCon}>
+                <div id={style.tag}>#두통</div>
+                <div id={style.tag}>#알레르기</div>
+                <div id={style.tag}>#불면증</div>
+            </div>
+
+            <div className={style.plusCon}>
+                <div className={style.plusInfoCon} onClick={storedClick}>
+                    <span id={style.plusTxt}>내가 저장한<br/>약 보기</span>
+                    <Image id={style.plusImg} src={markIcon} alt="마크" />
+                </div>
+                <div className={style.plusInfoCon} onClick={alramClick}>
+                    <span id={style.plusTxt}>오늘 나의 약<br/>알람 보기</span>
+                    <Image id={style.plusImg} src={alramIcon} alt="마크" />
+                </div>
+                <div className={style.plusInfoCon} onClick={recentClick}>
+                    <span id={style.plusTxt}>내가 최근 본<br/>약 보기</span>
+                    <Image id={style.plusImg} src={clockIcon} alt="마크" />
+                </div>
+            </div>
+
+            <div className={style.famousCon}>
+                <span id={style.famousTitle}>많이 찾는 약 list</span>
+                    {
+                        medicine.slice(0, 3).map((medi, idx) => (
+                            <div key={idx}>
+                                <MedicineLayout data={medi} />
+                            </div>
+                        ))
+                    }
+            </div>
+            <NavigationVarLayout />
+
         </div>
       </div>
 

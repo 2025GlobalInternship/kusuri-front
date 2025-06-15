@@ -9,8 +9,33 @@ import clockIcon from "../../../public/images/clockIcon.png";
 import MedicineLayout from "@/components/medicine-layout";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
+import { GetServerSideProps } from "next";
+import axios from "axios";
 
-export default function Page() {
+export const getServerSideProps: GetServerSideProps = async (context) => {
+    try {
+        const response = await axios.get(
+            `http://localhost:80/kusuri-back/medicines/watched-medicine`,
+            {
+                headers: {
+                    cookie: context.req.headers.cookie || '',
+                },
+                withCredentials: true,
+            }
+        );
+
+        const data = response?.data?.data ?? [];
+        return {
+            props: { data },
+        };
+    } catch (error) {
+        return {
+            props: { data: [] },
+        };
+    }
+};
+
+export default function Page({ data }: { data: any[] }) {
     const router = useRouter();
 
     const userName = "빼코빼코";
@@ -24,32 +49,6 @@ export default function Page() {
         "/images/ch6.png",
     ];
 
-    const dropdownList = [
-        { idx: 1, text: '정보 수정'},
-        { idx: 1, text: '로그 아웃'},
-        { idx: 1, text: '회원 탈퇴'}
-    ];
-
-    let [data, setData] = useState(
-        [
-            {
-                name: "약1",
-                tag: "감기",
-                detail: "어쩌구저쩌구"
-            },
-            {
-                name: "약2",
-                tag: "멀미미",
-                detail: "어쩌구저쩌구"
-            },
-            {
-                name: "약3",
-                tag: "알레르기",
-                detail: "어쩌구저쩌구"
-            }
-        ]
-    );
-
     const onStroedClick = () => {
         router.push('/my/storedMedicine');
     }
@@ -57,7 +56,7 @@ export default function Page() {
     const onManageClick = () => {
         router.push('/my/management');
     }
-    
+
     return (
         <div>
             <div className={style.userImfoContainer}>
@@ -77,7 +76,7 @@ export default function Page() {
                 </div>
                 <div className={style.obCon}>
                     {
-                        data.map((a, idx) => {
+                        data.slice(0, 3).map((a, idx) => {
                             return (
                                 <MedicineLayout key={idx} data={a} />
                             )
