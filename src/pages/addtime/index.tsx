@@ -10,9 +10,15 @@ const VISIBLE_COUNT = 5;
 const CENTER_INDEX = Math.floor(VISIBLE_COUNT / 2);
 
 const repeatOptions = [
-  '격일', '매일', 'Mon', 'Tue',
-  'Wed', 'Thu', 'Fri',
-  'Sat', 'Sun',
+  { label: '격일', value: '격일' },
+  { label: '매일', value: '매일' },
+  { label: '월요일마다', value: 'Mon' },
+  { label: '화요일마다', value: 'Tue' },
+  { label: '수요일마다', value: 'Wed' },
+  { label: '목요일마다', value: 'Thu' },
+  { label: '금요일마다', value: 'Fri' },
+  { label: '토요일마다', value: 'Sat' },
+  { label: '일요일마다', value: 'Sun' },
 ];
 
 const AddTime = () => {
@@ -116,7 +122,7 @@ const AddTime = () => {
       last_day: lastDay,
       time: timeString,
       timeslot,
-      day_type: selectedRepeat,
+      day_type: selectedRepeat, // value만 서버로 전달
       medicine,
     };
 
@@ -156,7 +162,7 @@ const AddTime = () => {
 
         <div className={styles.dropdownWrapper}>
           <div className={styles.selectedBox} onClick={() => setRepeatOpen(prev => !prev)}>
-            {selectedRepeat || '반복 설정 선택'}
+            {repeatOptions.find(opt => opt.value === selectedRepeat)?.label || '반복 설정 선택'}
             <span className={styles.arrow}>
               <svg width="20" height="20" viewBox="0 0 24 24">
                 <path d="M6 9L12 15L18 9" stroke="#ccc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -165,16 +171,16 @@ const AddTime = () => {
           </div>
           {repeatOpen && (
             <div className={styles.optionList}>
-              {repeatOptions.map(o => (
+              {repeatOptions.map(opt => (
                 <div
-                  key={o}
+                  key={opt.value}
                   className={styles.optionItem}
                   onClick={() => {
-                    setSelectedRepeat(o);
+                    setSelectedRepeat(opt.value); // value만 저장
                     setRepeatOpen(false);
                   }}
                 >
-                  {o}
+                  {opt.label}
                 </div>
               ))}
             </div>
