@@ -1,11 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styles from './index.module.css';
 import HeaderLayout from "@/components/header-layout";
 
+type Alarm = {
+  id: number;
+  user_id: string;
+  medicine: string;
+  time: string;
+  timeslot: string;
+  days: string;
+  start_day: string;
+  last_day: string;
+  state: string;
+};
+
 const Calendar = () => {
   const router = useRouter();
   const [currentMonth, setCurrentMonth] = useState(new Date(2025, 5, 18)); // 2025년 6월 시작
+  const [alarms, setAlarms] = useState<Alarm[]>([]);
+
+  useEffect(() => {
+    fetch('/api/alarms/alarm')
+      .then(res => res.json())
+      .then(data => setAlarms(data))
+      .catch(err => console.error("알람 데이터를 가져오는 중 오류:", err));
+  }, []);
 
   const getDaysInMonth = (date: Date) => {
     const year = date.getFullYear();
@@ -34,6 +54,15 @@ const Calendar = () => {
       currentMonth.getMonth() === today.getMonth() &&
       currentMonth.getFullYear() === today.getFullYear()
     );
+  };
+
+  const isAlarmDay = (day: number): boolean => {
+    const date = new Date(currentMonth.getFullYear(), currentMonth.getMonth(), day);
+    return alarms.some(alarm => {
+      const start = new Date(alarm.start_day);
+      const end = new Date(alarm.last_day);
+      return date >= start && date <= end;
+    });
   };
 
   const month = currentMonth.toLocaleString('ko-KR', { month: 'long' });
@@ -88,7 +117,18 @@ const Calendar = () => {
               key={dayIndex}
               className={`${styles.day} ${day !== null && isToday(day) ? styles.today : ""}`}
             >
-              {day}
+              {day !== null && (
+                <>
+                  {day}
+                  {isAlarmDay(day) && (
+                    <img
+                      src="/images/greenmedicine.png"
+                      alt="alarm"
+                      className={styles.alarmIcon}
+                    />
+                  )}
+                </>
+              )}
             </div>
           ))}
         </div>

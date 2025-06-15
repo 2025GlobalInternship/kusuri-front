@@ -1,5 +1,5 @@
 .calendarContainer {
-  background-color: rgba(255, 255, 255, 1); 
+  background-color: rgba(255, 255, 255, 1);
   border-radius: 20px;
   padding: 20px;
   width: 320px;
@@ -22,7 +22,7 @@
   cursor: pointer;
   font-size: 15px;
   color: rgba(209, 210, 209, 1);
-  user-select: none; 
+  user-select: none;
 }
 
 .daysOfWeek {
@@ -34,8 +34,8 @@
   color: rgba(170, 170, 170, 1);
 }
 
-.daysOfWeek div:nth-child(1),  /* 일요일 */
-.daysOfWeek div:nth-child(7) { /* 토요일 */
+.daysOfWeek div:nth-child(1),
+.daysOfWeek div:nth-child(7) {
   color: rgba(170, 170, 170, 1);
 }
 
@@ -74,6 +74,7 @@
   bottom: -20px;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 0;
 }
 
 .day:empty::after {
@@ -87,9 +88,17 @@
   color: #333;
 }
 
-/* 기존 .today는 이렇게 수정하세요 */
 .today::after {
-  border: 2px solid #4EE287; /* ✅ 초록 테두리 */
+  border: 2px solid #4EE287;
   box-sizing: border-box;
 }
 
+.alarmIcon {
+  width: 16px;
+  height: 16px;
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}

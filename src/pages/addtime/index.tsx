@@ -10,9 +10,15 @@ const VISIBLE_COUNT = 5;
 const CENTER_INDEX = Math.floor(VISIBLE_COUNT / 2);
 
 const repeatOptions = [
-  '격일', '매일', 'Mon', 'Tue',
-  'Wed', 'Thu', 'Fri',
-  'Sat', 'Sun',
+  { label: '격일', value: '격일' },
+  { label: '매일', value: '매일' },
+  { label: '월요일마다', value: 'Mon' },
+  { label: '화요일마다', value: 'Tue' },
+  { label: '수요일마다', value: 'Wed' },
+  { label: '목요일마다', value: 'Thu' },
+  { label: '금요일마다', value: 'Fri' },
+  { label: '토요일마다', value: 'Sat' },
+  { label: '일요일마다', value: 'Sun' },
 ];
 
 const AddTime = () => {
@@ -24,8 +30,8 @@ const AddTime = () => {
   const [repeatOpen, setRepeatOpen] = useState(false);
   const [startDay, setStartDay] = useState('');
   const [lastDay, setLastDay] = useState('');
-  // medicine 쿼리만 받음
   const [medicine, setMedicine] = useState('');
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     if (router.isReady) {
@@ -80,7 +86,12 @@ const AddTime = () => {
     };
 
     return (
-      <div className={styles.wheelContainer} ref={ref} onScroll={handleScroll} style={{ height: ITEM_HEIGHT * VISIBLE_COUNT }}>
+      <div
+        className={styles.wheelContainer}
+        ref={ref}
+        onScroll={handleScroll}
+        style={{ height: ITEM_HEIGHT * VISIBLE_COUNT }}
+      >
         {items.map((item, i) => {
           const centerIdx = Math.round(ref.current?.scrollTop! / ITEM_HEIGHT) + CENTER_INDEX;
           const isSel = i === centerIdx && item !== '';
@@ -94,27 +105,48 @@ const AddTime = () => {
     );
   };
 
-  const handleNext = () => {
-    if (!isComplete) return;
+  const handleNext = async () => {
+    if (!isComplete || submitting) return;
+
+    setSubmitting(true);
 
     let h = parseInt(hour);
     if (ampm === 'PM' && h !== 12) h += 12;
     if (ampm === 'AM' && h === 12) h = 0;
 
     const timeString = `${String(h).padStart(2, '0')}:${minute}:00`;
-    const timeslot = ampm === 'AM' ? '오전' : '오후'; // ✅ 추가된 라인
+    const timeslot = ampm === 'AM' ? '오전' : '오후';
 
-    router.push({
-      pathname: '/finishalarm',
-      query: {
-        start_day: startDay,
-        last_day: lastDay,
-        time: timeString,
-        timeslot, // ✅ 추가된 항목
-        day_type: selectedRepeat,
-        medicine,
-      },
-    });
+    const payload = {
+      start_day: startDay,
+      last_day: lastDay,
+      time: timeString,
+      timeslot,
+      day_type: selectedRepeat, // value만 서버로 전달
+      medicine,
+    };
+
+    try {
+      const res = await fetch('/api/alarms/alarm-setting', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (res.status === 409) {
+        router.push('/failalram'); // 중복된 알람
+      } else if (res.ok) {
+        router.push('/finishalarm'); // 정상 등록
+      } else {
+        console.error('알람 저장 실패:', res.status);
+        router.push('/failalram'); // 기타 실패
+      }
+    } catch (e) {
+      console.error('알람 저장 중 네트워크 오류:', e);
+      router.push('/failalram');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -130,7 +162,7 @@ const AddTime = () => {
 
         <div className={styles.dropdownWrapper}>
           <div className={styles.selectedBox} onClick={() => setRepeatOpen(prev => !prev)}>
-            {selectedRepeat || '반복 설정 선택'}
+            {repeatOptions.find(opt => opt.value === selectedRepeat)?.label || '반복 설정 선택'}
             <span className={styles.arrow}>
               <svg width="20" height="20" viewBox="0 0 24 24">
                 <path d="M6 9L12 15L18 9" stroke="#ccc" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -139,9 +171,16 @@ const AddTime = () => {
           </div>
           {repeatOpen && (
             <div className={styles.optionList}>
-              {repeatOptions.map(o => (
-                <div key={o} className={styles.optionItem} onClick={() => { setSelectedRepeat(o); setRepeatOpen(false); }}>
-                  {o}
+              {repeatOptions.map(opt => (
+                <div
+                  key={opt.value}
+                  className={styles.optionItem}
+                  onClick={() => {
+                    setSelectedRepeat(opt.value); // value만 저장
+                    setRepeatOpen(false);
+                  }}
+                >
+                  {opt.label}
                 </div>
               ))}
             </div>
@@ -153,7 +192,7 @@ const AddTime = () => {
         <button
           className={`${styles.nextButton} ${isComplete ? styles.clicked : ''}`}
           onClick={handleNext}
-          disabled={!isComplete}
+          disabled={!isComplete || submitting}
         >
           다음
         </button>

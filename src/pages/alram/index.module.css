@@ -180,7 +180,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  padding: 10px 0;
+  margin-top: 16px;
 }
 
 .dot {
@@ -244,4 +244,51 @@
   height: 20px;
   margin-left: 8px;
   cursor: pointer;
+}
+
+.alarmItem {
+  
+}
+
+.iconWrapper {
+  flex-shrink: 0;
+  background: #f0f5f2;
+  border-radius: 50%;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.textWrapper {
+  flex-grow: 1;
+  margin-left: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.time {
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: rgba(93, 93, 93, 1);
+}
+
+.medicine {
+  font-size: 14px;
+  color: #666;
+}
+
+.repeat {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.bellWrapper {
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.emptyMsg {
+  color: rgba(170, 170, 170, 1);
+  font-size: 12px;
 }
