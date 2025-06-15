@@ -180,7 +180,7 @@
   display: flex;
   align-items: center;
   gap: 15px;
-  padding: 10px 0;
+  margin-top: 16px;
 }
 
 .dot {
@@ -247,14 +247,7 @@
 }
 
 .alarmItem {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: #fff;
-  padding: 12px 16px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  margin-bottom: 12px;
+  
 }
 
 .iconWrapper {
@@ -275,9 +268,9 @@
 }
 
 .time {
-  font-size: 16px;
-  font-weight: 600;
-  color: #333;
+  font-weight: 500;
+  font-size: 1.1rem;
+  color: rgba(93, 93, 93, 1);
 }
 
 .medicine {
@@ -293,4 +286,9 @@
 .bellWrapper {
   flex-shrink: 0;
   cursor: pointer;
+}
+
+.emptyMsg {
+  color: rgba(170, 170, 170, 1);
+  font-size: 12px;
 }
