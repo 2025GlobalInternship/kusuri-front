@@ -1,30 +1,65 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import HeaderLayout from "@/components/header-layout";
 import styles from './index.module.css';
 
-const initialAlarms = [
-  { id: 1, time: "06:15", label: "혈압약", period: "오전"},
-  { id: 2, time: "07:15", label: "혈압약", period: "오전"},
-  { id: 3, time: "08:15", label: "혈압약", period: "오전"},
-  { id: 4, time: "17:15", label: "혈압약", period: "오후"},
-  { id: 5, time: "17:15", label: "혈압약", period: "오후"},
-  { id: 6, time: "17:15", label: "혈압약", period: "오후"},
-];
+interface Alarm {
+  id: number;
+  time: string; // "06:00"
+  label: string;
+  period: "오전" | "오후";
+}
 
 const Setalram = () => {
-  const [alarmList, setAlarmList] = useState(initialAlarms);
+  const [alarmList, setAlarmList] = useState<Alarm[]>([]);
   const router = useRouter();
 
-  // 전체 삭제 API 호출
+  const fetchAlarms = async () => {
+    try {
+      const res = await fetch("/api/alarms/alarm", {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      const text = await res.text();
+      if (!text) {
+        console.warn("응답 본문이 없습니다.");
+        setAlarmList([]);
+        return;
+      }
+
+      const data = JSON.parse(text);
+
+      if (!Array.isArray(data)) {
+        console.error("알람 응답이 배열이 아님:", data);
+        setAlarmList([]);
+        return;
+      }
+
+      const parsedAlarms: Alarm[] = data.map((item: any, index: number) => ({
+        id: item.id ?? index + 1,
+        time: item.time ? item.time.split(":").slice(0, 2).join(":") : "",
+        label: item.medicine || "",
+        period: item.timeslot === "오전" || item.timeslot === "오후" ? item.timeslot : "오전",
+      }));
+
+      setAlarmList(parsedAlarms);
+    } catch (error) {
+      console.error("알람 데이터 불러오기 실패:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAlarms();
+  }, []);
+
   const handleDeleteAll = async () => {
     try {
-      const res = await fetch("http://localhost:3009/alarm/alarm-delete", {
-        method: "POST",
+      const res = await fetch("/api/alarms/alarm-delete", {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ all: true }),
       });
 
       if (!res.ok) {
@@ -37,22 +72,20 @@ const Setalram = () => {
     }
   };
 
-  // 단일 삭제 API 호출
   const handleDeleteOne = async (id: number) => {
     try {
-      const res = await fetch("http://localhost:3009/alarm/alarm-delete", {
-        method: "POST",
+      const res = await fetch(`/api/alarms/alarm-delete${id}`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id }),
       });
 
       if (!res.ok) {
         throw new Error("알람 삭제 실패");
       }
 
-      setAlarmList(prev => prev.filter(alarm => alarm.id !== id));
+      setAlarmList((prev) => prev.filter((alarm) => alarm.id !== id));
     } catch (error) {
       console.error("알람 삭제 중 오류 발생:", error);
     }
@@ -62,8 +95,8 @@ const Setalram = () => {
     router.push("/selectmedicine");
   };
 
-  const morningAlarms = alarmList.filter(a => a.period === "오전");
-  const eveningAlarms = alarmList.filter(a => a.period === "오후");
+  const morningAlarms = alarmList.filter((a) => a.period === "오전");
+  const eveningAlarms = alarmList.filter((a) => a.period === "오후");
 
   return (
     <>
@@ -84,26 +117,34 @@ const Setalram = () => {
 
           <div className={styles.section}>
             <div className={styles.sectionTitle}>오전</div>
-            {morningAlarms.map((alarm) => (
-              <div key={alarm.id} className={styles.alarmItem}>
-                <div className={styles.dot} />
-                <span className={styles.time}>{alarm.time}</span>
-                <span className={styles.label}>{alarm.label}</span>
-                <button className={styles.minuss} onClick={() => handleDeleteOne(alarm.id)}>－</button>
-              </div>
-            ))}
+            {morningAlarms.length === 0 ? (
+              <div className={styles.emptyMsg}>등록된 알람이 없습니다.</div>
+            ) : (
+              morningAlarms.map((alarm) => (
+                <div key={alarm.id} className={styles.alarmItem}>
+                  <div className={styles.dot} />
+                  <span className={styles.time}>{alarm.time}</span>
+                  <span className={styles.label}>{alarm.label}</span>
+                  <button className={styles.minuss} onClick={() => handleDeleteOne(alarm.id)}>－</button>
+                </div>
+              ))
+            )}
           </div>
 
           <div className={styles.section}>
             <div className={styles.sectionTitle}>오후</div>
-            {eveningAlarms.map((alarm) => (
-              <div key={alarm.id} className={styles.alarmItem}>
-                <div className={styles.dot} />
-                <span className={styles.time}>{alarm.time}</span>
-                <span className={styles.label}>{alarm.label}</span>
-                <button className={styles.minuss} onClick={() => handleDeleteOne(alarm.id)}>－</button>
-              </div>
-            ))}
+            {eveningAlarms.length === 0 ? (
+              <div className={styles.emptyMsg}>등록된 알람이 없습니다.</div>
+            ) : (
+              eveningAlarms.map((alarm) => (
+                <div key={alarm.id} className={styles.alarmItem}>
+                  <div className={styles.dot} />
+                  <span className={styles.time}>{alarm.time}</span>
+                  <span className={styles.label}>{alarm.label}</span>
+                  <button className={styles.minuss} onClick={() => handleDeleteOne(alarm.id)}>－</button>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </div>
@@ -112,4 +153,3 @@ const Setalram = () => {
 };
 
 export default Setalram;
-
