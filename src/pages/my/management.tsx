@@ -30,14 +30,22 @@ export default function Page() {
         }
     };
 
+    const handleEditInformation = () => {
+        router.push("/editinformation");
+    };
+
     return (
         <div>
             <HeaderLayout>계정 관리</HeaderLayout>
             <div className={style.managementBox}>
                 <div className={style.managementEleBox}>
-                    <div className={style.correctionMoveCon}>
+                    <div className={style.correctionMoveCon} onClick={handleEditInformation}>
                         정보 수정
-                        <Image className={style.correntionMoveIcon} src={icon} alt="수정" />
+                        <Image
+                            className={style.correntionMoveIcon}
+                            src={icon}
+                            alt="수정"
+                        />
                     </div>
                     <div className={style.logOutCon} onClick={handleLogout}>
                         로그아웃
