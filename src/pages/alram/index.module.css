@@ -71,7 +71,7 @@
 .calendarWrapper {
   display: flex;
   justify-content: space-between;
-  gap: 12px;
+  gap: 8px;
 }
 
 .calendarChevron {
@@ -81,10 +81,9 @@
 
 .dateCard {
   flex: 1;
-  margin: 0 2px;
   background-color: rgba(244, 247, 250, 1);
-  border-radius: 17px;
-  padding: 10px 0px;
+  border-radius: 20px;
+  padding: 15px 11px;
   text-align: center;
   font-size: 12px;
   color: rgba(170, 170, 170, 1);
