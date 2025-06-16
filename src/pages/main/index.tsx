@@ -111,20 +111,5 @@ export default function Page() {
             <NavigationVarLayout />
 
         </div>
-      </div>
-
-      <div className={style.famousCon}>
-        <span id={style.famousTitle}>많이 찾는 약 list</span>
-        {medicine.slice(0, 3).map((medi, idx) => (
-          <div key={idx}>
-            <MedicineLayout data={medi} />
-          </div>
-        ))}
-      </div>
-
-      <ChatIconLayout />
-
-      <NavigationVarLayout />
-    </div>
-  );
+    )
 }
