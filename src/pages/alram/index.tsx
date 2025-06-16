@@ -19,7 +19,7 @@ interface Alarm {
   isActive: boolean;
   start_day?: string;
   last_day?: string;
-  days?: string; // 요일 문자열 또는 날짜 숫자 문자열, 예: "Mon,Tue" 또는 "17,18,19"
+  days?: string;
 }
 
 export default function Page() {
@@ -99,7 +99,7 @@ export default function Page() {
 
   const getCurrentWeekDates = (): Date[] => {
     const today = new Date();
-    const dayOfWeek = today.getDay(); // 0(일) ~ 6(토)
+    const dayOfWeek = today.getDay();
     const start = new Date(today);
     start.setDate(today.getDate() - dayOfWeek);
     start.setHours(0, 0, 0, 0);
@@ -188,11 +188,7 @@ export default function Page() {
           <div className={styles.calendarWrapper}>
             {weekDates.map((date) => {
               const day = date.getDate();
-              const dayOfWeek = date.toLocaleDateString("ko-KR", {
-                weekday: "short",
-              });
               const isToday = date.toDateString() === new Date().toDateString();
-
               const hasAlarm = alarmList.some((alarm) =>
                 isAlarmOnThisDate(alarm, date)
               );
@@ -200,12 +196,9 @@ export default function Page() {
               return (
                 <div
                   key={day}
-                  className={`${styles.dateCard} ${
-                    isToday ? styles.selected : ""
-                  }`}
+                  className={`${styles.dateCard} ${isToday ? styles.selected : ""}`}
                 >
                   <span className={styles.dateNum}>{day}</span>
-                  <span className={styles.dayLabel}>{dayOfWeek}</span>
                   <div className={styles.dots}>
                     {hasAlarm && <span className={styles.dotGreen}></span>}
                   </div>
