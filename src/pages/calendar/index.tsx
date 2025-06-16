@@ -59,17 +59,13 @@ const Calendar = () => {
   const isAlarmDay = (day: number): boolean => {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
-    const date = new Date(year, month, day); // 시,분,초 0 으로 고정
+    const date = new Date(year, month, day);
+    const dateStr = date.toISOString().slice(0, 10); // YYYY-MM-DD
 
     return alarms.some(alarm => {
-      // start_day와 last_day도 시간 0으로 맞추기
-      const startDateRaw = new Date(alarm.start_day);
-      const start = new Date(startDateRaw.getFullYear(), startDateRaw.getMonth(), startDateRaw.getDate());
-
-      const endDateRaw = new Date(alarm.last_day);
-      const end = new Date(endDateRaw.getFullYear(), endDateRaw.getMonth(), endDateRaw.getDate());
-
-      return date >= start && date <= end;
+      const startStr = new Date(alarm.start_day).toISOString().slice(0, 10);
+      const endStr = new Date(alarm.last_day).toISOString().slice(0, 10);
+      return dateStr >= startStr && dateStr <= endStr;
     });
   };
 

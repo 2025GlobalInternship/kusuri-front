@@ -8,7 +8,7 @@ const nextConfig = {
     return [
       {
         source: '/api/:path*',
-        destination: 'http://localhost/kusuri-back/:path*',
+        destination: 'https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/:path*',
       },
     ];
   },
