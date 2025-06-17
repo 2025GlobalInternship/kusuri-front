@@ -31,7 +31,11 @@ export default function Page() {
     };
 
     const handleEditInformation = () => {
-        router.push("/editinformation");
+        router.push("/editinformation-name");
+    };
+
+    const handleEditPassword = () => {
+        router.push("/editpassword"); // 비밀번호 수정 페이지 경로 맞게 수정하세요
     };
 
     return (
@@ -39,14 +43,36 @@ export default function Page() {
             <HeaderLayout>계정 관리</HeaderLayout>
             <div className={style.managementBox}>
                 <div className={style.managementEleBox}>
+
+                    {/* 정보수정 */}
                     <div className={style.correctionMoveCon} onClick={handleEditInformation}>
-                        정보 수정
+                        정보수정
                         <Image
                             className={style.correntionMoveIcon}
                             src={icon}
                             alt="수정"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleEditInformation();
+                            }}
                         />
                     </div>
+
+                    {/* 비밀번호 수정 */}
+                    <div className={style.correctionMoveCon} onClick={handleEditPassword}>
+                        비밀번호 수정
+                        <Image
+                            className={style.correntionMoveIcon}
+                            src={icon}
+                            alt="수정"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                handleEditPassword();
+                            }}
+                        />
+                    </div>
+
+                    {/* 로그아웃 */}
                     <div className={style.logOutCon} onClick={handleLogout}>
                         로그아웃
                     </div>
