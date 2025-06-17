@@ -10,6 +10,7 @@ import MedicineLayout from "@/components/medicine-layout";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import axios from "axios";
+import { mediProps } from "@/components/medicine-layout";
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
@@ -31,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     }
 };
 
-export default function Page({ data }: { data: any[] }) {
+export default function Page({ data }: { data: mediProps[] }) {
     const router = useRouter();
 
     const userName = "빼코빼코";

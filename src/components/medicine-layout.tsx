@@ -2,7 +2,7 @@ import Image from "next/image";
 import style from "./medicine-layout.module.css";
 import { useRouter } from "next/router";
 
-interface mediProps {
+export interface mediProps {
     med_id: string;
     med_name_kr: string;
     med_imgPath: string;

@@ -22,6 +22,10 @@ interface Alarm {
   days?: string;
 }
 
+interface AlarmState extends Alarm {
+  state: "On" | "Off"
+}
+
 export default function Page() {
   const [medicines, setMedicines] = useState<Medicine[] | null>(null);
   const [alarmList, setAlarmList] = useState<Alarm[]>([]);
@@ -57,7 +61,7 @@ export default function Page() {
         return setAlarmList([]);
       }
 
-      const parsedAlarms: Alarm[] = data.map((item: any, index: number) => ({
+      const parsedAlarms: Alarm[] = data.map((item: AlarmState, index: number) => ({
         id: item.id ?? index + 1,
         time: item.time?.split(":").slice(0, 2).join(":") ?? "",
         timeslot: item.timeslot === "오전" || item.timeslot === "오후" ? item.timeslot : "오전",
