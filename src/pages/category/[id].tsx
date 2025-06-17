@@ -23,7 +23,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     const { id } = context.params as { id: string };
 
     try {
-        const response = await fetch(`http://localhost:80/kusuri-back/medicines/category?type=${id}`);
+        const response = await fetch(`https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/category?type=${id}`);
         const data = await response.json();
 
         return {

@@ -13,7 +13,7 @@ export default function Page() {
 
     useEffect(() => {
 
-        axios.get(`http://localhost:80/kusuri-back/medicines/my-favorite-medicine`, {
+        axios.get(`https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/my-favorite-medicine`, {
             withCredentials: true
         })
             .then(response => {

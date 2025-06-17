@@ -45,9 +45,8 @@ export default function Page() {
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        axios.get('http://localhost:80/kusuri-back/medicines/ranking')
+        axios.get('https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/ranking')
         .then(response => {
-            // console.log('약 리스트:', response.data);
             setMedicine(response.data);
             setLoading(false);
         })
@@ -59,7 +58,7 @@ export default function Page() {
 
 
     if(loading) return <p>Loading</p>
-    if(error) return <p>Error : {error}</p>
+    if(error) return <p>{error?.message}</p>
 
     return (
         <div className={style.container}>

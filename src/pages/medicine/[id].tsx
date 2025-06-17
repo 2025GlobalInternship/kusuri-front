@@ -25,12 +25,12 @@ export default function Page() {
         setLoading(true);
 
         const fetchMedicine = axios.get(
-            `http://localhost:80/kusuri-back/medicines/medicine?id=${id}`,
+            `https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/medicine?id=${id}`,
             { withCredentials: true }
         );
 
         const fetchFavorite = axios.get(
-            `http://localhost:80/kusuri-back/medicines/is-favorite-medicine?med_id=${id}`,
+            `https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/is-favorite-medicine?med_id=${id}`,
             { withCredentials: true }
         );
 
@@ -48,7 +48,7 @@ export default function Page() {
     const toggleBookmark = async () => {
         try {
             const response = await axios.post(
-                `http://localhost:80/kusuri-back/medicines/favorite`,
+                `https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/favorite`,
                 { med_id: {id} },
                 {
                     headers: { 'Content-Type': 'application/json' },
@@ -96,7 +96,7 @@ export default function Page() {
                 <span id={style.mediJp}>({medicine.med_name_jp})</span>
                 <Image
                     id={style.mediImg}
-                    src={`http://localhost:80/kusuri-back/${medicine.med_imgPath}`}
+                    src={`https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/${medicine.med_imgPath}`}
                     alt="약 이미지"
                     width={150}
                     height={150}
