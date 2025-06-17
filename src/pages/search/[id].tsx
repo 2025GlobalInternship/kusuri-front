@@ -21,7 +21,7 @@ export default function Page() {
     useEffect(() => {
         if (!id) return;
 
-        axios.get(`http://localhost/kusuri-back/medicines/search?name=${id}`)
+        axios.get(`https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/search?name=${id}`)
             .then(response => {
                 setData(response.data);
             })

@@ -15,7 +15,7 @@ import axios from "axios";
 export const getServerSideProps: GetServerSideProps = async (context) => {
     try {
         const response = await axios.get(
-            `http://localhost:80/kusuri-back/medicines/watched-medicine`,
+            `https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/watched-medicine`,
             {
                 headers: {
                     cookie: context.req.headers.cookie || '',
