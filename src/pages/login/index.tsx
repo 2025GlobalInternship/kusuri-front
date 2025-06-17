@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Image from "next/image";
-import Icon from "../../../public/images/Frame 2814.png";
 import style from "./index.module.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -52,7 +51,12 @@ export default function LoginPage() {
   return (
     <div className={style.container}>
       <div className={style.icon}>
-        <Image src={Icon} alt="아이콘" />
+        <Image
+          src="/images/Frame 2814.png"
+          alt="아이콘"
+          width={120}
+          height={120}
+        />
       </div>
       <form onSubmit={onSubmit}>
         <div className={style.form}>
