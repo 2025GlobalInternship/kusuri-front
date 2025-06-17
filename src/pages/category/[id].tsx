@@ -2,8 +2,13 @@ import HeaderLayout from "@/components/header-layout";
 import style from "./[id].module.css";
 import MedicineLayout from "@/components/medicine-layout";
 import { GetServerSideProps } from "next";
+import { mediProps } from "@/components/medicine-layout";
 
-export default function Page({ id, data }: { id: string; data: any[] }) {
+interface mediPropsName extends mediProps {
+    name: string
+}
+
+export default function Page({ id, data }: { id: string; data: mediPropsName[] }) {
     return (
         <div key={"cate" + id}>
             <HeaderLayout>{id}</HeaderLayout>

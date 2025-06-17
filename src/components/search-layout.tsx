@@ -9,7 +9,7 @@ export default function SearchLayout({
     text
 }: {
     children: string;
-    text: any;
+    text: string;
 }) {
     const router = useRouter();
     const [search, setSearch] = useState(text || "");

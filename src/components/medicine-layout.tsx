@@ -2,7 +2,7 @@ import Image from "next/image";
 import style from "./medicine-layout.module.css";
 import { useRouter } from "next/router";
 
-interface mediProps {
+export interface mediProps {
     med_id: string;
     med_name_kr: string;
     med_imgPath: string;
@@ -26,7 +26,7 @@ export default function MedicineLayout({
         <div className={style.medicineCon} onClick={onClick}>
             <Image
                 id={style.medicineImg}
-                src={`http://localhost:80/kusuri-back/${data.med_imgPath}`}
+                src={`https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/${data.med_imgPath}`}
                 alt="약 이미지"
                 width={44.3}
                 height={44.3} />
