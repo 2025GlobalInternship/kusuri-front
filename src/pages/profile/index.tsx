@@ -48,7 +48,7 @@ export default function ProfileSelection() {
 
     try {
       // 서버에 유저 정보 업데이트 요청
-      const response = await fetch("/api/users/frist-info", {
+      const response = await fetch("/api/users/first-info", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
