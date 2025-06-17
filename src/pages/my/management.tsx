@@ -31,7 +31,7 @@ export default function Page() {
     };
 
     const handleEditInformation = () => {
-        router.push("/editinformation-name");
+        router.push("/information");
     };
 
     const handleEditPassword = () => {
