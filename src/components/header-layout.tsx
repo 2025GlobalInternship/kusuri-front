@@ -3,11 +3,12 @@ import Image from "next/image";
 
 import backIcon from "../../public/images/chevron-left.png";
 import { useRouter } from "next/router";
+import { ReactNode } from "react";
 
 export default function HeaderLayout({
     children,
 }: {
-    children : any
+    children : ReactNode
 }) {
     const router = useRouter();
 

@@ -1,4 +1,4 @@
-import Router, { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import Image from "next/image";
 import homeIcon from "../../public/images/home_icon.png";
 import arlamIcon from "../../public/images/alram_icon.png";

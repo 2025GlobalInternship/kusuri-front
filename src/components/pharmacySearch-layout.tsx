@@ -9,7 +9,7 @@ export default function PharmacySearchLayout({
     text
 }: {
     children: string;
-    text: any;
+    text: string;
 }) {
     const router = useRouter();
     const [search, setSearch] = useState(text || "");
@@ -25,7 +25,7 @@ export default function PharmacySearchLayout({
     }
 
     const pageChange = () => {
-        if(!search || q === search) return; // search 값이 없을 때 리턴
+        if(!search || q === search) return;
         router.push(`/pharmacySearch-result/${search}`);
     }
 
