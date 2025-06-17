@@ -1,7 +1,5 @@
 import Image from "next/image";
 import style from "./medicine-layout.module.css";
-
-import bellIcon from "../../public/images/alramIcon.png";
 import { useRouter } from "next/router";
 
 interface mediProps {

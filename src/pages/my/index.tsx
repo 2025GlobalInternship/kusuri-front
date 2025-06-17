@@ -7,7 +7,6 @@ import detailIcon from "../../../public/images/detailIcon.png";
 import chevron from "../../../public/images/chevron-right.png";
 import clockIcon from "../../../public/images/clockIcon.png";
 import MedicineLayout from "@/components/medicine-layout";
-import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import { GetServerSideProps } from "next";
 import axios from "axios";

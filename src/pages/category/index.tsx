@@ -12,14 +12,14 @@ import motion from "../../../public/images/category/motionImg.png";
 import stomach from "../../../public/images/category/stomackImg.png";
 import skin from "../../../public/images/category/skinImg.png";
 
-import chosenHead from "../../../public/images/category/chosen_head.png";
-import chosenCold from "../../../public/images/category/chosen_cold.png";
-import chosenSleep from "../../../public/images/category/chosen_sleep.png";
-import chosenMuscle from "../../../public/images/category/chosen_muscle.png";
-import chosenAllergy from "../../../public/images/category/chosen_allergy.png";
-import chosenMotion from "../../../public/images/category/chosen_motion.png";
-import chosenStomack from "../../../public/images/category/chosen_stomach.png";
-import chosenSkin from "../../../public/images/category/chosen_skin.png";
+// import chosenHead from "../../../public/images/category/chosen_head.png";
+// import chosenCold from "../../../public/images/category/chosen_cold.png";
+// import chosenSleep from "../../../public/images/category/chosen_sleep.png";
+// import chosenMuscle from "../../../public/images/category/chosen_muscle.png";
+// import chosenAllergy from "../../../public/images/category/chosen_allergy.png";
+// import chosenMotion from "../../../public/images/category/chosen_motion.png";
+// import chosenStomack from "../../../public/images/category/chosen_stomach.png";
+// import chosenSkin from "../../../public/images/category/chosen_skin.png";
 
 import { useRouter } from "next/router";
 import Head from "next/head";
