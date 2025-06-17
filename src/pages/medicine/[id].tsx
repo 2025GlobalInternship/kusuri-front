@@ -25,7 +25,7 @@ export default function Page() {
         setLoading(true);
 
         const fetchMedicine = axios.get(
-            `https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/medicine?id=${id}`,
+            `https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/medicine?med_id=${id}`,
             { withCredentials: true }
         );
 
@@ -37,7 +37,7 @@ export default function Page() {
         Promise.all([fetchMedicine, fetchFavorite])
             .then(([res1, res2]) => {
                 setMedicine(res1.data); // 정보
-                setMarked(res2.data === false ? 0 : 1); // 북마크
+                setMarked(res2.data === true ? 0 : 1); // 북마크
             })
             .catch(err => {
                 console.error('데이터 로딩 실패:', err);
@@ -48,8 +48,8 @@ export default function Page() {
     const toggleBookmark = async () => {
         try {
             const response = await axios.post(
-                `https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/favorite`,
-                { med_id: {id} },
+                `/api/medicines/favorite`,
+                { med_id: id },
                 {
                     headers: { 'Content-Type': 'application/json' },
                     withCredentials: true
@@ -67,6 +67,11 @@ export default function Page() {
 
     if (loading) return <div>로딩 중...</div>;
     if (!medicine) return <div>약 정보를 불러오지 못했습니다.</div>;
+
+    const imgSrc = medicine.med_imgPath
+    ? `https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/${medicine.med_imgPath}`
+    : '/images/default-medicine.png';
+
 
     const categories = [
         medicine.cate_1,
@@ -96,7 +101,7 @@ export default function Page() {
                 <span id={style.mediJp}>({medicine.med_name_jp})</span>
                 <Image
                     id={style.mediImg}
-                    src={`https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/${medicine.med_imgPath}`}
+                    src={imgSrc}
                     alt="약 이미지"
                     width={150}
                     height={150}

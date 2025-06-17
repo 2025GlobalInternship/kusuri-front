@@ -9,10 +9,10 @@ const nextConfig = {
     },
     async rewrites() {
         return [
-        {
-            source: '/api/:path*',
-            destination: 'https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/:path*',
-        },
+            {
+                source: '/api/:path*',
+                destination: 'https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/:path*',
+            },
         ];
     },
 };
