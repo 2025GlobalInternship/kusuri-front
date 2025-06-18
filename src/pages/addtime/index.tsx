@@ -129,6 +129,7 @@ const AddTime = () => {
     try {
       const res = await fetch('/api/alarms/alarm-setting', {
         method: 'POST',
+        credentials: 'include' ,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });

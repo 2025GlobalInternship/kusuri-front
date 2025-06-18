@@ -25,6 +25,7 @@ export default function Page() {
         try {
             const response = await fetch("/api/users/check-id", {
                 method: "POST",
+                credentials: 'include' ,
                 headers: {
                     "Content-Type": "application/json",
                 },
