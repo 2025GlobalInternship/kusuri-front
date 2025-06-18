@@ -55,8 +55,8 @@ export default function LoginPage() {
         <Image
           src="/images/Frame 2814.png"
           alt="아이콘"
-          width={120}
-          height={120}
+          width={180}
+          height={50}
         />
       </div>
       <form onSubmit={onSubmit}>
