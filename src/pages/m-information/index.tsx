@@ -28,6 +28,7 @@ export default function InfoPage() {
       for (const med of medicineList) {
         const res = await fetch("/api/medicines/taking-medicine", {
           method: "POST",
+          credentials: 'include',
           headers: {
             "Content-Type": "application/json",
           },

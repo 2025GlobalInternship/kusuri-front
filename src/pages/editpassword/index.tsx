@@ -63,6 +63,7 @@ export default function Page() {
         try {
             const response = await fetch("/api/users/update", {
                 method: "PATCH",
+                credentials: 'include' ,
                 headers: {
                     "Content-Type": "application/json",
                 },
