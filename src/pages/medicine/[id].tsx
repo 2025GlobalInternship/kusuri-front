@@ -10,6 +10,17 @@ import markIcon2 from "../../../public/images/markIcon2.png";
 
 import style from "./[id].module.css";
 
+interface Medicine {
+    id: number;
+    time: string;
+    timeslot: "오전" | "오후";
+    medicine: string;
+    isActive: boolean;
+    start_day?: string;
+    last_day?: string;
+    days?: string;
+}
+
 export default function Page() {
     const router = useRouter();
     const { id } = router.query;
@@ -37,6 +48,7 @@ export default function Page() {
         Promise.all([fetchMedicine, fetchFavorite])
             .then(([res1, res2]) => {
                 setMedicine(res1.data); // 정보
+                console.log(res2)
                 setMarked(res2.data === true ? 0 : 1); // 북마크
             })
             .catch(err => {

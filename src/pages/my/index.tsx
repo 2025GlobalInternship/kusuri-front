@@ -1,88 +1,91 @@
+"use client";
 import NavigationVarLayout from "@/components/navigation_var-layout";
 import style from "./index.module.css";
 import Image from "next/image";
 import markIcon from "../../../public/images/markIcon.png";
-
 import detailIcon from "../../../public/images/detailIcon.png";
 import chevron from "../../../public/images/chevron-right.png";
 import clockIcon from "../../../public/images/clockIcon.png";
 import MedicineLayout from "@/components/medicine-layout";
 import { useRouter } from "next/router";
-import { GetServerSideProps } from "next";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import { mediProps } from "@/components/medicine-layout";
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    try {
-        const response = await axios.get(
-            `https://port-9000-kusuri-back-mbwh1ckxb2a8c087.sel4.cloudtype.app/medicines/watched-medicine`,
-            {
-                withCredentials: true,
-            }
-        );
+export default function Page() {
+  const router = useRouter();
+  const userName = "빼코빼코";
+  const imageList = [
+    "/images/ch1.png",
+    "/images/ch2.png",
+    "/images/ch3.png",
+    "/images/ch4.png",
+    "/images/ch5.png",
+    "/images/ch6.png",
+  ];
 
-        const data = response?.data?.data ?? [];
-        return {
-            props: { data },
-        };
-    } catch (error) {
-        return {
-            props: { data: [] },
-        };
-    }
-};
+  const [data, setData] = useState<mediProps[]>([]);
 
-export default function Page({ data }: { data: mediProps[] }) {
-    const router = useRouter();
+  useEffect(() => {
+    const fetchWatchedMedicines = async () => {
+      try {
+        const res = await fetch("/api/medicines/watched-medicine", {
+          credentials: "include",
+        });
+        const json = await res.json();
+        setData(json?.data ?? []);
+      } catch (err) {
+        console.error("최근 본 약 불러오기 실패:", err);
+      }
+    };
 
-    const userName = "빼코빼코";
+    fetchWatchedMedicines();
+  }, []);
 
-    const imageList = [
-        "/images/ch1.png",
-        "/images/ch2.png",
-        "/images/ch3.png",
-        "/images/ch4.png",
-        "/images/ch5.png",
-        "/images/ch6.png",
-    ];
+  const onStroedClick = () => {
+    router.push("/my/storedMedicine");
+  };
 
-    const onStroedClick = () => {
-        router.push('/my/storedMedicine');
-    }
+  const onManageClick = () => {
+    router.push("/my/management");
+  };
 
-    const onManageClick = () => {
-        router.push('/my/management');
-    }
+  return (
+    <div>
+      <div className={style.userImfoContainer}>
+        <Image src={imageList[0]} alt="프로필 이미지" width={50} height={50} />
+        <p>{userName}님</p>
+        <Image
+          onClick={onManageClick}
+          id={style.right_icon}
+          src={detailIcon}
+          alt="설정"
+        />
+      </div>
 
-    return (
-        <div>
-            <div className={style.userImfoContainer}>
-                <Image src={imageList[0]} alt="프로필 이미지" width={50} height={50} />
-                <p>{userName}님</p>
-                <Image onClick={onManageClick} id={style.right_icon} src={detailIcon} alt="설정" />
-            </div>
-            <div className={style.storedMcon}>
-                <Image src={markIcon} alt="북마크 아이콘"/>
-                <p>내가 저장한 약</p>
-                <Image onClick={onStroedClick} id={style.right_icon} src={chevron} alt="설정" />
-            </div>
-            <div className={style.recentCon}>
-                <div className={style.recentTitleCon}>
-                    <Image src={clockIcon} alt="북마크 아이콘"/>
-                    <p>내가 최근 본 약</p>
-                </div>
-                <div className={style.obCon}>
-                    {
-                        data.slice(0, 3).map((a, idx) => {
-                            return (
-                                <MedicineLayout key={idx} data={a} />
-                            )
-                        })
-                    }
-                    
-                </div>
-            </div>
-            <NavigationVarLayout/>
+      <div className={style.storedMcon}>
+        <Image src={markIcon} alt="북마크 아이콘" />
+        <p>내가 저장한 약</p>
+        <Image
+          onClick={onStroedClick}
+          id={style.right_icon}
+          src={chevron}
+          alt="설정"
+        />
+      </div>
+
+      <div className={style.recentCon}>
+        <div className={style.recentTitleCon}>
+          <Image src={clockIcon} alt="시계 아이콘" />
+          <p>내가 최근 본 약</p>
         </div>
-    )
+        <div className={style.obCon}>
+          {data.slice(0, 3).map((a, idx) => (
+            <MedicineLayout key={idx} data={a} />
+          ))}
+        </div>
+      </div>
+
+      <NavigationVarLayout />
+    </div>
+  );
 }

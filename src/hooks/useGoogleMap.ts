@@ -9,6 +9,7 @@ interface Pharmacy {
     length: number;
 }
 
+
 export const useGoogleMap = (
     mapRef: React.RefObject<HTMLDivElement>,
     onPharmaciesFound: (pharmacies: Pharmacy[]) => void
